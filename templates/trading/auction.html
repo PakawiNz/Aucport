@@ -4,8 +4,56 @@
 {% endblock %}
 {% block script %}
 <script type="text/javascript" src="/static/js/trading/auction.js"></script>
+<script type="text/javascript" src="/static/js/trading/countdown.min.js"></script>
+<script type="text/javascript">
+	var auctions = [];
+	{% for auction in auctions %}
+		auctions.push({
+			index:{{forloop.counter}},
+			enddate: new Date(
+				{{auction.endtime.year}}, 
+				{{auction.endtime.month}}-1, 
+				{{auction.endtime.day}}, 
+				{{auction.endtime.hour}}, 
+				{{auction.endtime.minute}}, 
+				{{auction.endtime.second}}),
+		});
+	{% endfor %}
+</script>
 {% endblock %}
 {% block body %}
 {% include 'common/topnavbar.html' %}
-
+<div class="container">
+	<div class="row">
+		<div class="[ col-xs-12 col-sm-offset-2 col-sm-8 ]">
+			<ul class="event-list">
+				{% for auction in auctions %}
+				<li>
+					<time id="endTime{{forloop.counter}}">
+						<span id="endMajor{{forloop.counter}}" class="day">{{auction.endtime.day}}</span>
+						<span id="endMinor{{forloop.counter}}" class="month">{{auction.endmonth}}</span>
+					</time>
+					<img src="{{auction.picture}}"/>
+					<div class="info">
+						<h2 class="title">{{auction.product}}</h2>
+						<p class="desc">{{auction.endtime}}</p>
+						<ul style="width:50%;">
+							<li style="width:25%;">1 <span class="fa fa-sort-amount-desc"></span></li>
+							<li style="width:25%;">10 <span class="fa fa-male"></span></li>
+							<li style="width:25%;">29.99 <span class="fa fa-money"></span></li>
+						</ul>
+					</div>
+					<div class="social">
+						<ul>
+							<li class="facebook"><a href="#facebook"><span class="fa fa-facebook"></span></a></li>
+							<li class="twitter"><a href="#twitter"><span class="fa fa-twitter"></span></a></li>
+							<li class="google-plus"><a href="#google-plus"><span class="fa fa-google-plus"></span></a></li>
+						</ul>
+					</div>
+				</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+</div>
 {% endblock %}
