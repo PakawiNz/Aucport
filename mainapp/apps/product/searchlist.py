@@ -1,4 +1,4 @@
 from django.shortcuts import render
 
 def main(request):
-	return render(request,'member/editprofile.html')
+	return render(request,'product/searchlist.html')

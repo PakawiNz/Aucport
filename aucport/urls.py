@@ -8,5 +8,7 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
 
-    url(r'^member/', include('mainapp.apps.member.urls'))
+    url(r'^member/', include('mainapp.apps.member.urls')),
+    url(r'^product/', include('mainapp.apps.product.urls')),
+    url(r'^trading/', include('mainapp.apps.trading.urls')),
 )
