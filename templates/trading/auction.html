@@ -25,10 +25,10 @@
 {% include 'common/topnavbar.html' %}
 <div class="container">
 	<div class="row">
-		<div class="[ col-xs-12 col-sm-offset-2 col-sm-8 ]">
-			<ul class="event-list">
+		<div class="col-xs-12 col-sm-offset-2 col-sm-8">
+			<div class="mainblock">
 				{% for auction in auctions %}
-				<li>
+				<div>
 					<time id="endTime{{forloop.counter}}">
 						<span id="endMajor{{forloop.counter}}" class="day">{{auction.endtime.day}}</span>
 						<span id="endMinor{{forloop.counter}}" class="month">{{auction.endmonth}}</span>
@@ -50,9 +50,9 @@
 							<li class="google-plus"><a href="#google-plus"><span class="fa fa-google-plus"></span></a></li>
 						</ul>
 					</div>
-				</li>
+				</div>
 				{% endfor %}
-			</ul>
+			</div>
 		</div>
 	</div>
 </div>

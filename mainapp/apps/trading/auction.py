@@ -25,6 +25,7 @@ def main(request):
 		auction['endmonth'] = auction['endtime'].strftime('%b')
 
 	context = {
+		'title': 'Auction watchlist',
 		'today':datetime.datetime.now(),
 		'auctions':auctions,
 	}
