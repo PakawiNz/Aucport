@@ -17,7 +17,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'c_m8@1dd1lphe(gt4u2h2q)pc1(k_)mv5hn0+)=1l%$^hw+u%6'
+SECRET_KEY = 'mm-#*yh+x(k9#^2%uye@tmwdymx-quk^@cx(_flb2%$&+e7uf&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -26,6 +26,12 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# HTTPS
+# os.environ['HTTPS'] = "on"
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+# SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Application definition
 
@@ -37,7 +43,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "mainapp",
-    "south",
+    # "sslserver",
 )
 
 MIDDLEWARE_CLASSES = (
