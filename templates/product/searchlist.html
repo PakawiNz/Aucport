@@ -1,6 +1,8 @@
 {% extends 'common/maincanvas.html' %}
 {% block style %}
 <link rel="stylesheet" type="text/css" href="/static/css/product/searchlist.css">
+<style type="text/css">
+</style>
 {% endblock %}
 {% block script %}
 <script type="text/javascript" src="/static/js/product/searchlist.js"></script>
@@ -9,105 +11,92 @@
 {% include 'common/topnavbar.html' %}
 <div class="container">
 	<div class="row">
-		<div class="[ col-xs-12 col-sm-offset-2 col-sm-8 ]">
-			<ul class="event-list">
-				<li>
-					<time datetime="2014-07-20">
-						<span class="day">4</span>
-						<span class="month">Jul</span>
-						<span class="year">2014</span>
-						<span class="time">ALL DAY</span>
-					</time>
-					<img alt="Independence Day" src="https://farm4.staticflickr.com/3100/2693171833_3545fb852c_q.jpg" />
+		<div class="col-xs-12 col-sm-offset-2 col-sm-8">
+			<div class="mainblock">
+				
+				<div>
+					<img src="http://cdn.dota2.com/apps/dota2/images/items/bfury_lg.png"/>
 					<div class="info">
-						<h2 class="title">Independence Day</h2>
-						<p class="desc">United States Holiday</p>
-					</div>
-					<div class="social">
-						<ul>
-							<li class="facebook" style="width:33%;"><a href="#facebook"><span class="fa fa-facebook"></span></a></li>
-							<li class="twitter" style="width:34%;"><a href="#twitter"><span class="fa fa-twitter"></span></a></li>
-							<li class="google-plus" style="width:33%;"><a href="#google-plus"><span class="fa fa-google-plus"></span></a></li>
+						<h2 class="title">Battle Fury</h2>
+						<p class="desc">Nov. 3, 2014, 8:30 a.m.</p>
+						<ul style="width:50%;">
+							<li style="width:25%;">29.99 <span class="fa fa-money"></span></li>							
 						</ul>
-					</div>
-				</li>
 
-				<li>
-					<time datetime="2014-07-20 0000">
-						<span class="day">8</span>
-						<span class="month">Jul</span>
-						<span class="year">2014</span>
-						<span class="time">12:00 AM</span>
-					</time>
-					<div class="info">
-						<h2 class="title">One Piece Unlimited World Red</h2>
-						<p class="desc">PS Vita</p>
-						<ul>
-							<li style="width:50%;"><a href="#website"><span class="fa fa-globe"></span> Website</a></li>
-							<li style="width:50%;"><span class="fa fa-money"></span> $39.99</li>
-						</ul>
 					</div>
 					<div class="social">
 						<ul>
-							<li class="facebook" style="width:33%;"><a href="#facebook"><span class="fa fa-facebook"></span></a></li>
-							<li class="twitter" style="width:34%;"><a href="#twitter"><span class="fa fa-twitter"></span></a></li>
-							<li class="google-plus" style="width:33%;"><a href="#google-plus"><span class="fa fa-google-plus"></span></a></li>
-						</ul>
-					</div>
-				</li>
+							<li class="facebook"><a href="#facebook"><span class="fa fa-facebook"></span></a></li>
+							<li class="twitter"><a href="#twitter"><span class="fa fa-twitter"></span></a></li>
+							<li class="google-plus"><a href="#google-plus"><span class="fa fa-google-plus"></span></a></li>
 
-				<li>
-					<time datetime="2014-07-20 2000">
-						<span class="day">20</span>
-						<span class="month">Jan</span>
-						<span class="year">2014</span>
-						<span class="time">8:00 PM</span>
-					</time>
-					<img alt="My 24th Birthday!" src="https://farm5.staticflickr.com/4150/5045502202_1d867c8a41_q.jpg" />
+						</ul>
+					</div>
+				</div>
+				
+				<div>
+					<img src="http://cdn.dota2.com/apps/dota2/images/items/ultimate_scepter_lg.png"/>
 					<div class="info">
-						<h2 class="title">Mouse0270's 24th Birthday!</h2>
-						<p class="desc">Bar Hopping in Erie, Pa.</p>
-						<ul>
-							<li style="width:33%;">1 <span class="glyphicon glyphicon-ok"></span></li>
-							<li style="width:34%;">3 <span class="fa fa-question"></span></li>
-							<li style="width:33%;">103 <span class="fa fa-envelope"></span></li>
+						<h2 class="title">Aghanim&#39;s Sceptor</h2>
+						<p class="desc">Nov. 4, 2014, 8:30 a.m.</p>
+						<ul style="width:50%;">
+							<li style="width:25%;">29.99 <span class="fa fa-money"></span></li>							
 						</ul>
-					</div>
-					<div class="social">
-						<ul>
-							<li class="facebook" style="width:33%;"><a href="#facebook"><span class="fa fa-facebook"></span></a></li>
-							<li class="twitter" style="width:34%;"><a href="#twitter"><span class="fa fa-twitter"></span></a></li>
-							<li class="google-plus" style="width:33%;"><a href="#google-plus"><span class="fa fa-google-plus"></span></a></li>
-						</ul>
-					</div>
-				</li>
 
-				<li>
-					<time datetime="2014-07-31 1600">
-						<span class="day">31</span>
-						<span class="month">Jan</span>
-						<span class="year">2014</span>
-						<span class="time">4:00 PM</span>
-					</time>
-					<img alt="Disney Junior Live On Tour!" src="http://www.thechaifetzarena.com/images/main/DL13_PiratePrincess_thumb.jpg" />
-					<div class="info">
-						<h2 class="title">Disney Junior Live On Tour!</h2>
-						<p class="desc"> Pirate and Princess Adventure</p>
-						<ul>
-							<li style="width:33%;">$49.99 <span class="fa fa-male"></span></li>
-							<li style="width:34%;">$29.99 <span class="fa fa-child"></span></li>
-						</ul>
 					</div>
 					<div class="social">
 						<ul>
-							<li class="facebook" style="width:33%;"><a href="#facebook"><span class="fa fa-facebook"></span></a></li>
-							<li class="twitter" style="width:34%;"><a href="#twitter"><span class="fa fa-twitter"></span></a></li>
-							<li class="google-plus" style="width:33%;"><a href="#google-plus"><span class="fa fa-google-plus"></span></a></li>
+							<li class="facebook"><a href="#facebook"><span class="fa fa-facebook"></span></a></li>
+							<li class="twitter"><a href="#twitter"><span class="fa fa-twitter"></span></a></li>
+							<li class="google-plus"><a href="#google-plus"><span class="fa fa-google-plus"></span></a></li>
+
 						</ul>
 					</div>
-				</li>
-			</ul>
+				</div>
+				
+				<div>
+					<img src="http://cdn.dota2.com/apps/dota2/images/items/travel_boots_lg.png"/>
+					<div class="info">
+						<h2 class="title">Boot of travel</h2>
+						<p class="desc">Nov. 4, 2014, 8:31 a.m.</p>
+						<ul style="width:50%;">
+							<li style="width:25%;">29.99 <span class="fa fa-money"></span></li>							
+						</ul>
+
+					</div>
+					<div class="social">
+						<ul>
+							<li class="facebook"><a href="#facebook"><span class="fa fa-facebook"></span></a></li>
+							<li class="twitter"><a href="#twitter"><span class="fa fa-twitter"></span></a></li>
+							<li class="google-plus"><a href="#google-plus"><span class="fa fa-google-plus"></span></a></li>
+
+						</ul>
+					</div>
+				</div>
+				
+				<div>
+					<img src="http://cdn.dota2.com/apps/dota2/images/items/desolator_lg.png"/>
+					<div class="info">
+						<h2 class="title">Desolator</h2>
+						<p class="desc">Nov. 5, 2014, 8:30 a.m.</p>
+						<ul style="width:50%;">
+							<li style="width:25%;">29.99 <span class="fa fa-money"></span></li>							
+						</ul>
+
+					</div>
+					<div class="social">
+						<ul>
+							<li class="facebook"><a href="#facebook"><span class="fa fa-facebook"></span></a></li>
+							<li class="twitter"><a href="#twitter"><span class="fa fa-twitter"></span></a></li>
+							<li class="google-plus"><a href="#google-plus"><span class="fa fa-google-plus"></span></a></li>
+
+						</ul>
+					</div>
+				</div>
+				
+			</div>
 		</div>
 	</div>
 </div>
+
 {% endblock %}
