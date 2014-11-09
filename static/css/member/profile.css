@@ -221,3 +221,199 @@ div.user-menu div.user-menu-content:not(.active){
         max-height: 400px;
     }
 }
+
+    body {
+    padding: 60px 0px;
+    background-color: rgb(220, 220, 220);
+  }
+    
+    .mainblock {
+    list-style: none;
+    font-family: 'Lato', sans-serif;
+    margin: 0px;
+    padding: 0px;
+  }
+  .mainblock > div {
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 5px rgb(51, 51, 51);
+    box-shadow: 0px 0px 5px rgba(51, 51, 51, 0.7);
+    padding: 0px;
+    margin: 0px 0px 20px;
+  }
+  .mainblock > div > time {
+    display: inline-block;
+    width: 100%;
+    color: rgb(255, 255, 255);
+    background-color: rgb(197, 44, 102);
+    padding: 5px;
+    text-align: center;
+    text-transform: uppercase;
+  }
+  .mainblock > div:nth-child(even) > time {
+    background-color: rgb(165, 82, 167);
+  }
+  .mainblock > div > time > span {
+    display: none;
+  }
+  .mainblock > div > time > .day {
+    display: block;
+    font-size: 56pt;
+    font-weight: 100;
+    line-height: 1;
+  }
+  .mainblock > div time > .month {
+    display: block;
+    font-size: 24pt;
+    font-weight: 900;
+    line-height: 1;
+  }
+  .mainblock > div > time > .clock {
+    display: block;
+    font-size: 32pt;
+    font-weight: 100;
+    line-height: 1.7;
+  }
+  .mainblock > div > img {
+    width: 100%;
+  }
+  .mainblock > div > .info {
+    padding-top: 5px;
+    text-align: center;
+  }
+  .mainblock > div > .info > .title {
+    font-size: 17pt;
+    font-weight: 700;
+    margin: 0px;
+  }
+  .mainblock > div > .info > .desc {
+    font-size: 13pt;
+    font-weight: 300;
+    margin: 0px;
+  }
+  .mainblock > div > .info > ul,
+  .mainblock > div > .social > ul {
+    display: table;
+    list-style: none;
+    margin: 10px 0px 0px;
+    padding: 0px;
+    width: 100%;
+    text-align: center;
+  }
+  .mainblock > div > .social > ul {
+    margin: 0px;
+  }
+  .mainblock > div > .info > ul > li,
+  .mainblock > div > .social > ul > li {
+    display: table-cell;
+    cursor: pointer;
+    color: rgb(30, 30, 30);
+    font-size: 11pt;
+    font-weight: 300;
+        padding: 3px 0px;
+  }
+    .mainblock > div > .info > ul > li > a {
+    display: block;
+    width: 100%;
+    color: rgb(30, 30, 30);
+    text-decoration: none;
+  } 
+    .mainblock > div > .social > ul > li {    
+        padding: 0px;
+    }
+    .mainblock > div > .social > ul > li > a {
+        padding: 3px 0px;
+  } 
+  .mainblock > div > .info > ul > li:hover,
+  .mainblock > div > .social > ul > li:hover {
+    color: rgb(30, 30, 30);
+    background-color: rgb(200, 200, 200);
+  }
+  .facebook a,
+  .twitter a,
+  .google-plus a {
+    display: block;
+    width: 100%;
+    color: rgb(75, 110, 168) !important;
+  }
+  .twitter a {
+    color: rgb(79, 213, 248) !important;
+  }
+  .google-plus a {
+    color: rgb(221, 75, 57) !important;
+  }
+  .facebook:hover a {
+    color: rgb(255, 255, 255) !important;
+    background-color: rgb(75, 110, 168) !important;
+  }
+  .twitter:hover a {
+    color: rgb(255, 255, 255) !important;
+    background-color: rgb(79, 213, 248) !important;
+  }
+  .google-plus:hover a {
+    color: rgb(255, 255, 255) !important;
+    background-color: rgb(221, 75, 57) !important;
+  }
+
+  @media (min-width: 768px) {
+    .mainblock > div {
+      position: relative;
+      display: block;
+      width: 100%;
+      height: 120px;
+      padding: 0px;
+    }
+    .mainblock > div > time,
+    .mainblock > div > img  {
+      display: inline-block;
+    }
+    .mainblock > div > time,
+    .mainblock > div > img {
+      width: 120px;
+      float: left;
+    }
+    .mainblock > div > .info {
+      background-color: rgb(245, 245, 245);
+      overflow: hidden;
+    }
+    .mainblock > div > time,
+    .mainblock > div > img {
+      width: 120px;
+      height: 120px;
+      padding: 0px;
+      margin: 0px;
+    }
+    .mainblock > div > .info {
+      position: relative;
+      height: 120px;
+      text-align: left;
+      padding-right: 40px;
+    } 
+    .mainblock > div > .info > .title, 
+    .mainblock > div > .info > .desc {
+      padding: 0px 10px;
+    }
+    .mainblock > div > .info > ul {
+      position: absolute;
+      left: 0px;
+      bottom: 0px;
+    }
+    .mainblock > div > .social {
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      display: block;
+      width: 40px;
+    }
+        .mainblock > div > .social > ul {
+            border-left: 1px solid rgb(230, 230, 230);
+        }
+    .mainblock > div > .social > ul > li {      
+      display: block;
+            padding: 0px;
+    }
+    .mainblock > div > .social > ul > li > a {
+      display: block;
+      width: 40px;
+      padding: 10px 0px 9px;
+    }
+  }

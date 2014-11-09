@@ -1,4 +1,7 @@
 from django.shortcuts import render
 
 def main(request):
-	return render(request,'product/searchlist.html')
+	context = {
+		'title': 'Product List',
+	}
+	return render(request,'product/searchlist.html',context)
