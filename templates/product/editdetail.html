@@ -7,5 +7,58 @@
 {% endblock %}
 {% block body %}
 {% include 'common/topnavbar.html' %}
-
+<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-offset-2 col-sm-8">
+				<div class="mainblock">
+					<div>
+						<time>
+							<span class="clock">Authen</span>
+						</time>
+						<div class="detail">
+							<input name="email" id="email"  placeholder="Email Address" tabindex="1" type="email" class="form-control input">
+							<input name="password" id="password"  placeholder="Password" tabindex="2" type="password" class="form-control input">
+							<input name="password_confirmation" id="password_confirmation"  placeholder="Confirm Password" tabindex="3" type="password" class="form-control input">
+						</div>
+					</div>
+					<div>
+						<time>
+							<span class="clock">Contact</span>
+						</time>
+						<div class="detail">
+							<input name="first_name" id="first_name" placeholder="First Name" tabindex="4" type="text" class="form-control input">
+							<input name="last_name" id="last_name" placeholder="Last Name" tabindex="5" type="text" class="form-control input">
+							<input name="display_name" id="display_name" placeholder="Display Name" tabindex="6" type="text" class="form-control input">
+							<input name="birthdate" id="birthdate" placeholder="Birthday" tabindex="6" type="date" class="form-control input">
+							<input name="address" id="address" placeholder="Address" tabindex="6" type="text" class="form-control input">
+							<select name="country" id="country" placeholder="Country" tabindex="6" type="select" class="form-control input">
+							  <option >Thailand</option>
+							  <option >China</option>
+							  <option >USA</option>
+							</select>
+						</div>
+					</div>
+					<div>
+						<time>
+							<span class="clock">Agreement</span>
+						</time>
+						<div class="detail" style="height:50px">
+							<span class="button-checkbox">
+								<div style="float:left; padding-left:10px; padding-right:10px;">
+									<button type="button" class="btn" data-color="info" tabindex="7">I Agree</button>
+									<input type="checkbox" name="t_and_c" id="t_and_c" class="hidden" value="1">
+								</div>
+							</span>
+							I Agree to the <a href="#" data-toggle="modal" data-target="#t_and_c_m">Terms and Conditions</a> set out by this site, including our Cookie Use.
+						</div>
+						<div class="detail" style="height:55px;">
+							<button type="button" class="btn btn-primary" type="submit" style="float:right; width:300px" tabindex="8">
+								<span class="fa fa-file-text-o"></span>
+								Register
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
 {% endblock %}

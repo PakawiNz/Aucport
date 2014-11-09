@@ -3,9 +3,71 @@
 <link rel="stylesheet" type="text/css" href="/static/css/product/search.css">
 {% endblock %}
 {% block script %}
+	<script type="text/javascript" src="/static/js/member/register.js"></script>
 <script type="text/javascript" src="/static/js/product/search.js"></script>
 {% endblock %}
 {% block body %}
 {% include 'common/topnavbar.html' %}
+<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-offset-2 col-sm-8">
+				<div class="mainblock">
+					<div>
+						<time>
+							<span class="clock">Detail</span>
+						</time>
+						<div class="detail">
+							<br>
+							<br>
+							<div class="input-group">
+							<span class="input-group-addon">Product name</span>
+							<input name="name" id="name" placeholder="Name" tabindex="1" type="text" class="form-control input">
+							</div>
+							<div class="input-group">
+							<span class="input-group-addon">Brand</span>
+							<input name="brand" id="brand" placeholder="Brand" tabindex="2" type="text" class="form-control input">
+							</div>
+							<div class="input-group">
+							<span class="input-group-addon">Catagory</span>
+							<select name="catagory" id="catagory" placeholder="Catagory" tabindex="3" type="select" class="form-control input">
+							  <option >Electrocity</option>
+							  <option >Stationary</option>
+							  <option >Toy</option>
+							  <option >Food</option>
+							  <option >Book</option>
+							  <option >Jewelry</option>
+							  <option >Computer</option>
+							  <option >Home & Graden</option>
+							</select>
+							</div>
 
+							<div class="input-group">
+							<span class="input-group-addon">Lowest Price</span>
+							<input name="lprice" id="lprice" placeholder="Lowest Price" tabindex="2" type="text" class="form-control input">
+							</div>
+							<div class="input-group">
+							<span class="input-group-addon">Higest Price</span>
+							<input name="hprice" id="hprice" placeholder="Higest Price" tabindex="2" type="text" class="form-control input">
+							</div>
+							<div class="input-group">
+							<span class="input-group-addon">Auction Start date</span>
+							<input name="start" id="start" placeholder="Start Date" tabindex="6" type="date" class="form-control input">
+							</div>
+							<div class="input-group">
+							<span class="input-group-addon">Auction End date</span>
+							<input name="end" id="end" placeholder="End Date" tabindex="6" type="date" class="form-control input">
+							</div>
+							<div class="detail" style="height:55px;">
+							<br>
+							<button type="button" class="btn btn-primary" type="submit" style="float:right; width:300px" tabindex="8">
+								<span class="fa fa-search"></span>
+								Search
+							</button>
+						</div>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		
 {% endblock %}

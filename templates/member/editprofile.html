@@ -7,5 +7,41 @@
 {% endblock %}
 {% block body %}
 {% include 'common/topnavbar.html' %}
-
+<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-offset-2 col-sm-8">
+				<div class="mainblock">
+					<div>
+						<time>
+							<span class="clock">Authen</span>
+						</time>
+						<div class="detail">
+							<input name="email" id="email"  placeholder="Email Address" tabindex="1" type="email" class="form-control input" value="{{member.email}}">
+							<input name="password" id="password"  placeholder="Password" tabindex="2" type="password" class="form-control input" value="{{member.password}}">
+						</div>
+					</div>
+					<div>
+						<time>
+							<span class="clock">Contact</span>
+						</time>
+						<div class="detail">
+							<input name="first_name" id="first_name" placeholder="First Name" tabindex="4" type="text" class="form-control input" value="{{member.fname}}">
+							<input name="last_name" id="last_name" placeholder="Last Name" tabindex="5" type="text" class="form-control input" value="{{member.lname}}">
+							<input name="display_name" id="display_name" placeholder="Display Name" tabindex="6" type="text" class="form-control input" value="{{member.dname}}">
+							<input name="birthdate" id="birthdate" placeholder="Birthday" tabindex="6" type="date" class="form-control input" value="{{member.bd}}">
+							<input name="address" id="address" placeholder="Address" tabindex="6" type="text" class="form-control input" value="{{member.address}}">
+							<select name="country" id="country" placeholder="Country" tabindex="6" type="select" class="form-control input" value="{{member.country}}">
+							  <option >Thailand</option>
+							  <option >China</option>
+							  <option >USA</option>
+							</select>
+						</div>
+					</div>
+					<button type="button" class="btn btn-primary" type="submit" style="float:right; width:300px" tabindex="8">
+								<span class="fa fa-edit"></span>
+								Edit
+							</button>
+						
+				</div>
+			</div>
 {% endblock %}
