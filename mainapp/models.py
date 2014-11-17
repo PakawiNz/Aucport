@@ -1,9 +1,30 @@
 from django.db import models
 
 # Create your models here.
+
+class Country(models.Model) :
+	name = models.CharField(max_length=50)
+	def __unicode__(self):
+		return self.name
+
+class Timezone(models.Model) :
+	name = models.CharField(max_length=80)
+	offset = models.IntegerField()
+	def __unicode__(self):
+		return self.name
+
 class Member(models.Model) :
-	username = models.CharField(max_length=50)
+	email = models.CharField(max_length=50,unique=True)
 	password = models.CharField(max_length=50)
+	firstname = models.CharField(max_length=50)
+	lastname = models.CharField(max_length=50)
+	displayname = models.CharField(max_length=50,unique=True)
+	birthdate = models.CharField(max_length=50)
+	address = models.CharField(max_length=50)
+	country = models.ForeignKey(Country)
+	timezone = models.ForeignKey(Timezone)
+	confirmation = models.CharField(max_length=50)
+	isConfirmed = models.BooleanField(default=False)
 
 class Product(models.Model) :
 	STATE_PENDING = 1
@@ -17,8 +38,8 @@ class Product(models.Model) :
 		(STATE_SELLING,'selling'),
 		(STATE_AUCTION,'auction'),
 		(STATE_BILLING,'billing'),
-		(STATE_ABANDONED,'abandoned'),
 		(STATE_SOLDOUT,'soldout'),
+		(STATE_ABANDONED,'abandoned'),
 	)
 	owner = models.ForeignKey(Member)
 	netPrice = models.FloatField()

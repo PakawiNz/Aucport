@@ -1,0 +1,27 @@
+{% extends 'common/maincanvas.html' %}
+{% block style %}
+<link rel="stylesheet" type="text/css" href="/static/css/member/register.css">
+{% endblock %}
+{% block script %}
+<script type="text/javascript" src="/static/js/member/register.js"></script>
+{% endblock %}
+{% block body %}
+{% include 'common/topnavbar.html' %}
+<div class="container">
+	<div class="mainblock">
+		<div>
+			<time>
+				<span class="clock">
+					Success
+				</span>
+			</time>
+			<div class="padblock"></div>
+			<div class="detail">
+				<p>
+					{{content}}
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

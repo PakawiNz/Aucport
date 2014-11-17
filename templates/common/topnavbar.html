@@ -12,9 +12,9 @@
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="#">Home</a></li>
-				<li><a href="#">Product</a></li>
-				<li class="dropdown">
+				<li id="nav1"><a href="#">Home</a></li>
+				<li id="nav2"><a href="#">Product</a></li>
+				<li id="nav3" class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Search <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
 						<li>
@@ -33,21 +33,22 @@
 				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="{% url 'register' %}">Sign Up</a></li>
-				<li class="dropdown">
+				<li id="nav4"><a href="{% url 'register' %}">Sign Up</a></li>
+				<li id="nav5" class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Sign in <b class="caret"></b></a>
 					<ul class="dropdown-menu" style="padding: 15px;min-width: 250px;">
 						<li>
 							<div class="row">
 								<div class="col-md-12">
-									<form class="form" role="form" method="post" action="login" accept-charset="UTF-8" id="login-nav">
+									<form class="form" role="form" method="POST" action="/member/login/" accept-charset="UTF-8" id="login-nav">
+										{% csrf_token %}
 										<div class="form-group">
 											<label class="sr-only" for="exampleInputEmail2">Email address</label>
-											<input type="email" class="form-control" id="exampleInputEmail2" placeholder="Email address" required>
+											<input type="email" name="email" class="form-control" id="exampleInputEmail2" placeholder="Email address" required>
 										</div>
 										<div class="form-group">
 											<label class="sr-only" for="exampleInputPassword2">Password</label>
-											<input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password" required>
+											<input type="password" name="password" class="form-control" id="exampleInputPassword2" placeholder="Password" required>
 										</div>
 										<div class="checkbox">
 											<label>

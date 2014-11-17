@@ -1,87 +1,124 @@
 {% extends 'common/maincanvas.html' %}
 {% block style %}
-	<link rel="stylesheet" type="text/css" href="/static/css/member/register.css">
+<link rel="stylesheet" type="text/css" href="/static/css/member/register.css">
 {% endblock %}
 {% block script %}
-	<script type="text/javascript" src="/static/js/member/register.js"></script>
+<script type="text/javascript" src="/static/js/member/register.js"></script>
 {% endblock %}
 {% block body %}
-	{% include 'common/topnavbar.html' %}
-	<div class="container">
-		<div class="row">
-			<div class="col-xs-12 col-sm-offset-2 col-sm-8">
-				<div class="mainblock">
-					<div>
-						<time>
-							<span class="clock">Authen</span>
-						</time>
-						<div class="detail">
-							<input name="email" id="email"  placeholder="Email Address" tabindex="1" type="email" class="form-control input">
-							<input name="password" id="password"  placeholder="Password" tabindex="2" type="password" class="form-control input">
-							<input name="password_confirmation" id="password_confirmation"  placeholder="Confirm Password" tabindex="3" type="password" class="form-control input">
-						</div>
+{% include 'common/topnavbar.html' %}
+<div class="container">
+	<form action="" method="POST">
+		{% csrf_token %}
+		<div class="mainblock">
+			<div>
+				<time>
+					<span class="clock">Authen</span>
+				</time>
+				<div class="detail">
+					<div class="padblock"></div>
+					<div class="input-group">
+						<span class="input-group-addon">Email</span>
+						<input required name="email" id="email"  placeholder="Email Address" tabindex="1" type="email" class="form-control input">
 					</div>
-					<div>
-						<time>
-							<span class="clock">Contact</span>
-						</time>
-						<div class="detail">
-							<input name="first_name" id="first_name" placeholder="First Name" tabindex="4" type="text" class="form-control input">
-							<input name="last_name" id="last_name" placeholder="Last Name" tabindex="5" type="text" class="form-control input">
-							<input name="display_name" id="display_name" placeholder="Display Name" tabindex="6" type="text" class="form-control input">
-							<input name="birthdate" id="birthdate" placeholder="Birthday" tabindex="6" type="date" class="form-control input">
-							<input name="address" id="address" placeholder="Address" tabindex="6" type="text" class="form-control input">
-							<select name="country" id="country" placeholder="Country" tabindex="6" type="select" class="form-control input">
-							  <option >Thailand</option>
-							  <option >China</option>
-							  <option >USA</option>
-							</select>
-						</div>
+					<div class="input-group">
+						<span class="input-group-addon">Password</span>
+						<input required name="password" id="password"  placeholder="Password" tabindex="2" type="password" class="form-control input">
 					</div>
-					<div>
-						<time>
-							<span class="clock">Agreement</span>
-						</time>
-						<div class="detail" style="height:50px">
-							<span class="button-checkbox">
-								<div style="float:left; padding-left:10px; padding-right:10px;">
-									<button type="button" class="btn" data-color="info" tabindex="7">I Agree</button>
-									<input type="checkbox" name="t_and_c" id="t_and_c" class="hidden" value="1">
-								</div>
-							</span>
-							I Agree to the <a href="#" data-toggle="modal" data-target="#t_and_c_m">Terms and Conditions</a> set out by this site, including our Cookie Use.
-						</div>
-						<div class="detail" style="height:55px;">
-							<button type="button" class="btn btn-primary" type="submit" style="float:right; width:300px" tabindex="8">
-								<span class="fa fa-file-text-o"></span>
-								Register
-							</button>
-						</div>
+					<div class="input-group">
+						<span class="input-group-addon">Confirm</span>
+						<input required name="password_confirmation" id="password_confirmation"  placeholder="Confirm Password" tabindex="3" type="password" class="form-control input">
 					</div>
 				</div>
 			</div>
-			<!-- Modal -->
-			<div class="modal fade" id="t_and_c_m" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog modal-lg">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-							<h4 class="modal-title" id="myModalLabel">Terms & Conditions</h4>
-						</div>
-						<div class="modal-body">
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.</p>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.</p>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.</p>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.</p>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.</p>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.</p>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.</p>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-primary" data-dismiss="modal">I Agree</button>
-						</div>
-						</div><!-- /.modal-content -->
-						</div><!-- /.modal-dialog -->
-						</div><!-- /.modal -->
+			<div>
+				<time>
+					<span class="clock">Contact</span>
+				</time>
+				<div class="detail">
+					<div class="padblock"></div>
+					<div class="input-group">
+						<span class="input-group-addon">First Name</span>
+						<input required name="first_name" id="first_name" placeholder="First Name" tabindex="4" type="text" class="form-control input">
 					</div>
-				{% endblock %}
+					<div class="input-group">
+						<span class="input-group-addon">Last Name</span>
+						<input required name="last_name" id="last_name" placeholder="Last Name" tabindex="5" type="text" class="form-control input">
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">Display Name</span>
+						<input required name="display_name" id="display_name" placeholder="Display Name" tabindex="6" type="text" class="form-control input">
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">Birthdate</span>
+						<input required name="birthdate" id="birthdate" placeholder="Birthdate" tabindex="6" type="date" class="form-control input">
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">Address</span>
+						<input required name="address" id="address" placeholder="Address" tabindex="7" type="text" class="form-control input">
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">Country</span>
+						<select required name="country" id="country" placeholder="Country" tabindex="8" type="select" class="form-control input">
+						{% for country in countries %}
+						  <option value="{{country.id}}">{{country.name}}</option>
+						{% endfor %}
+						</select>
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">Timezone</span>
+						<select required name="timezone" id="timezone" placeholder="Timezone" tabindex="9" type="select" class="form-control input">
+						{% for timezone in timezones %}
+						  <option value="{{timezone.id}}">{{timezone.name}}</option>
+						{% endfor %}
+						</select>
+					</div>
+				</div>
+			</div>
+			<div>
+				<time>
+					<span class="clock">Agreement</span>
+				</time>
+				<div class="detail">
+					<div class="padblock"></div>
+					<div>
+						<span class="button-checkbox">
+							<button type="button" class="btn" data-color="info" tabindex="10">I Agree</button>
+							<input type="checkbox" class="hidden" name="agreement" required></input>
+							I Agree to the <a href="#" data-toggle="modal" data-target="#modal_term">Terms and Conditions</a> set out by this site, including our Cookie Use.
+						</span>
+					</div>
+					<div style="text-align:right;">
+						<button type="submit" class="btn btn-primary" tabindex="11">
+							<span class="fa fa-file-text-o"></span>Register
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+
+	<div class="modal fade" id="modal_term" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h4 class="modal-title" id="myModalLabel">Terms & Conditions</h4>
+				</div>
+				<div class="modal-body">
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.</p>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.</p>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.</p>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.</p>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.</p>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.</p>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">I Agree</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
