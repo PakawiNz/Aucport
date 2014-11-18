@@ -19,6 +19,7 @@ def validate(data,*constraints) :
 	else :
 		return errorList
 
+#------------------------------------------------------------------------------------------
 
 def V_is_in_DB(aclass):
 	def inner(data) :
@@ -64,5 +65,17 @@ def V_alphabet() :
 		return __re_validation(r'^[a-zA-Z]+$', data, "ERROR MESSAGE V_alphabet")
 	return inner
 
+def V_isEmail() :
+	def inner(data) :
+		return __re_validation(r'^[a-zA-Z]\w+@\w.\w$', data, "ERROR MESSAGE V_isEmail")
+	return inner
 
-validate("ABC@#$error_msg",V_numeric(),V_alphabet())
+def V_name() :
+	def inner(data) :
+		return __re_validation(r'^[a-zA-Z]\w+ ?\w+$', data, "ERROR MESSAGE V_name")
+	return inner
+
+def V_date() :
+	def inner(data) :
+		return 	
+	return

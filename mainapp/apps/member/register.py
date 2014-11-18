@@ -45,11 +45,19 @@ def register(request):
 	print 'agreement : ' + agreement
 
 	vresults = []
-	vresults.append(V.validate(email,V.V_is_unique(models.Member,'email')))
-	vresults.append(V.validate(password,V.V_is_unique(models.Member,'password')))
-	vresults.append(V.validate(first_name))
-	vresults.append(V.validate(last_name))
-	vresults.append(V.validate(display_name))
+	vresults.append(V.validate(email,
+		V.V_is_unique(models.Member,'email'),
+		V.V_isEmail(),))
+	vresults.append(V.validate(password),
+		V.V_len_more_than(8),)
+	vresults.append(V.validate(first_name,
+		V.V_alphabet(),))
+	vresults.append(V.validate(last_name,
+		V.V_alphabet(),))
+	vresults.append(V.validate(display_name,
+		V.V_is_unique(models.Member,'displayname'),
+		V.V_len_more_than(4),
+		V.V_name(),))
 	vresults.append(V.validate(birthdate))
 	vresults.append(V.validate(address))
 	vresults.append(V.validate(country,V.V_is_in_DB(models.Country)))

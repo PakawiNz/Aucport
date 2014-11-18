@@ -8,5 +8,4 @@ urlpatterns = patterns('',
     url(r'detail/', detail.main,name='detail'),
     url(r'editdetai/', editdetail.main,name='editdetail'),
     url(r'search/', search.main,name='search'),
-    url(r'searchlist/', searchlist.main,name='searchlist'),
 )
