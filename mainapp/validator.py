@@ -67,7 +67,8 @@ def V_alphabet() :
 
 def V_isEmail() :
 	def inner(data) :
-		return __re_validation(r'^[a-zA-Z]\w+@\w.\w$', data, "ERROR MESSAGE V_isEmail")
+		print data
+		return __re_validation(r'^[a-zA-Z]\w+@\w+\.\w+$', data, "ERROR MESSAGE V_isEmail")
 	return inner
 
 def V_name() :
@@ -78,4 +79,11 @@ def V_name() :
 def V_date() :
 	def inner(data) :
 		return 	
-	return
+	return inner
+
+def V_file_isJPG() :
+	def inner(data) :
+		if data._name.split('.')[-1].lower() != 'jpg' : return "ERROR MESSAGE V_file_isJPG"
+		if data.content_type.lower() != 'image/jpeg' : return "ERROR MESSAGE V_file_isJPG"
+		return True
+	return inner

@@ -18,8 +18,9 @@ def login(request):
 		return render(request,'common/invalid.html',{'content':'invalid username or password'})
 
 def logout(request):
-	if request.method != 'POST' : return render(request,'common/invalid.html')
 	request.session.clear()
+	context = {'content':"You have been logged out."}
+	return render(request,'common/success.html',context)
 
 def confirm(request):
 	if not request.GET : return render(request,'common/invalid.html')

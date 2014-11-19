@@ -8,7 +8,7 @@
 {% block body %}
 {% include 'common/topnavbar.html' %}
 <div class="container">
-	<form action="" method="POST">
+	<form action="" method="POST" enctype="multipart/form-data" >
 		{% csrf_token %}
 		<div class="mainblock">
 			<div>
@@ -39,27 +39,27 @@
 					<div class="padblock"></div>
 					<div class="input-group">
 						<span class="input-group-addon">First Name</span>
-						<input required name="first_name" id="first_name" placeholder="First Name" tabindex="4" type="text" class="form-control input">
+						<input required name="first_name" id="first_name" placeholder="First Name" tabindex="5" type="text" class="form-control input">
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon">Last Name</span>
-						<input required name="last_name" id="last_name" placeholder="Last Name" tabindex="5" type="text" class="form-control input">
+						<input required name="last_name" id="last_name" placeholder="Last Name" tabindex="6" type="text" class="form-control input">
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon">Display Name</span>
-						<input required name="display_name" id="display_name" placeholder="Display Name" tabindex="6" type="text" class="form-control input">
+						<input required name="display_name" id="display_name" placeholder="Display Name" tabindex="7" type="text" class="form-control input">
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon">Birthdate</span>
-						<input required name="birthdate" id="birthdate" placeholder="Birthdate" tabindex="6" type="date" class="form-control input">
+						<input required name="birthdate" id="birthdate" placeholder="Birthdate" tabindex="8" type="date" class="form-control input">
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon">Address</span>
-						<input required name="address" id="address" placeholder="Address" tabindex="7" type="text" class="form-control input">
+						<input required name="address" id="address" placeholder="Address" tabindex="9" type="text" class="form-control input">
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon">Country</span>
-						<select required name="country" id="country" placeholder="Country" tabindex="8" type="select" class="form-control input">
+						<select required name="country" id="country" placeholder="Country" tabindex="10" type="select" class="form-control input">
 						{% for country in countries %}
 						  <option value="{{country.id}}">{{country.name}}</option>
 						{% endfor %}
@@ -67,12 +67,22 @@
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon">Timezone</span>
-						<select required name="timezone" id="timezone" placeholder="Timezone" tabindex="9" type="select" class="form-control input">
+						<select required name="timezone" id="timezone" placeholder="Timezone" tabindex="11" type="select" class="form-control input">
 						{% for timezone in timezones %}
 						  <option value="{{timezone.id}}">{{timezone.name}}</option>
 						{% endfor %}
 						</select>
 					</div>
+				</div>
+			</div>
+			<div>
+				<time>
+					<span class="clock">Profile</span>
+				</time>
+				<div class="detail">
+					<div class="padblock"></div>
+					<input type="file" name="profilepic" id="profilepic" placeholder="Profile Picture" tabindex="4">
+					{{uploadform}}
 				</div>
 			</div>
 			<div>
@@ -83,13 +93,13 @@
 					<div class="padblock"></div>
 					<div>
 						<span class="button-checkbox">
-							<button type="button" class="btn" data-color="info" tabindex="10">I Agree</button>
+							<button type="button" class="btn" data-color="info" tabindex="12">I Agree</button>
 							<input type="checkbox" class="hidden" name="agreement" required></input>
 							I Agree to the <a href="#" data-toggle="modal" data-target="#modal_term">Terms and Conditions</a> set out by this site, including our Cookie Use.
 						</span>
 					</div>
 					<div style="text-align:right;">
-						<button type="submit" class="btn btn-primary" tabindex="11">
+						<button type="submit" class="btn btn-primary" tabindex="13">
 							<span class="fa fa-file-text-o"></span>Register
 						</button>
 					</div>
@@ -98,7 +108,7 @@
 		</div>
 	</form>
 
-	<div class="modal fade" id="modal_term" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="modal_term" tabindex141" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">

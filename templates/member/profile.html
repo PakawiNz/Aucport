@@ -13,16 +13,24 @@
             <div class="row coralbg white">
                 <div class="col-md-6 no-pad">
                     <div class="user-pad">
-                        <h3>Welcome back, {{member.firstname}}</h3>
-                        <h4 class="white"><i class="fa fa-check-circle-o"></i> San Antonio, TX</h4>
-                        <h4 class="white"><i class="fa fa-twitter"></i> CoolesOCool</h4>
-                        <button type="button" class="btn btn-labeled btn-info" href="#">
-                            <span class="btn-label"><i class="fa fa-pencil"></i></span>Update</button>
+                        <h3>{{member.displayname}}</h3>
+                        <!-- <h4 class="white"><i class="fa fa-check-circle-o"></i> San Antonio, TX</h4> -->
+                        <!-- <h4 class="white"><i class="fa fa-twitter"></i> CoolesOCool</h4> -->
+                        {% if isOwner %}
+                        <a type="button" class="btn btn-labeled btn-info" href="/member/editprofile/">
+                            <span class="btn-label"><i class="fa fa-pencil"></i></span>Update
+                        </a>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="col-md-6 no-pad">
                     <div class="user-image">
-                        <img src="https://farm7.staticflickr.com/6163/6195546981_200e87ddaf_b.jpg" class="img-responsive thumbnail">
+                        {% if member.picture %}
+                        <img src="{{member.picture.url}}" class="img-responsive thumbnail">
+                        {% else %}
+                        <img src="http://www.gravatar.com/avatar/{{member.confirmation}}.jpg?s=512&r=x&d=identicon" 
+                            class="img-responsive thumbnail">
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -73,8 +81,9 @@
                         <h4><i class="fa fa-paper-plane-o coral"></i> <a>Jenkins</a> buy your <a>Devine Rapier</a></h4>
                     </li>
                     <li>
-                        <button type="button" class="btn btn-labeled btn-success" href="#">
-                            <span class="btn-label"><i class="fa fa-bell-o"></i></span>View all activity</button>
+                        <a type="button" class="btn btn-labeled btn-success" href="#">
+                            <span class="btn-label"><i class="fa fa-bell-o"></i></span>View all activity
+                        </a>
                     </li>
                 </ul>
             </div>

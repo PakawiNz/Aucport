@@ -1,4 +1,5 @@
 from django.db import models
+import hashlib
 
 # Create your models here.
 
@@ -14,6 +15,10 @@ class Timezone(models.Model) :
 		return self.name
 
 class Member(models.Model) :
+	def content_file_name(instance, filename):
+		filename = hashlib.sha224(instance.email).hexdigest()
+		return '/'.join(['profilepic', filename + '.jpg'])
+
 	email = models.CharField(max_length=50,unique=True)
 	password = models.CharField(max_length=50)
 	firstname = models.CharField(max_length=50)
@@ -23,8 +28,9 @@ class Member(models.Model) :
 	address = models.CharField(max_length=50)
 	country = models.ForeignKey(Country)
 	timezone = models.ForeignKey(Timezone)
-	confirmation = models.CharField(max_length=50)
+	confirmation = models.CharField(max_length=100)
 	isConfirmed = models.BooleanField(default=False)
+	picture = models.FileField(upload_to=content_file_name,null=True)
 
 class Product(models.Model) :
 	STATE_PENDING = 1

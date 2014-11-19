@@ -1,8 +1,8 @@
-from django.shortcuts import render,redirect
-from mainapp import models
+from django.shortcuts import render,render_to_response,redirect
+from mainapp import models,common
 
 def invalid() :
-	return render(request,'common/invalid.html',{'content':'No Member Information'})
+	return render_to_response('common/invalid.html',{'content':'No Member Information'})
 
 def main(request):
 	if not request.GET : 
@@ -24,5 +24,7 @@ def main(request):
 		'buy':models.Transaction.objects.filter(buyer=member).count(),
 		'sell':models.Transaction.objects.filter(product__in=models.Product.objects.filter(owner=member)).count(),
 		'liked':0,
+		'isOwner':request.session.get('member') == member.id,
 	}
+	common.gencontext(request, context)
 	return render(request,'member/profile.html',context)

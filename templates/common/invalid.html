@@ -23,6 +23,13 @@
 						Restricted URL Location
 					{% endif %}
 				</p>
+				{% if errorList %}
+				<li>
+					{% for error in errorList %}
+					<ul>{{error}}</ul>
+					{% endfor %}
+				</li>
+				{% endif %}
 			</div>
 		</div>
 	</div>
