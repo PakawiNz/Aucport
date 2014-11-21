@@ -6,6 +6,7 @@ import datetime
 # Create your models here.
 class Country(models.Model) :
 	name = fields.CharField(max_length=50)
+
 	def __unicode__(self):
 		return self.name
 
@@ -30,6 +31,13 @@ class Member(models.Model) :
 	isConfirmed = models.BooleanField(default=False)
 	picture = models.ImageField(upload_to=fields.member_file_name,null=True)
 
+	def __unicode__(self):
+		return self.email
+
+class Category(models.Model) :
+	name = fields.CharField(max_length=80)
+	parent = models.ForeignKey('self',null=True,blank=True,related_name="children")
+
 class Product(models.Model) :
 
 	STATE_PENDING = 1
@@ -46,29 +54,31 @@ class Product(models.Model) :
 		(STATE_SOLDOUT,'soldout'),
 		(STATE_ABANDONED,'abandoned'),
 	)
-	owner = models.ForeignKey(Member)
-	netPrice = models.FloatField()
+
 	state = models.IntegerField(choices=__state)
+	category = models.ForeignKey(Category)
+	owner = models.ForeignKey(Member)
+	
+	name = models.CharField(max_length=50)
+	amount = models.CharField(max_length=50)
+	
+	netPrice = models.FloatField()
 	expired = models.DateTimeField()
-	picture1 = models.ImageField(upload_to=fields.product_file_name,null=True)
-	picture2 = models.ImageField(upload_to=fields.product_file_name,null=True)
-	picture3 = models.ImageField(upload_to=fields.product_file_name,null=True)
-	picture4 = models.ImageField(upload_to=fields.product_file_name,null=True)
-	picture5 = models.ImageField(upload_to=fields.product_file_name,null=True)
+	picture1 = models.ImageField(upload_to=fields.product_file_name,null=True,blank=True)
+	picture2 = models.ImageField(upload_to=fields.product_file_name,null=True,blank=True)
+	picture3 = models.ImageField(upload_to=fields.product_file_name,null=True,blank=True)
+	picture4 = models.ImageField(upload_to=fields.product_file_name,null=True,blank=True)
+	picture5 = models.ImageField(upload_to=fields.product_file_name,null=True,blank=True)
 
-	# product_name
-	# product_brand
-	# product_version
-	# product_capacity
-	# product_properties
-	# product_dimension
-	# product_amount
-	# product_defection
-	# product_condition
-
-	# selling_condition
-	# shipping_condition
-	# increasing_price
+	brand = models.CharField(max_length=50,null=True,blank=True)
+	version = models.CharField(max_length=50,null=True,blank=True)
+	capacity = models.CharField(max_length=50,null=True,blank=True)
+	properties = models.CharField(max_length=50,null=True,blank=True)
+	dimension = models.CharField(max_length=50,null=True,blank=True)
+	defection = models.CharField(max_length=50,null=True,blank=True)
+	product_condition = models.CharField(max_length=50,null=True,blank=True)
+	selling_condition = models.CharField(max_length=50,null=True,blank=True)
+	shipping_condition = models.CharField(max_length=50,null=True,blank=True)
 
 class Auction(models.Model) :
 	product = models.ForeignKey(Product)

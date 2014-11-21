@@ -15,6 +15,10 @@ class TimezoneAdmin(admin.ModelAdmin) :
 class MemberAdmin(admin.ModelAdmin) :
 	list_display = ('email','firstname','lastname','displayname','birthdate','address','country','timezone','isConfirmed')
 
+@admin.register(models.Category)
+class CategoryAdmin(admin.ModelAdmin) :
+	list_display = ('name',)
+
 @admin.register(models.Product)
 class ProductAdmin(admin.ModelAdmin) :
 	list_display = ('owner','netPrice','state',)
