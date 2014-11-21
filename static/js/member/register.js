@@ -1,4 +1,10 @@
 $(function () {
+    $('#birthdate').datetimepicker({
+        pickTime: false,
+        maxDate:  new Date(),
+        useStrict: true
+    });
+
     $('.button-checkbox').each(function () {
 
         // Settings

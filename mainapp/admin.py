@@ -31,10 +31,6 @@ class TransactionAdmin(admin.ModelAdmin) :
 class FeedbackAdmin(admin.ModelAdmin) :
 	list_display = ('transaction',)
 
-@admin.register(models.Comment)
-class CommentAdmin(admin.ModelAdmin) :
-	list_display = ('product',)
-
 @admin.register(models.CreditCard)
 class CreditCardAdmin(admin.ModelAdmin) :
 	list_display = ('owner',)

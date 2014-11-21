@@ -49,9 +49,12 @@
 						<span class="input-group-addon">Display Name</span>
 						<input required name="display_name" id="display_name" placeholder="Display Name" tabindex="7" type="text" class="form-control input">
 					</div>
-					<div class="input-group">
+					<div class="input-group" id="datetimepicker1">
 						<span class="input-group-addon">Birthdate</span>
-						<input required name="birthdate" id="birthdate" placeholder="Birthdate" tabindex="8" type="date" class="form-control input">
+						<input required name="birthdate" id="birthdate" placeholder="Birthdate" tabindex="8" type="date" 
+							class="form-control input" data-date-format="DD MMM YYYY"
+							style="background-color:white; cursor: text;" readonly/>
+						<span class="input-group-addon" style="width:0px !important;"><span class="glyphicon glyphicon-calendar"></span></span>
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon">Address</span>

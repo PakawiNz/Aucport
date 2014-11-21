@@ -1,3 +1,5 @@
+from django.core.mail import send_mail
+from django.conf import settings
 from mainapp import models
 
 def gencontext(request,context):
@@ -11,3 +13,6 @@ def gencontext(request,context):
 	member = member[0]
 
 	context['member'] = member
+
+def sendmail(title,content,receipants):
+	send_mail(title, content, settings.EMAIL_HOST_USER, receipants)

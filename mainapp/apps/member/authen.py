@@ -1,7 +1,6 @@
 from django.shortcuts import render,redirect
 from django.core.mail import send_mail
 from mainapp import models
-from mainapp import validator as V
 
 def login(request):
 	if not request.POST : return render(request,'common/invalid.html')

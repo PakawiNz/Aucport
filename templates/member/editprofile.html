@@ -6,7 +6,7 @@
 <script type="text/javascript" src="/static/js/member/editprofile.js"></script>
 <style type="text/css">
 	span.input-group-addon {
-		width: 140px !important;
+		width: 120px !important;
 	}
 </style>
 {% endblock %}
@@ -27,15 +27,15 @@
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon">Old Password</span>
-						<input name="o_password" id="o_password"  placeholder="Password" tabindex="2" type="password" class="form-control input" value="">
+						<input name="o_password" id="o_password"  placeholder="Old Password" tabindex="2" type="password" class="form-control input" value="">
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon">New Password</span>
-						<input name="n_password" id="n_password"  placeholder="Password" tabindex="3" type="password" class="form-control input" value="">
+						<input name="n_password" id="n_password"  placeholder="New Password" tabindex="3" type="password" class="form-control input" value="">
 					</div>
 					<div class="input-group">
-						<span class="input-group-addon">Confirm Password</span>
-						<input name="c_password" id="c_password"  placeholder="Password" tabindex="4" type="password" class="form-control input" value="">
+						<span class="input-group-addon">Confirm</span>
+						<input name="c_password" id="c_password"  placeholder="Confirm Password" tabindex="4" type="password" class="form-control input" value="">
 					</div>
 				</div>
 			</div>
@@ -57,9 +57,12 @@
 						<span class="input-group-addon">Display Name</span>
 						<input name="display_name" id="display_name" placeholder="Display Name" tabindex="7" type="text" class="form-control input" value="{{member.displayname}}">
 					</div>
-					<div class="input-group">
+					<div class="input-group" id="datetimepicker1">
 						<span class="input-group-addon">Birthdate</span>
-						<input name="birthdate" id="birthdate" placeholder="Birthdate" tabindex="8" type="date" class="form-control input" value="{{member.birthdate}}">
+						<input required name="birthdate" id="birthdate" placeholder="Birthdate" tabindex="8" type="date" 
+							class="form-control input" data-date-format="DD MMM YYYY"
+							style="background-color:white; cursor: text;" readonly value="{{member.birthdate|date:"d b Y"}}"/>
+						<span class="input-group-addon" style="width:0px !important;"><span class="glyphicon glyphicon-calendar"></span></span>
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon">Address</span>
@@ -81,6 +84,16 @@
 							{% endfor %}
 						</select>
 					</div>
+				</div>
+			</div>
+			<div>
+				<time>
+					<span class="clock">Profile</span>
+				</time>
+				<div class="detail">
+					<div class="padblock"></div>
+					<input type="file" name="profilepic" id="profilepic" placeholder="Profile Picture" tabindex="4">
+					{{uploadform}}
 				</div>
 			</div>
 			<button type="button" class="btn btn-primary" type="submit" style="float:right; width:300px" tabindex="12">

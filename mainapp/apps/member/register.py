@@ -1,8 +1,7 @@
 from django.shortcuts import render
-from django.core.mail import send_mail
-from mainapp import models,common,forms
-from mainapp import validator as V
+from mainapp import models,common
 import traceback
+import datetime
 import hashlib
 
 def main(request):
@@ -62,11 +61,10 @@ def register(request):
 			for error in vresult : errorList.append(error)
 
 	if isCompleted :
+		birthdate = datetime.datetime.strptime(birthdate,"%d %b %Y")
 		country=models.Country.objects.get(id=country)
 		timezone=models.Timezone.objects.get(id=timezone)
 		confirm = hashlib.sha224(email+password).hexdigest()
-
-		picture
 
 		member = models.Member(
 			email=email,password=password,
@@ -78,7 +76,7 @@ def register(request):
 		member.save()
 
 		confirm_url = "http://127.0.0.1:8000/member/confirm?email=" + email + "&confirm=" + confirm
-		# send_mail("Aucport Email Confirmation", "Please Click This Link : " + confirm_url, "system@aucport.com", [email])
+		# common.sendmail("Aucport : Email Confirmation", "Please Click This Link : " + confirm_url, [email])
 
 	if isCompleted :
 		context = { 'content':

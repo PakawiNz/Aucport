@@ -1,4 +1,4 @@
-import re
+import re,datetime
 
 def __re_validation(pattern,data,error_msg) :
 	if re.match(pattern, data) is not None :
@@ -78,7 +78,12 @@ def V_name() :
 
 def V_date() :
 	def inner(data) :
-		return 	
+		try : 
+			datetime.datetime.strptime(data,"%d %b %Y")
+			return True
+		except :
+			return "ERROR MESSAGE V_date"
+
 	return inner
 
 def V_file_isJPG() :

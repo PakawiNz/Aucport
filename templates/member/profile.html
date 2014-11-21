@@ -13,7 +13,7 @@
             <div class="row coralbg white">
                 <div class="col-md-6 no-pad">
                     <div class="user-pad">
-                        <h3>{{member.displayname}}</h3>
+                        <h3>{{showmember.displayname}}</h3>
                         <!-- <h4 class="white"><i class="fa fa-check-circle-o"></i> San Antonio, TX</h4> -->
                         <!-- <h4 class="white"><i class="fa fa-twitter"></i> CoolesOCool</h4> -->
                         {% if isOwner %}
@@ -25,10 +25,10 @@
                 </div>
                 <div class="col-md-6 no-pad">
                     <div class="user-image">
-                        {% if member.picture %}
-                        <img src="{{member.picture.url}}" class="img-responsive thumbnail">
+                        {% if showmember.picture %}
+                        <img src="{{showmember.picture.url}}" class="img-responsive thumbnail">
                         {% else %}
-                        <img src="http://www.gravatar.com/avatar/{{member.confirmation}}.jpg?s=512&r=x&d=identicon" 
+                        <img src="http://www.gravatar.com/avatar/{{showmember.confirmation}}.jpg?s=512&r=x&d=identicon" 
                             class="img-responsive thumbnail">
                         {% endif %}
                     </div>
