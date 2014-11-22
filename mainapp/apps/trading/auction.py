@@ -1,6 +1,8 @@
 from django.shortcuts import render
+from mainapp import models,common
 import datetime
 
+@common.gen_view('Auction Watchlist','trading/auction.html',memberOnly=True)
 def main(request):
 	auctions = [{
 		'product': "Battle Fury",
@@ -25,8 +27,7 @@ def main(request):
 		auction['endmonth'] = auction['endtime'].strftime('%b')
 
 	context = {
-		'title': 'Auction watchlist',
 		'today':datetime.datetime.now(),
 		'auctions':auctions,
 	}
-	return render(request,'trading/auction.html',context)
+	return context

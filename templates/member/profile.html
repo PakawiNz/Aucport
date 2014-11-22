@@ -14,7 +14,7 @@
             <div class="row coralbg white">
                 <div class="col-md-6 no-pad">
                     <div class="user-pad">
-                        <h3>{{showmember.displayname}}</h3>
+                        <h3>{{member.displayname}}</h3>
                         <!-- <h4 class="white"><i class="fa fa-check-circle-o"></i> San Antonio, TX</h4> -->
                         <!-- <h4 class="white"><i class="fa fa-twitter"></i> CoolesOCool</h4> -->
                         {% if isOwner %}
@@ -26,10 +26,10 @@
                 </div>
                 <div class="col-md-6 no-pad">
                     <div class="user-image">
-                        {% if showmember.picture %}
-                        <img src="{{showmember.picture.url}}" class="img-responsive thumbnail">
+                        {% if member.picture %}
+                        <img src="{{member.picture.url}}" class="img-responsive thumbnail">
                         {% else %}
-                        <img src="http://www.gravatar.com/avatar/{{showmember.confirmation}}.jpg?s=512&r=x&d=identicon" 
+                        <img src="http://www.gravatar.com/avatar/{{member.confirmation}}.jpg?s=512&r=x&d=identicon" 
                             class="img-responsive thumbnail">
                         {% endif %}
                     </div>
@@ -172,87 +172,9 @@
     <div class="row">
         <div class="col-xs-12 col-sm-offset-2 col-sm-8">
             <div class="mainblock">
-                
-                <div>
-                    <img src="http://cdn.dota2.com/apps/dota2/images/items/bfury_lg.png"/>
-                    <div class="info">
-                        <h2 class="title">Battle Fury</h2>
-                        <p class="desc">Nov. 3, 2014, 8:30 a.m.</p>
-                        <ul style="width:50%;">
-                            <li style="width:25%;">29.99 <span class="fa fa-money"></span></li>                         
-                        </ul>
-
-                    </div>
-                    <div class="social">
-                        <ul>
-                            <li class="facebook"><a href="#facebook"><span class="fa fa-facebook"></span></a></li>
-                            <li class="twitter"><a href="#twitter"><span class="fa fa-twitter"></span></a></li>
-                            <li class="google-plus"><a href="#google-plus"><span class="fa fa-google-plus"></span></a></li>
-
-                        </ul>
-                    </div>
-                </div>
-                
-                <div>
-                    <img src="http://cdn.dota2.com/apps/dota2/images/items/ultimate_scepter_lg.png"/>
-                    <div class="info">
-                        <h2 class="title">Aghanim&#39;s Sceptor</h2>
-                        <p class="desc">Nov. 4, 2014, 8:30 a.m.</p>
-                        <ul style="width:50%;">
-                            <li style="width:25%;">29.99 <span class="fa fa-money"></span></li>                         
-                        </ul>
-
-                    </div>
-                    <div class="social">
-                        <ul>
-                            <li class="facebook"><a href="#facebook"><span class="fa fa-facebook"></span></a></li>
-                            <li class="twitter"><a href="#twitter"><span class="fa fa-twitter"></span></a></li>
-                            <li class="google-plus"><a href="#google-plus"><span class="fa fa-google-plus"></span></a></li>
-
-                        </ul>
-                    </div>
-                </div>
-                
-                <div>
-                    <img src="http://cdn.dota2.com/apps/dota2/images/items/travel_boots_lg.png"/>
-                    <div class="info">
-                        <h2 class="title">Boot of travel</h2>
-                        <p class="desc">Nov. 4, 2014, 8:31 a.m.</p>
-                        <ul style="width:50%;">
-                            <li style="width:25%;">29.99 <span class="fa fa-money"></span></li>                         
-                        </ul>
-
-                    </div>
-                    <div class="social">
-                        <ul>
-                            <li class="facebook"><a href="#facebook"><span class="fa fa-facebook"></span></a></li>
-                            <li class="twitter"><a href="#twitter"><span class="fa fa-twitter"></span></a></li>
-                            <li class="google-plus"><a href="#google-plus"><span class="fa fa-google-plus"></span></a></li>
-
-                        </ul>
-                    </div>
-                </div>
-                
-                <div>
-                    <img src="http://cdn.dota2.com/apps/dota2/images/items/desolator_lg.png"/>
-                    <div class="info">
-                        <h2 class="title">Desolator</h2>
-                        <p class="desc">Nov. 5, 2014, 8:30 a.m.</p>
-                        <ul style="width:50%;">
-                            <li style="width:25%;">29.99 <span class="fa fa-money"></span></li>                         
-                        </ul>
-
-                    </div>
-                    <div class="social">
-                        <ul>
-                            <li class="facebook"><a href="#facebook"><span class="fa fa-facebook"></span></a></li>
-                            <li class="twitter"><a href="#twitter"><span class="fa fa-twitter"></span></a></li>
-                            <li class="google-plus"><a href="#google-plus"><span class="fa fa-google-plus"></span></a></li>
-
-                        </ul>
-                    </div>
-                </div>
-                
+                {% for product in products %}
+                {% include 'product/productblock.html' with product=product %}
+                {% endfor %}
             </div>
         </div>
     </div>
