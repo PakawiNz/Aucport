@@ -8,16 +8,16 @@ import mainapp.utils.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('mainapp', '0018_auto_20141121_0858'),
+        ('mainapp', '0017_auto_20141121_1315'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Product_Category',
+            name='Category',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', mainapp.utils.fields.CharField(max_length=80)),
-                ('parent', models.ForeignKey(related_name='children', blank=True, to='mainapp.Product_Category', null=True)),
+                ('parent', models.ForeignKey(related_name=b'children', blank=True, to='mainapp.Category', null=True)),
             ],
             options={
             },
@@ -44,7 +44,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='product',
             name='category',
-            field=models.ForeignKey(default=0, to='mainapp.Product_Category'),
+            field=models.ForeignKey(default=0, to='mainapp.Category'),
             preserve_default=False,
         ),
         migrations.AddField(
@@ -94,5 +94,30 @@ class Migration(migrations.Migration):
             name='version',
             field=models.CharField(max_length=50, null=True, blank=True),
             preserve_default=True,
+        ),
+        migrations.AlterField(
+            model_name='product',
+            name='picture1',
+            field=models.ImageField(null=True, upload_to=mainapp.utils.fields.product_file_name, blank=True),
+        ),
+        migrations.AlterField(
+            model_name='product',
+            name='picture2',
+            field=models.ImageField(null=True, upload_to=mainapp.utils.fields.product_file_name, blank=True),
+        ),
+        migrations.AlterField(
+            model_name='product',
+            name='picture3',
+            field=models.ImageField(null=True, upload_to=mainapp.utils.fields.product_file_name, blank=True),
+        ),
+        migrations.AlterField(
+            model_name='product',
+            name='picture4',
+            field=models.ImageField(null=True, upload_to=mainapp.utils.fields.product_file_name, blank=True),
+        ),
+        migrations.AlterField(
+            model_name='product',
+            name='picture5',
+            field=models.ImageField(null=True, upload_to=mainapp.utils.fields.product_file_name, blank=True),
         ),
     ]
