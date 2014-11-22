@@ -1,6 +1,6 @@
 from django.shortcuts import render
 import datetime
-from mainapp import models
+from mainapp import models, common
 
 
 def main(request):
@@ -44,105 +44,64 @@ def bid(request) :
 	requester_list = models.Member.objects.filter(id=requester)
 	product_list = models.Product.objects.filter(id=request_product)
 
-	# auction_new = models.Auction.objects.filter(id)
-
-
-
+	requester = requester_list[0]
 
 	if product_list:
 		product = product_list[0]
-		requester = requester_list[0]
-		auction = product.highest_auction
+		auction_old = product.highest_auction
+		auction_new = common.getone(models.Auction,bidder=requester, product=product)
+		if not auction_new:
+			models.Auction(product=request_product,
+				bidder=requester,
+				ceiling = formstate.ceiling,
+				increase = formstate.increase,
+				current = formstate.amount,
+				isAuto = formstate.isAuto,
+				)
 
-		if formstate.amount != 0 :# the bid request is in manual mode
-			if not auction.isAuto :# The current highest bidder is manual bidding
-				if formstate.amount > auction.current : # challenger wins
-					auction.bidder = requester
-					# auction.ceiling
-					# auction.increase
-					auction.current = formstate.increase
-					auction.isAuto = False
-					# auction.notify
-					# auction.lastbid
+		winner = 0 # 0: old bidder, 1: new bidder
 
-				elif formstate.amount <= auction.current : # old bidder wins
-					# do nothing
-					pass
-			else auction.isAuto : # The current highest bidder is auto bidding
-				if formstate.amount > auction.ceiling : # challenger wins
-					auction.bidder = requester
-					# auction.ceiling
-					# auction.increase
-					auction.current = formstate.increase
-					auction.isAuto = False
-					# auction.notify
-					# auction.lastbid
-				elif formstate.amount <= auction.ceiling : # old bidder wins
-					while auction.current <= formstate.amount:
-						auction.current += auction.increase
-						pass
+		if not auction_new.isAuto : # the bid request is in manual mode
+			if not auction_old.isAuto : # The current highest bidder is manual bidding
+				if auction_new.current > auction_old.current : # challenger wins
+					winner = 1
 
-		elif formstate.amount == 0 # the bid request is in auto mode
-			if not auction.isAuto # The current highest bidder is manual bidding
-				if formstate.ceiling > auction.current : # challenger wins
-					auction.bidder = requester
-					auction.ceiling = formstate.ceiling
-					auction.increase = formstate.increase
-					auction.current += formstate.increase
-					auction.isAuto = True
-					# auction.notify
-					# auction.lastbid
-				elif formstate.ceiling <= auction.current : # old bidder wins
-					# do nothing
-					pass
-			else auction.isAuto # The current highest bidder is auto bidding
+				elif auction_new.current <= auction_old.current : # old bidder wins
+					winner = 0
+
+			else auction_old.isAuto : # The current highest bidder is auto bidding
+				if auction_new.current > auction_old.ceiling : # challenger wins
+					winner = 1
+
+				elif auction_new.current <= auction_old.ceiling : # old bidder wins
+					while auction_old.current <= auction_new.current:
+						auction_old.current += auction_old.increase
+						winner = 0
+
+		elif auction_new.current == 0 # the bid request is in auto mode
+			if not auction_old.isAuto # The current highest bidder is manual bidding
+				if auction_new.ceiling > auction_old.current : # challenger wins
+					winner = 1
+					auction_new.current = auction_old.current+auction_new.increase
+				elif auction_new.ceiling <= auction_old.current : # old bidder wins
+					winner = 0
+			else auction_old.isAuto # The current highest bidder is auto bidding
 				# Fight to determine winner
-				bidder_turn = 0 # 0 = challenger, 1 =  old bidder
-				highest_bidder = auction.bidder
-				highest_ceiling = auction.ceiling
-				highest_increase = auction.increase
-				highest_current = auction.current
-				while auction.ceiling > highest_current and formstate.ceiling > highest_current:
-					if bidder_turn == 0 :
-						highest_bidder = requester
-						highest_ceiling = formstate.ceiling
-						highest_increase = formstate.increase
-						highest_current += formstate.increase
-						# auction.isAuto
-						# auction.notify
-						# auction.lastbid
-						bidder_turn = 1
-					else :
-						highest_bidder = auction.bidder
-						highest_ceiling = auction.ceiling
-						highest_increase = auction.increase
-						highest_current += auction.increase
-						# auction.isAuto
-						# auction.notify
-						# auction.lastbid
+				bidder_turn = 1 # 0 = old bidder, 1 = challenger
+				while True:
+					if bidder_turn == 1 and auction_new.ceiling > auction_old.current:
+						winner = 1
+						auction_new.current = auction_old.current + auction_new.increase
 						bidder_turn = 0
-					pass
-		
-				auction.bidder = highest_bidder
-				auction.ceiling = highest_ceiling
-				auction.increase = highest_increase
-				auction.current = highest_current
+					elif bidder_turn == 0 and auction_old.ceiling > auction_new.current:
+						winner = 0
+						auction_old.current = auction_new.current + auction_old.increase
+						bidder_turn = 1
+					else
 
 
-	if formstate.get('')
-	if amount == 0 :
-		if self.product.netPrice < self.ceiling :
-			self.current = min([self.current + self.increase, self.ceiling])
-			self.product.netPrice = self.current
-			self.lastbid = datetime.datetime.now()
-		else :
-			self.isAuto = False
-			if self.notify :
-				common.sendmail("Aucport : Auction Notificaton", "", [self.bidder.email])
-	else :
-		if self.product.netPrice < amount :
-			self.current = amount
-			self.product.netPrice = self.current
-			self.lastbid = datetime.datetime.now()
-		else :
-			return False
+		if winner == 0
+			product.highest_auction = auction_old
+		else
+			product.highest_auction = auction_new
+					
