@@ -13,7 +13,19 @@
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
 				<li id="nav1"><a href="#">Home</a></li>
-				<li id="nav2"><a href="#">Product</a></li>
+				<li id="nav2" class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Menu <span class="caret"></span></a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="{% url 'detail' %}">Detail</a></li>
+						<li><a href="{% url 'editdetail' %}">Edit Detail</a></li>
+						<li><a href="{% url 'search' %}">Search</a></li>
+						<li><a href="{% url 'editprofile' %}">Edit Profile</a></li>
+						<li><a href="{% url 'profile' %}">Profile</a></li>
+						<li><a href="{% url 'register' %}">Register</a></li>
+						<li><a href="{% url 'auction' %}">Auction</a></li>
+						<li><a href="{% url 'payment' %}">Payment</a></li>
+					</ul>
+				</li>
 				<li id="nav3" class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Search <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
@@ -52,11 +64,11 @@
 											<label class="sr-only" for="exampleInputPassword2">Password</label>
 											<input type="password" name="password" class="form-control" id="exampleInputPassword2" placeholder="Password" required>
 										</div>
-										<div class="checkbox">
+										<!-- <div class="checkbox">
 											<label>
 												<input type="checkbox"> Remember me
 											</label>
-										</div>
+										</div> -->
 										<div class="form-group">
 											<button type="submit" class="btn btn-success btn-block">Sign in</button>
 										</div>

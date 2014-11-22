@@ -12,6 +12,7 @@ def main(request):
 def search(request) :
 
 	context = {
+		'products':models.Product.objects.all(),
 		'title':'Product List',
 		'subtitle':'with keyword blah blah',
 	}

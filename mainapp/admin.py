@@ -21,7 +21,7 @@ class CategoryAdmin(admin.ModelAdmin) :
 
 @admin.register(models.Product)
 class ProductAdmin(admin.ModelAdmin) :
-	list_display = ('owner','netPrice','state',)
+	list_display = ('name','owner','netPrice','state',)
 
 @admin.register(models.Auction)
 class AuctionAdmin(admin.ModelAdmin) :

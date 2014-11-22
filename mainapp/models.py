@@ -38,6 +38,9 @@ class Category(models.Model) :
 	name = fields.CharField(max_length=80)
 	parent = models.ForeignKey('self',null=True,blank=True,related_name="children")
 
+	def __unicode__(self):
+		return self.name
+
 class Product(models.Model) :
 
 	STATE_PENDING = 1
@@ -70,15 +73,15 @@ class Product(models.Model) :
 	picture4 = models.ImageField(upload_to=fields.product_file_name,null=True,blank=True)
 	picture5 = models.ImageField(upload_to=fields.product_file_name,null=True,blank=True)
 
+	properties = models.TextField(null=True,blank=True)
 	brand = models.CharField(max_length=50,null=True,blank=True)
 	version = models.CharField(max_length=50,null=True,blank=True)
 	capacity = models.CharField(max_length=50,null=True,blank=True)
-	properties = models.CharField(max_length=50,null=True,blank=True)
 	dimension = models.CharField(max_length=50,null=True,blank=True)
 	defection = models.CharField(max_length=50,null=True,blank=True)
-	product_condition = models.CharField(max_length=50,null=True,blank=True)
-	selling_condition = models.CharField(max_length=50,null=True,blank=True)
-	shipping_condition = models.CharField(max_length=50,null=True,blank=True)
+	product_condition = models.TextField(null=True,blank=True)
+	selling_condition = models.TextField(null=True,blank=True)
+	shipping_condition = models.TextField(null=True,blank=True)
 
 class Auction(models.Model) :
 	product = models.ForeignKey(Product)
