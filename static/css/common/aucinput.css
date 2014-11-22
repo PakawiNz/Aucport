@@ -42,6 +42,14 @@ span.input-group-addon {
 	width: 110px !important;
 }
 
+div.errorblock {
+	display:table; 
+	width:100%; 
+	word-wrap: break-all;
+	table-layout:fixed;
+	text-align: left;
+}
+
 @media (min-width: 768px) {
 	.mainblock {
 		padding-left: 10%;

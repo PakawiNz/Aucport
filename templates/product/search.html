@@ -11,59 +11,60 @@
 <script type="text/javascript" src="/static/js/product/search.js"></script>
 {% endblock %}
 {% block body %}
-	{% include 'common/topnavbar.html' %}
-	<div class="container">
-		<form method="POST" action="{% url 'dosearch' %}">
-		{% csrf_token %}
-		<div class="mainblock">
-			<div>
-				<time>
-				<span class="clock">Detail</span>
-				</time>
-				<div class="padblock"></div>
-				<div class="detail">
-					<div class="input-group">
-						<span class="input-group-addon">Product name</span>
-						<input name="name" id="name" placeholder="Name" tabindex="1" type="text" class="form-control input">
-					</div>
-					<div class="input-group">
-						<span class="input-group-addon">Brand</span>
-						<input name="brand" id="brand" placeholder="Brand" tabindex="2" type="text" class="form-control input">
-					</div>
-					<div class="input-group">
-						<span class="input-group-addon">Catagory</span>
-						<select name="category" id="category" placeholder="Catagory" tabindex="3" type="select" class="form-control input">
-							{% for category in categorys %}
-							<option value="{{category.id}}">{{category.name}}</option>
-							{% endfor %}
-						</select>
-					</div>
-					<div class="input-group">
-						<span class="input-group-addon">Lowest Price</span>
-						<input name="lprice" id="lprice" placeholder="Lowest Price" tabindex="2" type="text" class="form-control input">
-					</div>
-					<div class="input-group">
-						<span class="input-group-addon">Higest Price</span>
-						<input name="hprice" id="hprice" placeholder="Higest Price" tabindex="2" type="text" class="form-control input">
-					</div>
-					<div class="input-group">
-						<span class="input-group-addon">Auction Start</span>
-						<input name="start" id="start" placeholder="Start Date" tabindex="6" type="date" class="form-control input">
-					</div>
-					<div class="input-group">
-						<span class="input-group-addon">Auction End</span>
-						<input name="end" id="end" placeholder="End Date" tabindex="6" type="date" class="form-control input">
-					</div>
-					<div class="detail" style="height:55px;">
-						<br>
-						<button type="submit" class="btn btn-primary" type="submit" style="float:right; width:300px" tabindex="8">
-						<span class="fa fa-search"></span>
-						Search
-						</button>
-					</div>
+{% include 'common/topnavbar.html' %}
+{% include 'common/topbreadcrumb.html'%}
+<div class="container">
+	<form method="POST" action="{% url 'dosearch' %}">
+	{% csrf_token %}
+	<div class="mainblock">
+		<div>
+			<time>
+			<span class="clock">Detail</span>
+			</time>
+			<div class="padblock"></div>
+			<div class="detail">
+				<div class="input-group">
+					<span class="input-group-addon">Product name</span>
+					<input name="name" id="name" placeholder="Name" tabindex="1" type="text" class="form-control input">
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon">Brand</span>
+					<input name="brand" id="brand" placeholder="Brand" tabindex="2" type="text" class="form-control input">
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon">Catagory</span>
+					<select name="category" id="category" placeholder="Catagory" tabindex="3" type="select" class="form-control input">
+						{% for category in categorys %}
+						<option value="{{category.id}}">{{category.name}}</option>
+						{% endfor %}
+					</select>
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon">Lowest Price</span>
+					<input name="lprice" id="lprice" placeholder="Lowest Price" tabindex="2" type="text" class="form-control input">
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon">Higest Price</span>
+					<input name="hprice" id="hprice" placeholder="Higest Price" tabindex="2" type="text" class="form-control input">
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon">Auction Start</span>
+					<input name="start" id="start" placeholder="Start Date" tabindex="6" type="date" class="form-control input">
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon">Auction End</span>
+					<input name="end" id="end" placeholder="End Date" tabindex="6" type="date" class="form-control input">
+				</div>
+				<div class="detail" style="height:55px;">
+					<br>
+					<button type="submit" class="btn btn-primary" type="submit" style="float:right; width:300px" tabindex="8">
+					<span class="fa fa-search"></span>
+					Search
+					</button>
 				</div>
 			</div>
 		</div>
-		</form>
 	</div>
+	</form>
+</div>
 {% endblock %}

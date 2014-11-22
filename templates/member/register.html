@@ -7,6 +7,7 @@
 {% endblock %}
 {% block body %}
 {% include 'common/topnavbar.html' %}
+{% include 'common/topbreadcrumb.html'%}
 <div class="container">
 	<form action="" method="POST" enctype="multipart/form-data" >
 		{% csrf_token %}
@@ -17,9 +18,10 @@
 				</time>
 				<div class="detail">
 					<div class="padblock"></div>
-					<div class="input-group">
+					<div class="input-group has-error">
 						<span class="input-group-addon">Email</span>
 						<input required name="email" id="email"  placeholder="Email Address" tabindex="1" type="email" class="form-control input">
+						<div class="input-group-addon errorblock">ฝากดูตรงนี้โหน่ยยย มันไม่ยอมขึ้นบรรทัดใหม่ให้อ่ะ </div>
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon">Password</span>
@@ -39,30 +41,30 @@
 					<div class="padblock"></div>
 					<div class="input-group">
 						<span class="input-group-addon">First Name</span>
-						<input required name="first_name" id="first_name" placeholder="First Name" tabindex="5" type="text" class="form-control input">
+						<input required name="first_name" id="first_name" placeholder="First Name" tabindex="4" type="text" class="form-control input">
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon">Last Name</span>
-						<input required name="last_name" id="last_name" placeholder="Last Name" tabindex="6" type="text" class="form-control input">
+						<input required name="last_name" id="last_name" placeholder="Last Name" tabindex="5" type="text" class="form-control input">
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon">Display Name</span>
-						<input required name="display_name" id="display_name" placeholder="Display Name" tabindex="7" type="text" class="form-control input">
+						<input required name="display_name" id="display_name" placeholder="Display Name" tabindex="6" type="text" class="form-control input">
 					</div>
 					<div class="input-group" id="datetimepicker1">
 						<span class="input-group-addon">Birthdate</span>
-						<input required name="birthdate" id="birthdate" placeholder="Birthdate" tabindex="8" type="date" 
+						<input required name="birthdate" id="birthdate" placeholder="Birthdate" tabindex="7" type="date" 
 							class="form-control input" data-date-format="DD MMM YYYY"
 							style="background-color:white; cursor: text;" readonly/>
 						<span class="input-group-addon" style="width:0px !important;"><span class="glyphicon glyphicon-calendar"></span></span>
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon">Address</span>
-						<input required name="address" id="address" placeholder="Address" tabindex="9" type="text" class="form-control input">
+						<input required name="address" id="address" placeholder="Address" tabindex="8" type="text" class="form-control input">
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon">Country</span>
-						<select required name="country" id="country" placeholder="Country" tabindex="10" type="select" class="form-control input">
+						<select required name="country" id="country" placeholder="Country" tabindex="9" type="select" class="form-control input">
 						{% for country in countries %}
 						  <option value="{{country.id}}">{{country.name}}</option>
 						{% endfor %}
@@ -70,7 +72,7 @@
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon">Timezone</span>
-						<select required name="timezone" id="timezone" placeholder="Timezone" tabindex="11" type="select" class="form-control input">
+						<select required name="timezone" id="timezone" placeholder="Timezone" tabindex="10" type="select" class="form-control input">
 						{% for timezone in timezones %}
 						  <option value="{{timezone.id}}">{{timezone.name}}</option>
 						{% endfor %}
@@ -84,8 +86,7 @@
 				</time>
 				<div class="detail">
 					<div class="padblock"></div>
-					<input type="file" name="profilepic" id="profilepic" placeholder="Profile Picture" tabindex="4">
-					{{uploadform}}
+					<input type="file" name="profilepic" id="profilepic" placeholder="Profile Picture" tabindex="11">
 				</div>
 			</div>
 			<div>

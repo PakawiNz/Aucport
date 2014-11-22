@@ -12,6 +12,7 @@
 {% endblock %}
 {% block body %}
 {% include 'common/topnavbar.html' %}
+{% include 'common/topbreadcrumb.html'%}
 <div class="container">
 	<form action="member/editprofile/" method="POST">
 		<div class="mainblock">
@@ -23,7 +24,7 @@
 				<div class="detail">
 					<div class="input-group">
 						<span class="input-group-addon">Email Address</span>
-						<input name="email" id="email"  placeholder="Email Address" tabindex="1" type="email" class="form-control input" value="{{member.email}}" disabled>
+						<input name="email" id="email"  placeholder="Email Address" tabindex="1" type="email" class="form-control input" value="{{login_member.email}}" disabled>
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon">Old Password</span>
@@ -47,30 +48,30 @@
 				<div class="detail">
 					<div class="input-group">
 						<span class="input-group-addon">Firstname</span>
-						<input name="first_name" id="first_name" placeholder="Firstname" tabindex="5" type="text" class="form-control input" value="{{member.firstname}}">
+						<input name="first_name" id="first_name" placeholder="Firstname" tabindex="5" type="text" class="form-control input" value="{{login_member.firstname}}">
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon">Lastname</span>
-						<input name="last_name" id="last_name" placeholder="Lastname" tabindex="6" type="text" class="form-control input" value="{{member.lastname}}">
+						<input name="last_name" id="last_name" placeholder="Lastname" tabindex="6" type="text" class="form-control input" value="{{login_member.lastname}}">
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon">Display Name</span>
-						<input name="display_name" id="display_name" placeholder="Display Name" tabindex="7" type="text" class="form-control input" value="{{member.displayname}}">
+						<input name="display_name" id="display_name" placeholder="Display Name" tabindex="7" type="text" class="form-control input" value="{{login_member.displayname}}">
 					</div>
 					<div class="input-group" id="datetimepicker1">
 						<span class="input-group-addon">Birthdate</span>
 						<input required name="birthdate" id="birthdate" placeholder="Birthdate" tabindex="8" type="date" 
 							class="form-control input" data-date-format="DD MMM YYYY"
-							style="background-color:white; cursor: text;" readonly value="{{member.birthdate|date:"d b Y"}}"/>
+							style="background-color:white; cursor: text;" readonly value="{{login_member.birthdate|date:"d b Y"}}"/>
 						<span class="input-group-addon" style="width:0px !important;"><span class="glyphicon glyphicon-calendar"></span></span>
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon">Address</span>
-						<input name="address" id="address" placeholder="Address" tabindex="9" type="text" class="form-control input" value="{{member.address}}">
+						<input name="address" id="address" placeholder="Address" tabindex="9" type="text" class="form-control input" value="{{login_member.address}}">
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon">Country</span>
-						<select name="country" id="country" placeholder="Country" tabindex="10" type="select" class="form-control input" value="{{member.country.name}}">
+						<select name="country" id="country" placeholder="Country" tabindex="10" type="select" class="form-control input" value="{{login_member.country.name}}">
 							{% for option in countries %}
 							<option >{{option}}</option>
 							{% endfor %}
@@ -78,7 +79,7 @@
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon">Timezone</span>
-						<select name="timezone" id="timezone" placeholder="Timezone" tabindex="11" type="select" class="form-control input" value="{{member.timezone.name}}">
+						<select name="timezone" id="timezone" placeholder="Timezone" tabindex="11" type="select" class="form-control input" value="{{login_member.timezone.name}}">
 							{% for option in timezones %}
 							<option >{{option}}</option>
 							{% endfor %}

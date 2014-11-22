@@ -1,5 +1,4 @@
 from django.shortcuts import render,redirect
-from django.core.mail import send_mail
 from mainapp import models
 
 def login(request):
