@@ -1,8 +1,10 @@
 from django.shortcuts import render
+from mainapp import models,common
 import datetime
 from mainapp import models, common
 
 
+@common.gen_view('Auction Watchlist','trading/auction.html',memberOnly=True)
 def main(request):
 	auctions = [{
 		'product': "Battle Fury",
@@ -27,11 +29,10 @@ def main(request):
 		auction['endmonth'] = auction['endtime'].strftime('%b')
 
 	context = {
-		'title': 'Auction watchlist',
 		'today':datetime.datetime.now(),
 		'auctions':auctions,
 	}
-	return render(request,'trading/auction.html',context)
+	return context
 
 def bid(request) :
 	if not request.POST :
@@ -104,4 +105,3 @@ def bid(request) :
 			product.highest_auction = auction_old
 		else
 			product.highest_auction = auction_new
-					

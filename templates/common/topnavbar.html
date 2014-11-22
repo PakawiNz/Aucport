@@ -30,7 +30,7 @@
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Search <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
 						<li>
-							<form role="search" method="POST" action="/product/search/">
+							<form role="search" method="POST" action="{% url 'dosearch' %}">
 								{% csrf_token %}
 								<div class="input-group" style="padding:10px; width:300px">
 									<input name="keyword" type="text" class="form-control" required>
@@ -41,12 +41,12 @@
 							</form>
 						</li>
 						<li class="divider"></li>
-						<li><a href="/product/search/">Advance Search</a></li>
+						<li><a href="{% url 'search' %}">Advance Search</a></li>
 					</ul>
 				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				{% if not member %}
+				{% if not login_member %}
 				<li id="nav4"><a href="{% url 'register' %}">Sign Up</a></li>
 				<li id="nav5" class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Sign in <b class="caret"></b></a>
@@ -86,7 +86,7 @@
 		</div>
 	</div>
 </nav>
-{% if title %}
+{% if not hideTitle %}
 <div class="container">
 	<div class="jumbotron" style="margin:10px; padding-top:2px; padding-bottom:10px; padding-left:30px;">
 		<h2>
