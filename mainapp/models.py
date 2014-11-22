@@ -3,6 +3,11 @@ from django.db import models
 from utils import fields,validator as V
 import datetime
 
+def get_one(model,**kwargs) :
+ 	alist = model.objects.filter(**kwargs)
+ 	if alist : return alist[0]
+	else : return None
+
 # Create your models here.
 class Country(models.Model) :
 	name = fields.CharField(max_length=50)
