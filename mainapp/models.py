@@ -80,6 +80,8 @@ class Product(models.Model) :
 	selling_condition = models.CharField(max_length=50,null=True,blank=True)
 	shipping_condition = models.CharField(max_length=50,null=True,blank=True)
 
+	highest_auction = models.OneToOneField('Auction',related_name="highest_auction",null=True,blank=True)
+
 class Auction(models.Model) :
 	product = models.ForeignKey(Product)
 	bidder = models.ForeignKey(Member)
@@ -89,26 +91,7 @@ class Auction(models.Model) :
 	isAuto = models.BooleanField(default=False)
 	notify = models.BooleanField(default=False)
 	lastbid = models.DateTimeField()
-
-	def bid(self,amount=0) :
-		if amount == 0 :
-			if self.product.netPrice < self.ceiling :
-				self.current = min([self.current + self.increase, self.ceiling])
-				self.product.netPrice = self.current
-				self.lastbid = datetime.datetime.now()
-			else :
-				self.isAuto = False
-				if self.notify :
-					common.sendmail("Aucport : Auction Notificaton", "", [self.bidder.email])
-		else :
-			if self.product.netPrice < amount :
-				self.current = amount
-				self.product.netPrice = self.current
-				self.lastbid = datetime.datetime.now()
-			else :
-				return False
 				
-
 class Transaction(models.Model) :
 	product = models.ForeignKey(Product)
 	buyer = models.ForeignKey(Member)
