@@ -1,8 +1,8 @@
 $(function () {
     $('#register').click(function(){
         var mainform = $('#mainform')[0];
-        console.log(mainform);
-        console.log(mainform.action);
+        var register = $('#register');
+        register.parent().prepend('<img class="loading" src="/static/img/loading.gif"></img>');
         doajax({
             url: mainform.action,
             type: mainform.method,
@@ -10,7 +10,9 @@ $(function () {
             data: $('#mainform').serialize(),
             success: function(result) {
                 if (result.success){
-                    alert('SUCCESS'); 
+                    var input = $("<input>").attr("type", "hidden").attr("name", "isSubmit").val("true");
+                    $('#mainform').append($(input));
+                    mainform.submit();
                 }else {
                     $('.descbox').remove();
                     $('.has-error').removeClass('has-error');
@@ -23,6 +25,9 @@ $(function () {
                     }
                 }
             },
+            complete : function(){
+                $('.loading').fadeOut();            
+            }
         });
     });
 

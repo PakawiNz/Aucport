@@ -27,13 +27,15 @@ def register(request):
 	country = formstate.get('country')
 	timezone = formstate.get('timezone')
 	picture = request.FILES.get('picture')
-	submit = request.FILES.get('submit')
-	
+	submit = formstate.get('isSubmit')
+
 	password_confirmation = formstate.get('password_confirmation')
 	agreement = formstate.get('agreement')
 
 	errorList = {}
 
+	if not agreement :
+		errorList['agreement'] = ['You should agree to the Terms and Conditions']
 	if password_confirmation != password :
 		errorList['password_confirmation'] = ['Confirmation Password Not Match']
 	try : 
@@ -64,40 +66,36 @@ def register(request):
 
 	context = {}
 
-	if not submit :
-		try :
-			member.full_clean()
-		except Exception as e :
-			for error in e.args :
-				if not error : continue
-				for field,exceptions in error.items() :
-					errorList[field] = errorList[field] if errorList.get(field) else []
-					for exception in exceptions :
-						errorList[field].append(unicode(exception.message))
-
-			if errorList :
-				context['errorList'] = errorList
-			else :
-				context['success'] = True
-
-		return common.jsonResponse(context)
-
 	try :
 		member.full_clean()
 	except Exception as e :
-		errorList = []
 		for error in e.args :
 			if not error : continue
-			for key,value in error.items() :
-				errorList.append("%s :: %s"%(key,value))
+			for field,exceptions in error.items() :
+				errorList[field] = errorList[field] if errorList.get(field) else []
+				for exception in exceptions :
+					errorList[field].append(unicode(exception.message))
 
-		context['errorList'] = errorList
+
+	if not submit :
+		if errorList :
+			context['errorList'] = errorList
+		else :
+			context['success'] = True
+		return common.jsonResponse(context)
+	
+	if errorList :
+		errorListText = []
+		for field,error in errorList.items() :
+			errorListText.append("%s :: %s"%(field,", ".join(error)))
+
+		context['errorList'] = errorListText
 		context['content'] = "Validation Error."
-
 		return render(request,'common/invalid.html',context)
 
 	member.save()
 	confirm_url = "http://127.0.0.1:8000/member/confirm?email=" + email + "&confirm=" + confirm
+	common.sendmail("Aucport : Email Confirmation", "Please Click This Link : " + confirm_url, [email])
 	context = { 'content':
 		"Successfully Registered : You should click the link in your email to confirm, blah blah blah"}
 	return render(request,'common/success.html',context)

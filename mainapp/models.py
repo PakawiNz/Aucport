@@ -34,7 +34,7 @@ class Member(models.Model) :
 	timezone = models.ForeignKey(Timezone)
 	confirmation = fields.CharField(max_length=100)
 	isConfirmed = models.BooleanField(default=False)
-	picture = models.ImageField(upload_to=fields.member_file_name,null=True)
+	picture = models.ImageField(upload_to=fields.member_file_name,null=True,blank=True)
 
 	def __unicode__(self):
 		return self.email
