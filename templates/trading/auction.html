@@ -20,13 +20,44 @@
 		});
 	{% endfor %}
 </script>
+<script type="text/javascript">
+
+var bid;
+
+$(function() { 
+	bid = function(id){
+		// $('#form'+id).ajaxForm(function() { 
+	 //            alert("Thank you for your comment!"); 
+	 //        }); 
+
+		// var data = {
+			// 'bidder' : 
+			// 'ur' : $('#urp'+id).val(),
+			// 'max' : $('#maxurp'+id).val(),
+			// 'step' : $('#urstep'+id).val(),
+		// };
+		// console.log(data);
+	    doajax({
+            url: '/trading/bid/',
+            type: 'POST',
+            dataType: "json",
+            data: {'work' : 'bid' },
+            success: function(result) {
+        		alert(id); 
+			},
+	    });
+	};
+
+});
+
+</script>
 {% endblock %}
 {% block body %}
 {% include 'common/topnavbar.html' %}
 <div class="container">
 	<div class="row">
 		<div class="col-xs-12 col-sm-offset-2 col-sm-8">
-			<div class="mainblock">
+			<div id="main" class="mainblock">
 				{% for auction in auctions %}
 				<div>
 					<time id="endTime{{forloop.counter}}">
@@ -38,21 +69,19 @@
 						<h2 class="title">{{auction.product}}</h2>
 						<p class="desc">{{auction.endtime}}</p>
 						<ul style="width:50%;">
-							<li style="width:25%;">1 <span class="fa fa-sort-amount-desc"></span></li>
-							<li style="width:25%;">10 <span class="fa fa-male"></span></li>
-							<li style="width:25%;">29.99 <span class="fa fa-money"></span></li>							
+							<li style="width:25%;">{{auction.rank}} <span class="fa fa-sort-amount-desc"></span></li>
+							<li style="width:25%;">{{auction.bidding}} <span class="fa fa-male"></span></li>
+							<li style="width:25%;">{{auction.price}} <span class="fa fa-money"></span></li>							
 						</ul>
-						<form class="form-inline" role="form">
 								<label for="urp">ur$</label>
-								<input type="text" id ="urp" placeholder="28.99" size="5">  
+								<input type="text" id ="urp{{auction.id}}" placeholder={{auction.ur}} size="5">  
 						
 								<label for="maxurp">max$</label>
-								<input type="text" id ="maxurp" placeholder="28.99" size="5">  
+								<input type="text" id ="maxurp{{auction.id}}" placeholder={{auction.max}} size="5">  
 
 								<label for="urstep">step$</label>
-								<input type="text" id ="urstep" placeholder="1.99" size="5"> 
-								<button type="button" class="btn btn-success">submit</button>
-						</form>
+								<input type="text" id ="urstep{{auction.id}}" placeholder={{auction.step}} size="5"> 
+								<button type="submit" class="btn btn-success" onClick="bid({{auction.id}});">submit</button>
 
 					</div>
 					<div class="social">
@@ -70,3 +99,4 @@
 	</div>
 </div>
 {% endblock %}
+

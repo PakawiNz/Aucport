@@ -1,4 +1,6 @@
-$(document).ready(function(){
+var csrf = "";
+var doajax = function(){};
+$(function(){
     //Handles menu drop down
     $('.dropdown-menu').find('form').click(function (e) {
         e.stopPropagation();
@@ -10,5 +12,15 @@ $(document).ready(function(){
     	$('#nav4').addClass('active');
     }else if (page == "register"){
     	$('#nav4').addClass('active');
+    }
+
+    csrf = $('meta[name="csrf"]').attr('content')
+
+    doajax = function(data){
+        if (data.type == 'POST') {
+            if (data.data) data.data.csrfmiddlewaretoken = csrf;
+            else data.data = {'csrfmiddlewaretoken':csrf,}
+        }
+        $.ajax(data);
     }
 });
