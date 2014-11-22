@@ -1,20 +1,13 @@
 from django.shortcuts import render
 from mainapp import models,common
 
-def main(request):
-	if request.POST : return search(request)
-	context = {
-		'title':'Advance Search',
-	}
-	common.gencontext(request, context)
-	return render(request,'product/search.html', context)
-
+@common.gen_view('Advance Search','product/search.html')
+def form(request):
+	return {}
+	
+@common.gen_view('Product List','product/searchlist.html',postOnly=True)
 def search(request) :
-
 	context = {
 		'products':models.Product.objects.all(),
-		'title':'Product List',
-		'subtitle':'with keyword blah blah',
 	}
-	common.gencontext(request, context)
-	return render(request,'product/searchlist.html',context)
+	return context

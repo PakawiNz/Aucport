@@ -3,13 +3,29 @@ from django.conf import settings
 from django.contrib import admin
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'aucport.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
 
-    url(r'^member/', include('mainapp.apps.member.urls')),
-    url(r'^product/', include('mainapp.apps.product.urls')),
-    url(r'^trading/', include('mainapp.apps.trading.urls')),
 ) + static.static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+urlpatterns += patterns('mainapp.apps.member',
+    url(r'^member/profile/', 		'profile.show',		name='profile'),
+    url(r'^member/editprofile/', 	'profile.edit',		name='editprofile'),
+    url(r'^member/register/', 		'register.main',	name='register'),
+    url(r'^member/login/', 			'authen.login',		name='login'),
+    url(r'^member/logout/', 		'authen.logout',	name='logout'),
+    url(r'^member/confirm/', 		'authen.confirm',	name='confirm'),
+)
+
+urlpatterns += patterns('mainapp.apps.product',
+    url(r'^product/detail/', 		'detail.show',		name='detail'),
+    url(r'^product/editdetail/', 	'detail.edit',		name='editdetail'),
+    url(r'^product/search/', 		'search.form',		name='search'),
+    url(r'^product/dosearch/', 		'search.search',	name='dosearch'),
+)
+
+urlpatterns += patterns('mainapp.apps.trading',
+    url(r'^trading/auction/', 		'auction.main',		name='auction'),
+    url(r'^trading/payment/', 		'payment.main',		name='payment'),
+    # url(r'^trading/bid/', 			'auction.bid',		name='bid'),
+)
