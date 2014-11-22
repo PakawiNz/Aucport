@@ -70,7 +70,7 @@ def bid(request) :
 				elif auction_new.current <= auction_old.current : # old bidder wins
 					winner = 0
 
-			else auction_old.isAuto : # The current highest bidder is auto bidding
+			else : # The current highest bidder is auto bidding
 				if auction_new.current > auction_old.ceiling : # challenger wins
 					winner = 1
 
@@ -79,29 +79,27 @@ def bid(request) :
 						auction_old.current += auction_old.increase
 						winner = 0
 
-		elif auction_new.current == 0 # the bid request is in auto mode
-			if not auction_old.isAuto # The current highest bidder is manual bidding
+		elif auction_new.current == 0 :# the bid request is in auto mode
+			if not auction_old.isAuto : # The current highest bidder is manual bidding
 				if auction_new.ceiling > auction_old.current : # challenger wins
 					winner = 1
 					auction_new.current = auction_old.current+auction_new.increase
 				elif auction_new.ceiling <= auction_old.current : # old bidder wins
 					winner = 0
-			else auction_old.isAuto # The current highest bidder is auto bidding
+			else : # The current highest bidder is auto bidding
 				# Fight to determine winner
 				bidder_turn = 1 # 0 = old bidder, 1 = challenger
-				while True:
-					if bidder_turn == 1 and auction_new.ceiling > auction_old.current:
+				while True :
+					if bidder_turn == 1 and auction_new.ceiling > auction_old.current :
 						winner = 1
 						auction_new.current = auction_old.current + auction_new.increase
 						bidder_turn = 0
-					elif bidder_turn == 0 and auction_old.ceiling > auction_new.current:
+					elif bidder_turn == 0 and auction_old.ceiling > auction_new.current :
 						winner = 0
 						auction_old.current = auction_new.current + auction_old.increase
 						bidder_turn = 1
-					else
 
-
-		if winner == 0
+		if winner == 0 :
 			product.highest_auction = auction_old
-		else
+		else :
 			product.highest_auction = auction_new

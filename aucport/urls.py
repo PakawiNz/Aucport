@@ -12,6 +12,7 @@ urlpatterns += patterns('mainapp.apps.member',
     url(r'^member/profile/', 		'profile.show',		name='profile'),
     url(r'^member/editprofile/', 	'profile.edit',		name='editprofile'),
     url(r'^member/register/', 		'register.main',	name='register'),
+    
     url(r'^member/login/', 			'authen.login',		name='login'),
     url(r'^member/logout/', 		'authen.logout',	name='logout'),
     url(r'^member/confirm/', 		'authen.confirm',	name='confirm'),

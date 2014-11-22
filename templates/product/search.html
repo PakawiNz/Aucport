@@ -13,6 +13,8 @@
 {% block body %}
 	{% include 'common/topnavbar.html' %}
 	<div class="container">
+		<form method="POST" action="{% url 'dosearch' %}">
+		{% csrf_token %}
 		<div class="mainblock">
 			<div>
 				<time>
@@ -30,15 +32,10 @@
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon">Catagory</span>
-						<select name="catagory" id="catagory" placeholder="Catagory" tabindex="3" type="select" class="form-control input">
-							<option >Electrocity</option>
-							<option >Stationary</option>
-							<option >Toy</option>
-							<option >Food</option>
-							<option >Book</option>
-							<option >Jewelry</option>
-							<option >Computer</option>
-							<option >Home & Graden</option>
+						<select name="category" id="category" placeholder="Catagory" tabindex="3" type="select" class="form-control input">
+							{% for category in categorys %}
+							<option value="{{category.id}}">{{category.name}}</option>
+							{% endfor %}
 						</select>
 					</div>
 					<div class="input-group">
@@ -59,7 +56,7 @@
 					</div>
 					<div class="detail" style="height:55px;">
 						<br>
-						<button type="button" class="btn btn-primary" type="submit" style="float:right; width:300px" tabindex="8">
+						<button type="submit" class="btn btn-primary" type="submit" style="float:right; width:300px" tabindex="8">
 						<span class="fa fa-search"></span>
 						Search
 						</button>
@@ -67,6 +64,6 @@
 				</div>
 			</div>
 		</div>
+		</form>
 	</div>
-	
 {% endblock %}
