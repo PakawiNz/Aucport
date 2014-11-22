@@ -6,54 +6,98 @@ import hashlib
 
 @common.gen_view('Register','member/register.html',guestOnly=True)
 def main(request):
-	if request.method == 'POST' :
-		return register(request);
-
 	context = {
 		'countries': models.Country.objects.all(),
 		'timezones': models.Timezone.objects.all(),
 	}
 	return context
 
+@common.gen_view(guestOnly=True,postOnly=True,redirect=True)
 def register(request):
-	formstate = request.POST
 
+	formstate = request.POST
 	email = formstate.get('email')
 	password = formstate.get('password')
-	password_confirmation = formstate.get('password_confirmation')
-	first_name = formstate.get('first_name')
-	last_name = formstate.get('last_name')
-	display_name = formstate.get('display_name')
+	firstname = formstate.get('firstname')
+	lastname = formstate.get('lastname')
+	displayname = formstate.get('displayname')
 	birthdate = formstate.get('birthdate')
+	phone = formstate.get('phone')
 	address = formstate.get('address')
 	country = formstate.get('country')
 	timezone = formstate.get('timezone')
+	picture = request.FILES.get('picture')
+	submit = request.FILES.get('submit')
+	
+	password_confirmation = formstate.get('password_confirmation')
 	agreement = formstate.get('agreement')
-	picture = request.FILES.get('profilepic')
 
-	birthdate = datetime.datetime.strptime(birthdate,"%d %b %Y")
-	country=models.Country.objects.get(id=country)
-	timezone=models.Timezone.objects.get(id=timezone)
+	errorList = {}
+
+	if password_confirmation != password :
+		errorList['password_confirmation'] = ['Confirmation Password Not Match']
+	try : 
+		birthdate = datetime.datetime.strptime(birthdate,"%d %b %Y")
+	except : 
+		birthdate = datetime.datetime.now()
+		errorList['birthdate'] = ['This Birthdate is not valid format (should be like 11 Dec 2001)']
+	try : 
+		country=models.Country.objects.get(id=country)
+	except : 
+		country=models.Country.objects.first()
+		errorList['country'] = ['This Country is not in Database']
+	try : 
+		timezone=models.Timezone.objects.get(id=timezone)
+	except : 
+		timezone=models.Timezone.objects.first()
+		errorList['timezone'] = ['This Timezone is not in Database']
+
 	confirm = hashlib.sha224(email+password).hexdigest()
 
 	member = models.Member(
 		email=email,password=password,
-		firstname=first_name,lastname=last_name,
-		displayname=display_name,confirmation=confirm,
-		birthdate=birthdate,address=address,
-		country=country,timezone=timezone,picture=picture)
+		firstname=firstname,lastname=lastname,
+		displayname=displayname,birthdate=birthdate,
+		phone=phone,address=address,
+		country=country,timezone=timezone,
+		picture=picture,confirmation=confirm)
 
-	member.clean()
+	context = {}
 
-	if isCompleted :
-		member.save()
-		confirm_url = "http://127.0.0.1:8000/member/confirm?email=" + email + "&confirm=" + confirm
-		context = { 'content':
-			"Successfully Registered : You should click the link in your email to confirm, blah blah blah"}
-		return render(request,'common/success.html',context)
-	else :
-		context = { 
-			'content':"There're following error",
-			'errorList': errorList,
-		}
+	if not submit :
+		try :
+			member.full_clean()
+		except Exception as e :
+			for error in e.args :
+				if not error : continue
+				for field,exceptions in error.items() :
+					errorList[field] = errorList[field] if errorList.get(field) else []
+					for exception in exceptions :
+						errorList[field].append(unicode(exception.message))
+
+			if errorList :
+				context['errorList'] = errorList
+			else :
+				context['success'] = True
+
+		return common.jsonResponse(context)
+
+	try :
+		member.full_clean()
+	except Exception as e :
+		errorList = []
+		for error in e.args :
+			if not error : continue
+			for key,value in error.items() :
+				errorList.append("%s :: %s"%(key,value))
+
+		context['errorList'] = errorList
+		context['content'] = "Validation Error."
+
 		return render(request,'common/invalid.html',context)
+
+	member.save()
+	confirm_url = "http://127.0.0.1:8000/member/confirm?email=" + email + "&confirm=" + confirm
+	context = { 'content':
+		"Successfully Registered : You should click the link in your email to confirm, blah blah blah"}
+	return render(request,'common/success.html',context)

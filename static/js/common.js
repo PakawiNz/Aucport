@@ -17,7 +17,7 @@ $(function(){
     csrf = $('meta[name="csrf"]').attr('content')
 
     doajax = function(data){
-        if (data.type == 'POST') {
+        if (data.type.toUpperCase() == 'POST') {
             if (data.data) data.data.csrfmiddlewaretoken = csrf;
             else data.data = {'csrfmiddlewaretoken':csrf,}
         }

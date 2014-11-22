@@ -42,7 +42,7 @@ span.input-group-addon {
 	width: 110px !important;
 }
 
-div.errorblock {
+div.descbox {
 	display:table; 
 	width:100%; 
 	word-wrap: break-all;

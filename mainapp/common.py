@@ -1,10 +1,14 @@
 from django.shortcuts import render
 from django.core.mail import send_mail
 from django.conf import settings
+from django.http import HttpResponse
 from mainapp import models
 import traceback
+import json
 
-def gen_view(title,template,
+def gen_view(
+		title="",
+		template="",
 		memberOnly=False,
 		guestOnly=False,
 		postOnly=False,
@@ -43,6 +47,7 @@ def gen_view(title,template,
 					return render(request,template,context)
 
 			except Exception as e :
+				print traceback.format_exc()
 				context['content'] = e.message
 				return render(request,'common/invalid.html',context)
 			
@@ -60,3 +65,6 @@ def getLoginMember(request):
 
 def sendmail(title,content,receipants):
 	send_mail(title, content, settings.EMAIL_HOST_USER, receipants)
+
+def jsonResponse(data):
+	return HttpResponse(json.dumps(data))
