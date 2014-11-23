@@ -1,4 +1,31 @@
 $(function () {
+    $('#register').click(function(){
+        var mainform = $('#mainform')[0];
+        console.log(mainform);
+        console.log(mainform.action);
+        doajax({
+            url: mainform.action,
+            type: mainform.method,
+            dataType: 'json',
+            data: $('#mainform').serialize(),
+            success: function(result) {
+                if (result.success){
+                    alert('SUCCESS'); 
+                }else {
+                    $('.descbox').remove();
+                    $('.has-error').removeClass('has-error');
+                    for (var target in result.errorList){
+                        var input = $('#' + target);
+                        var inputblock = input.closest('.detail > .input-group');
+                        inputblock.addClass('has-error');
+                        var desc = '<div class="input-group-addon descbox">' + result.errorList[target] + '</div>';
+                        inputblock.append(desc);
+                    }
+                }
+            },
+        });
+    });
+
     $('#birthdate').datetimepicker({
         pickTime: false,
         maxDate:  new Date(),
@@ -67,5 +94,11 @@ $(function () {
             }
         }
         init();
+    });
+
+    $("#picture").fileinput({
+        previewFileType: "picture",
+        allowedFileExtensions: ["jpg"],
+        browseClass: "btn btn-default",
     });
 });

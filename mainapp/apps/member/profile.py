@@ -1,35 +1,29 @@
-from django.shortcuts import render,render_to_response,redirect
+from django.shortcuts import render
 from mainapp import models,common
 
-def show(request):
-	viewer = request.session.get('member')
 
-	if viewer : result = redirect('/member/profile?member='+str(viewer))
-	else : result = render(request,'common/invalid.html',{'content':'No Member Information'})
-
-	if not request.GET : 
-		return result
-
-	member = request.GET.get('member')
-	if not member : return result
-
-	member = models.Member.objects.filter(id=member)
-	if not member : return result
-
-	member = member[0]
+@common.gen_view('Profile','member/profile.html',memberOnly=True,redirect=True)
+def owner(request):
+	viewer = models.get_one(models.Member,id=request.session.get('member'))
+	return show(request,viewer.id)
+	
+@common.gen_view('Profile','member/profile.html')
+def show(request,mid):
+	viewer = models.get_one(models.Member,id=request.session.get('member'))
+	member = models.get_one(models.Member,id=mid)
+	if not member : raise Exception("No Member with such ID.")
 
 	context = {
-		'hideTitle': True,
 		'title': member.displayname,
+		'hideTitle': True,
 		'member':member,
 		'products':models.Product.objects.filter(owner=member),
 		'buy':models.Transaction.objects.filter(buyer=member).count(),
 		'sell':models.Transaction.objects.filter(product__in=models.Product.objects.filter(owner=member)).count(),
 		'liked':0,
-		'isOwner':viewer == member.id,
+		'isOwner':viewer == member,
 	}
-	return render(request,'member/profile.html',context)
-
+	return context
 
 @common.gen_view('Edit Profile','member/editprofile.html',memberOnly=True)
 def edit(request):

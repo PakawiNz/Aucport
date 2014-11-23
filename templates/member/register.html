@@ -1,14 +1,17 @@
 {% extends 'common/maincanvas.html' %}
 {% block style %}
 <link rel="stylesheet" type="text/css" href="/static/css/common/aucinput.css">
+<link rel="stylesheet" type="text/css" href="/static/css/fileinput.min.css">
 {% endblock %}
 {% block script %}
 <script type="text/javascript" src="/static/js/member/register.js"></script>
+<script type="text/javascript" src="/static/js/fileinput.min.js"></script>
 {% endblock %}
 {% block body %}
 {% include 'common/topnavbar.html' %}
+{% include 'common/topbreadcrumb.html'%}
 <div class="container">
-	<form action="" method="POST" enctype="multipart/form-data" >
+	<form action="{% url 'doregister' %}" method="POST" enctype="multipart/form-data" id="mainform" >
 		{% csrf_token %}
 		<div class="mainblock">
 			<div>
@@ -17,17 +20,23 @@
 				</time>
 				<div class="detail">
 					<div class="padblock"></div>
-					<div class="input-group">
+					<div class="input-group has-error">
 						<span class="input-group-addon">Email</span>
-						<input required name="email" id="email"  placeholder="Email Address" tabindex="1" type="email" class="form-control input">
+						<input required tabindex="1" type="email" class="form-control input"
+							name="email" id="email"  placeholder="Email Address" >
+						<div class="input-group-addon descbox">
+							ฝากดูตรงนี้โหน่ยยย มันไม่ยอมขึ้นบรรทัดใหม่ให้อ่ะ
+						</div>
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon">Password</span>
-						<input required name="password" id="password"  placeholder="Password" tabindex="2" type="password" class="form-control input">
+						<input required tabindex="2" type="password" class="form-control input"
+							name="password" id="password"  placeholder="Password" >
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon">Confirm</span>
-						<input required name="password_confirmation" id="password_confirmation"  placeholder="Confirm Password" tabindex="3" type="password" class="form-control input">
+						<input required tabindex="3" type="password" class="form-control input"
+							name="password_confirmation" id="password_confirmation"  placeholder="Confirm Password" >
 					</div>
 				</div>
 			</div>
@@ -39,30 +48,46 @@
 					<div class="padblock"></div>
 					<div class="input-group">
 						<span class="input-group-addon">First Name</span>
-						<input required name="first_name" id="first_name" placeholder="First Name" tabindex="5" type="text" class="form-control input">
+						<input tabindex="4" type="text" class="form-control input" required
+							name="firstname" id="firstname" placeholder="First Name" >
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon">Last Name</span>
-						<input required name="last_name" id="last_name" placeholder="Last Name" tabindex="6" type="text" class="form-control input">
+						<input tabindex="5" type="text" class="form-control input" required
+							name="lastname" id="lastname" placeholder="Last Name" >
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon">Display Name</span>
-						<input required name="display_name" id="display_name" placeholder="Display Name" tabindex="7" type="text" class="form-control input">
+						<input tabindex="6" type="text" class="form-control input" required
+							name="displayname" id="displayname" placeholder="Display Name" >
 					</div>
 					<div class="input-group" id="datetimepicker1">
 						<span class="input-group-addon">Birthdate</span>
-						<input required name="birthdate" id="birthdate" placeholder="Birthdate" tabindex="8" type="date" 
-							class="form-control input" data-date-format="DD MMM YYYY"
-							style="background-color:white; cursor: text;" readonly/>
-						<span class="input-group-addon" style="width:0px !important;"><span class="glyphicon glyphicon-calendar"></span></span>
+
+						<div class="input-group">
+							<input tabindex="7" type="date" class="form-control input" required
+								name="birthdate" id="birthdate" placeholder="Birthdate"  
+								data-date-format="DD MMM YYYY"
+								style="background-color:white; cursor: text;" readonly/>
+							<div class="input-group-addon" style="width:0px !important;">
+								<span class="glyphicon glyphicon-calendar"></span>
+							</div>
+						</div>
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">Phone</span>
+						<input tabindex="8" type="text" class="form-control input" required
+							name="phone" id="phone" placeholder="Phone" >
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon">Address</span>
-						<input required name="address" id="address" placeholder="Address" tabindex="9" type="text" class="form-control input">
+						<input tabindex="9" type="text" class="form-control input" required
+							name="address" id="address" placeholder="Address" >
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon">Country</span>
-						<select required name="country" id="country" placeholder="Country" tabindex="10" type="select" class="form-control input">
+						<select tabindex="10" type="select" class="form-control input" required
+							name="country" id="country" placeholder="Country" >
 						{% for country in countries %}
 						  <option value="{{country.id}}">{{country.name}}</option>
 						{% endfor %}
@@ -70,7 +95,8 @@
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon">Timezone</span>
-						<select required name="timezone" id="timezone" placeholder="Timezone" tabindex="11" type="select" class="form-control input">
+						<select tabindex="11" type="select" class="form-control input" required
+							name="timezone" id="timezone" placeholder="Timezone" >
 						{% for timezone in timezones %}
 						  <option value="{{timezone.id}}">{{timezone.name}}</option>
 						{% endfor %}
@@ -84,8 +110,12 @@
 				</time>
 				<div class="detail">
 					<div class="padblock"></div>
-					<input type="file" name="profilepic" id="profilepic" placeholder="Profile Picture" tabindex="4">
-					{{uploadform}}
+					<div class="input-group">
+						<span class="input-group-addon">Picture</span>
+						<input tabindex="12" type="file" class="form-control file" required
+							name="picture" id="picture" placeholder="Profile Picture"
+							data-show-upload="false" >
+					</div>
 				</div>
 			</div>
 			<div>
@@ -96,14 +126,16 @@
 					<div class="padblock"></div>
 					<div>
 						<span class="button-checkbox">
-							<button type="button" class="btn" data-color="info" tabindex="12">I Agree</button>
+							<button type="button" class="btn" data-color="info" tabindex="13">I Agree</button>
 							<input type="checkbox" class="hidden" name="agreement" required></input>
-							I Agree to the <a href="#" data-toggle="modal" data-target="#modal_term">Terms and Conditions</a> set out by this site, including our Cookie Use.
+							I Agree to the 
+							<a href="#" data-toggle="modal" data-target="#modal_term">Terms and Conditions</a>
+							set out by this site, including our Cookie Use.
 						</span>
 					</div>
 					<div style="text-align:right;">
-						<button type="submit" class="btn btn-primary" tabindex="13">
-							<span class="fa fa-file-text-o"></span>Register
+						<button type="button" id="register" class="btn btn-primary" tabindex="14">
+							<span class="fa fa-file-text-o"></span> Register <span id="validating"></span>
 						</button>
 					</div>
 				</div>
@@ -111,7 +143,7 @@
 		</div>
 	</form>
 
-	<div class="modal fade" id="modal_term" tabindex141" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="modal_term" tabindex="15" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">

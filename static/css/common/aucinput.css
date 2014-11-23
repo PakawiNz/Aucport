@@ -1,100 +1,73 @@
-    body {
-		padding: 60px 0px;
-		background-color: rgb(220, 220, 220);
-	}
+.mainblock {
+	list-style: none;
+	font-family: 'Lato', sans-serif;
+	margin: 0px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+.mainblock > div {
+	background-color: rgb(255, 255, 255);
+	box-shadow: 0px 0px 5px rgb(51, 51, 51);
+	box-shadow: 0px 0px 5px rgba(51, 51, 51, 0.7);
+	padding: 0px;
+	margin: 0px 0px 20px;
+}
+.mainblock > div > time {
+	display: inline-block;
+	width: 100%;
+	color: rgb(255, 255, 255);
+	background-color: rgb(197, 44, 102);
+	padding: 5px;
+	text-align: center;
+	text-transform: uppercase;
+}
+.mainblock > div:nth-child(even) > time {
+	background-color: rgb(165, 82, 167);
+}
+.mainblock > div > time > .clock {
+	display: block;
+	font-size: 20pt;
+	font-weight: 100;
+	line-height: 1.9;
+}
+.mainblock > div > .detail {
+	padding : 10px;
+}
 
-    .mainblock {
-		list-style: none;
-		font-family: 'Lato', sans-serif;
-		margin: 0px;
-		padding-left: 20px;
-		padding-right: 20px;
+div.input-group {
+	width: 100% !important;
+}
+
+span.input-group-addon {
+	width: 110px !important;
+}
+
+div.descbox {
+	display:table; 
+	width:100%; 
+	word-wrap: break-all;
+	table-layout:fixed;
+	text-align: left;
+}
+
+@media (min-width: 768px) {
+	.mainblock {
+		padding-left: 10%;
+		padding-right: 10%;
 	}
 	.mainblock > div {
-		background-color: rgb(255, 255, 255);
-		box-shadow: 0px 0px 5px rgb(51, 51, 51);
-		box-shadow: 0px 0px 5px rgba(51, 51, 51, 0.7);
-		padding: 0px;
-		margin: 0px 0px 20px;
-	}
-	.mainblock > div > time {
-		display: inline-block;
-		width: 100%;
-		color: rgb(255, 255, 255);
-		background-color: rgb(197, 44, 102);
-		padding: 5px;
-		text-align: center;
-		text-transform: uppercase;
-	}
-	.mainblock > div:nth-child(even) > time {
-		background-color: rgb(165, 82, 167);
-	}
-	.mainblock > div > time > .clock {
 		display: block;
-		font-size: 20pt;
-		font-weight: 100;
-		line-height: 1.9;
+		padding: 0px;
 	}
-	.mainblock > div > .info {
-		padding-top: 5px;
-		text-align: center;
-	}
-	.mainblock > div > .info > .title {
-		font-size: 17pt;
-		font-weight: 700;
+	.mainblock > div > time{
+		display: inline-block;
+		float: left;
+		width: 250px;
+		height: 50px;
+		padding: 0px;
 		margin: 0px;
 	}
-	.mainblock > div > .info > .desc {
-		font-size: 13pt;
-		font-weight: 300;
-		margin: 0px;
+	.padblock {
+		height: 50px;
 	}
-	.mainblock > div > .detail {
-		padding : 10px;
-	}
-
-	div.input-group {
-		width: 100% !important;
-	}
-
-	span.input-group-addon {
-		width: 110px !important;
-	}
-
-	@media (min-width: 768px) {
-		.mainblock {
-			padding-left: 10%;
-			padding-right: 10%;
-		}
-
-		.mainblock > div {
-			display: block;
-			padding: 0px;
-		}
-		.mainblock > div > .info {
-			background-color: rgb(245, 245, 245);
-			overflow: hidden;
-		}
-		.mainblock > div > time,
-		.mainblock > div > img {
-			display: inline-block;
-			float: left;
-			width: 250px;
-			height: 50px;
-			padding: 0px;
-			margin: 0px;
-		}
-		.mainblock > div > .info {
-			position: relative;
-			height: 120px;
-			text-align: left;
-			padding-right: 40px;
-		}	
-		.mainblock > div > .info > .title, 
-		.mainblock > div > .info > .desc {
-			padding: 0px 10px;
-		}
-		.padblock {
-			height: 50px;
-		}
-	}
+}

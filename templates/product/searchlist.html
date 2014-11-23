@@ -9,15 +9,22 @@
 {% endblock %}
 {% block body %}
 {% include 'common/topnavbar.html' %}
+{% include 'common/topbreadcrumb.html'%}
 <div class="container">
-	<div class="row">
-		<div class="col-xs-12 col-sm-offset-2 col-sm-8">
-			<div class="mainblock">
-				{% for product in products %}
-				{% include 'product/productblock.html' with product=product %}
-				{% endfor %}
+	<div class="productblock">
+		{% for product in products %}
+		{% include 'product/productblock.html' with product=product %}
+		{% endfor %}
+		{% if not products %}
+		<div>
+			<time style="padding-top:20px;">
+				<div class="fa  fa-exclamation-triangle fa-5x"></div>
+			</time>
+			<div class="info">
+				<h2 class="title">No Search Result.</h2>
 			</div>
 		</div>
+		{% endif %}
 	</div>
 </div>
 
