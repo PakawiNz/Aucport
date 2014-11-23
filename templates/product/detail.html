@@ -14,7 +14,7 @@
             <div class="row coralbg white">
                 <div class="col-md-6 no-pad">
                     <div class="user-pad">
-                        <h3>Corsair GS600 600 Watt PSU</h3>
+                        <h3>{{ product.name }}</h3>
                         <!-- <h4 class="white">The Corsair Gaming Series GS600 is the ideal price/performance choice for mid-spec gaming PC</h4> -->
                         {% if isOwner %}
                         <a type="button" class="btn btn-labeled btn-info" href="{% url 'editdetail' %}">
@@ -29,59 +29,71 @@
                 </div>
                 <div class="col-md-6 no-pad">
                     <div class="user-image">
-                        {% if member.picture %}
-                        <img src="{{member.picture.url}}" class="img-responsive thumbnail">
-                        {% else %}
-                        <img src="" class="img-responsive thumbnail">
-                        <!-- <img src="http://www.gravatar.com/avatar/{{member.confirmation}}.jpg?s=512&r=x&d=identicon" 
-                            class="img-responsive thumbnail"> -->
+                        {% if product.picture1 %}
+                        <img src="{{product.picture1.url}}" class="img-responsive thumbnail">
                         {% endif %}
                     </div>
                 </div>
             </div>
             <div class="overview row">
                 <div class="user-pad text-center col-xs-4">
-                    <h3>Price</h3>
-                    <h4>0</h4>
+                    <h3>PRICE</h3>
+                    <h4>{{ product.netPrice }}</h4>
                 </div>
                 <div class="user-pad text-center col-xs-4">
-                    <h3>View</h3>
-                    <h4>0</h4>
+                    <h3>VIEW</h3>
+                    <h4>{{ product.view }}</h4>
                 </div>
                 <div class="user-pad text-center col-xs-4">
-                    <h3>LIKED</h3>
-                    <h4>0</h4>
+                    <h3>LIKE</h3>
+                    <h4>{{ product.like }}</h4>
                 </div>
             </div>
         </div>
         <div class="col-md-1 user-menu-btns">
             <div class="btn-group-vertical square" id="responsive">
                 <a href="#" class="imgprev btn btn-default active">
-                  <img src="http://www.corsair.com/Media/catalog/product/g/s/gs600_psu_sideview_blue_2.png" alt="">
+                  {% if product.picture2 %}
+                  <img src="{{product.picture2.url}}" alt="">
+                  {% endif %}
                 </a>
                 <a href="#" class="imgprev btn btn-default">
-                  <img src="http://www.corsair.com/Media/catalog/product/g/s/gs600_psu_sideview_blue_2.png" alt="">
+                  {% if product.picture3 %}
+                  <img src="{{product.picture3.url}}" alt="">
+                  {% endif %}
                 </a>
                 <a href="#" class="imgprev btn btn-default">
-                  <img src="http://www.corsair.com/Media/catalog/product/g/s/gs600_psu_sideview_blue_2.png" alt="">
+                  {% if product.picture4 %}
+                  <img src="{{product.picture4.url}}" alt="">
+                  {% endif %}
                 </a>
                 <a href="#" class="imgprev btn btn-default">
-                  <img src="http://www.corsair.com/Media/catalog/product/g/s/gs600_psu_sideview_blue_2.png" alt="">
+                  {% if product.picture5 %}
+                  <img src="{{product.picture5.url}}" alt="">
+                  {% endif %}
                 </a>
             </div>
         </div>
         <div class="col-md-4 user-menu user-pad">
             <div class="user-menu-content active">
-	            <img src="http://www.corsair.com/Media/catalog/product/g/s/gs600_psu_sideview_blue_2.png" alt="">
+                {% if product.picture2 %}            
+	            <img src="{{product.picture2.url}}" alt="">
+                {% endif %}
             </div>
             <div class="user-menu-content">
-	            <img src="http://www.corsair.com/Media/catalog/product/g/s/gs600_psu_sideview_blue_2.png" alt="">
+                {% if product.picture3 %}            
+	            <img src="{{product.picture3.url}}" alt="">
+                {% endif %}
             </div>
             <div class="user-menu-content">
-	            <img src="http://www.corsair.com/Media/catalog/product/g/s/gs600_psu_sideview_blue_2.png" alt="">
+                {% if product.picture4 %}            
+	            <img src="{{product.picture4.url}}" alt="">
+                {% endif %}
             </div>
             <div class="user-menu-content">
-	            <img src="http://www.corsair.com/Media/catalog/product/g/s/gs600_psu_sideview_blue_2.png" alt="">
+                {% if product.picture5 %}            
+	            <img src="{{product.picture5.url}}" alt="">
+                {% endif %}
             </div>
         </div>
     </div>
@@ -101,7 +113,7 @@
 						<div class="tab-pane fade in active" id="service-one">
 						 
 							<section class="container product-info">
-								The Corsair Gaming Series GS600 power supply is the ideal price-performance solution for building or upgrading a Gaming PC. A single +12V rail provides up to 48A of reliable, continuous power for multi-core gaming PCs with multiple graphics cards. The ultra-quiet, dual ball-bearing fan automatically adjusts its speed according to temperature, so it will never intrude on your music and games. Blue LEDs bathe the transparent fan blades in a cool glow. Not feeling blue? You can turn off the lighting with the press of a button.
+								{{ product.properties }}
 
 								<h3>Corsair Gaming Series GS600 Features:</h3>
 								<li>It supports the latest ATX12V v2.3 standard and is backward compatible with ATX12V 2.2 and ATX12V 2.01 systems</li>

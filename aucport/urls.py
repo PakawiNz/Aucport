@@ -22,8 +22,11 @@ urlpatterns += patterns('mainapp.apps.member',
 )
 
 urlpatterns += patterns('mainapp.apps.product',
-	url(r'^product/detail/$', 				'detail.show',				name='detail'),
-	url(r'^product/editdetail/$', 			'detail.edit',				name='editdetail'),
+	url(r'^product/product/$', 				'detail.show',				name='product'),
+	url(r'^product/c_product/$', 			'detail.create',			name='c_product'),
+	url(r'^product/e_product/$', 			'detail.edit',				name='e_product'),
+	url(r'^product/do_c_product/$',			'detail.docreate',			name='do_c_product'),
+	url(r'^product/do_e_product/$',			'detail.doedit',			name='do_e_product'),
 	url(r'^product/search/$', 				'search.form',				name='search'),
 	url(r'^product/dosearch/$', 			'search.search',			name='dosearch'),
 )

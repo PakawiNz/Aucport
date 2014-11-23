@@ -1,65 +1,138 @@
 {% extends 'common/maincanvas.html' %}
 {% block style %}
 <link rel="stylesheet" type="text/css" href="/static/css/common/aucinput.css">
+<link rel="stylesheet" type="text/css" href="/static/css/fileinput.min.css">
 {% endblock %}
 {% block script %}
 <script type="text/javascript" src="/static/js/product/editdetail.js"></script>
+<script type="text/javascript" src="/static/js/fileinput.min.js"></script>
 {% endblock %}
 {% block body %}
 {% include 'common/topnavbar.html' %}
 {% include 'common/topbreadcrumb.html'%}
 <div class="container">
-		<div class="row">
-			<div class="col-xs-12 col-sm-offset-2 col-sm-8">
-				<div class="mainblock">
-					<div>
-						<time>
-							<span class="clock">Authen</span>
-						</time>
-						<div class="detail">
-							<input name="email" id="email"  placeholder="Email Address" tabindex="1" type="email" class="form-control input">
-							<input name="password" id="password"  placeholder="Password" tabindex="2" type="password" class="form-control input">
-							<input name="password_confirmation" id="password_confirmation"  placeholder="Confirm Password" tabindex="3" type="password" class="form-control input">
+	{% if product %}
+	<form action="{% url 'do_e_product' %}" method="POST" enctype="multipart/form-data" id="mainform" >
+	{% else %}
+	<form action="{% url 'do_c_product' %}" method="POST" enctype="multipart/form-data" id="mainform" >
+	{% endif %}
+		{% csrf_token %}
+		<div class="mainblock">
+			<div>
+				<time>
+					<span class="clock">Authen</span>
+				</time>
+				<div class="detail">
+					<div class="padblock"></div>
+					<div class="input-group">
+						<input type="hidden" id="owner"/>
+					</div>
+					{% for form in forms %}
+					<div class="input-group">
+						<span class="input-group-addon">{{form.label}}</span>
+						<input tabindex="0" type="text" class="form-control input" {{form.require}} value="{{form.value}}" 
+							name="{{form.name}}" id="{{form.name}}" placeholder="{{form.label}}" >
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+			<div>
+				<time>
+					<span class="clock">Contact</span>
+				</time>
+				<div class="detail">
+					<div class="padblock"></div>
+					<div class="input-group">
+						<span class="input-group-addon">Expired</span>
+						<div class="input-group">
+							<input tabindex="0" type="text" class="form-control input" required value="{{product.expired|date:"d M Y H:i"}}" 
+								name="expired" id="expired" placeholder="Expired"  
+								data-date-format="DD MMM YYYY HH:mm"
+								style="background-color:white; cursor: text;"/>
+							<div class="input-group-addon" style="width:0px !important;">
+								<span class="glyphicon glyphicon-calendar"></span>
+							</div>
 						</div>
 					</div>
-					<div>
-						<time>
-							<span class="clock">Contact</span>
-						</time>
-						<div class="detail">
-							<input name="first_name" id="first_name" placeholder="First Name" tabindex="4" type="text" class="form-control input">
-							<input name="last_name" id="last_name" placeholder="Last Name" tabindex="5" type="text" class="form-control input">
-							<input name="display_name" id="display_name" placeholder="Display Name" tabindex="6" type="text" class="form-control input">
-							<input name="birthdate" id="birthdate" placeholder="Birthday" tabindex="6" type="date" class="form-control input">
-							<input name="address" id="address" placeholder="Address" tabindex="6" type="text" class="form-control input">
-							<select name="country" id="country" placeholder="Country" tabindex="6" type="select" class="form-control input">
-							  <option >Thailand</option>
-							  <option >China</option>
-							  <option >USA</option>
-							</select>
-						</div>
-					</div>
-					<div>
-						<time>
-							<span class="clock">Agreement</span>
-						</time>
-						<div class="detail" style="height:50px">
-							<span class="button-checkbox">
-								<div style="float:left; padding-left:10px; padding-right:10px;">
-									<button type="button" class="btn" data-color="info" tabindex="7">I Agree</button>
-									<input type="checkbox" name="t_and_c" id="t_and_c" class="hidden" value="1">
-								</div>
-							</span>
-							I Agree to the <a href="#" data-toggle="modal" data-target="#t_and_c_m">Terms and Conditions</a> set out by this site, including our Cookie Use.
-						</div>
-						<div class="detail" style="height:55px;">
-							<button type="button" class="btn btn-primary" type="submit" style="float:right; width:300px" tabindex="8">
-								<span class="fa fa-file-text-o"></span>
-								Register
-							</button>
-						</div>
+					<div class="input-group">
+						<span class="input-group-addon">Category</span>
+						<select tabindex="0" type="select" class="form-control input" required value="{{product.category}}" 
+							name="category" id="category" placeholder="Category" >
+						{% for category in categorys %}
+						  <option value="{{category.id}}">{{category.name}}</option>
+						{% endfor %}
+						</select>
 					</div>
 				</div>
 			</div>
-			
+			<div>
+				<time>
+					<span class="clock">Picture</span>
+				</time>
+				{% if product.picture1 %}
+				<img src="{{product.picture1.url}}" class="oldpicture hidden">
+				{% endif %}
+				{% if product.picture2 %}
+				<img src="{{product.picture2.url}}" class="oldpicture hidden">
+				{% endif %}
+				{% if product.picture3 %}
+				<img src="{{product.picture3.url}}" class="oldpicture hidden">
+				{% endif %}
+				{% if product.picture4 %}
+				<img src="{{product.picture4.url}}" class="oldpicture hidden">
+				{% endif %}
+				{% if product.picture5 %}
+				<img src="{{product.picture5.url}}" class="oldpicture hidden">
+				{% endif %}
+				<div class="detail">
+					<div class="padblock"></div>
+					<div class="input-group">
+						<span class="input-group-addon">Picture 1</span>
+						<input tabindex="0" type="file" class="form-control file"
+							name="picture1" id="picture1" placeholder="Product Picture1"
+							data-show-upload="false" >
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">Picture 2</span>
+						<input tabindex="0" type="file" class="form-control file"
+							name="picture2" id="picture2" placeholder="Product Picture2"
+							data-show-upload="false" >
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">Picture 3</span>
+						<input tabindex="0" type="file" class="form-control file"
+							name="picture3" id="picture3" placeholder="Product Picture3"
+							data-show-upload="false" >
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">Picture 4</span>
+						<input tabindex="0" type="file" class="form-control file"
+							name="picture4" id="picture4" placeholder="Product Picture4"
+							data-show-upload="false" >
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">Picture 5</span>
+						<input tabindex="0" type="file" class="form-control file"
+							name="picture5" id="picture5" placeholder="Product Picture5"
+							data-show-upload="false" >
+					</div>
+				</div>
+			</div>
+			<div>
+				<time>
+					<span class="clock">Agreement</span>
+				</time>
+				<div class="detail">
+					<div class="padblock"></div>
+					<input type="hidden" name="product" value="{{product.id}}">
+					<div style="text-align:right;">
+						<button type="button" id="register" class="btn btn-primary" tabindex="14">
+							<span class="fa fa-file-text-o"></span> {{title}}</span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
 {% endblock %}

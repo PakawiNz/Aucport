@@ -4,9 +4,14 @@
 		<h2 class="title">{{product.name}}</h2>
 		<p class="desc">{{product.properties}}</p>
 		<ul style="width:100%;">
-			<li></li>							
+			<li></li>
+			{% if login_member.id == product.owner.id %}
 			<li class="hoverable" style="width:25%;">
-				<a href="">{{product.netPrice}} <span class="fa fa-money"></span></a>
+				<a class="openeditlink" href="#" name="{{product.id}}">Edit Product <span class="fa fa-edit"></span></a>
+			</li>
+			{% endif %}
+			<li class="hoverable" style="width:25%;">
+				<a >{{product.netPrice}} <span class="fa fa-money"></span></a>
 			</li>
 			<li class="social_gap"></li>							
 		</ul>
