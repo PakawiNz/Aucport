@@ -10,10 +10,16 @@ class form(object) :
 		self.value = value
 		self.required = "required" if required else ""
 
+@common.gen_view('','')
+def dump(request):
+	raise Exception("No Product ID found.")
+
 @common.gen_view('Product Detail','product/detail.html')
-def show(request):
+def show(request,pid):
+	product = models.get_one(models.Product,id=pid)
+	if not product : raise Exception("No Product with such ID.")
 	context = {
-		'product':models.Product.objects.first(),
+		'product':product,
 	}
 	return context
 

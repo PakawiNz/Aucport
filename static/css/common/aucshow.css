@@ -45,7 +45,8 @@
 	font-weight: 100;
 	line-height: 1.7;
 }
-.productblock > div > img {
+.productblock > div > img,
+.productblock > div > a > img {
 	width: 100%;
 }
 .productblock > div > .info {
@@ -115,11 +116,13 @@
 		padding: 0px;
 	}
 	.productblock > div > time,
-	.productblock > div > img  {
+	.productblock > div > img,
+	.productblock > div > a > img  {
 		display: inline-block;
 	}
 	.productblock > div > time,
-	.productblock > div > img {
+	.productblock > div > img,
+	.productblock > div > a > img {
 		width: 120px;
 		float: left;
 	}
@@ -128,7 +131,8 @@
 		overflow: hidden;
 	}
 	.productblock > div > time,
-	.productblock > div > img {
+	.productblock > div > img,
+	.productblock > div > a > img {
 		width: 120px;
 		height: 120px;
 		padding: 0px;
