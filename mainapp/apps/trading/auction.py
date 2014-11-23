@@ -1,29 +1,27 @@
 from django.shortcuts import render
 from mainapp import models,common
+from django .http import HttpResponse
 import datetime
 from mainapp import models, common
 
 
 @common.gen_view('Auction Watchlist','trading/auction.html',memberOnly=True)
 def main(request):
-	auctions = [{
-		'product': "Battle Fury",
-		'picture': "http://cdn.dota2.com/apps/dota2/images/items/bfury_lg.png",
-		'endtime': datetime.datetime.now() + datetime.timedelta(-1,10),
-		},{
-		'product': "Aghanim's Sceptor",
-		'picture': "http://cdn.dota2.com/apps/dota2/images/items/ultimate_scepter_lg.png",
-		'endtime': datetime.datetime.now() + datetime.timedelta(0,10),
-		},{
-		'product': "Boot of travel",
-		'picture': "http://cdn.dota2.com/apps/dota2/images/items/travel_boots_lg.png",
-		'endtime': datetime.datetime.now() + datetime.timedelta(0,70),
-		},{
-		'product': "Desolator",
-		'picture': "http://cdn.dota2.com/apps/dota2/images/items/desolator_lg.png",
-		'endtime': datetime.datetime.now() + datetime.timedelta(1,10),
-		},
-	]
+	# requester = request.session.get('member')
+	# products = models.Auction.objects.filter(bidder=requester)
+	requester = models.Member.objects.filter(email='mi_ni_gift_@hotmail.com')
+	aucts = models.Auction.objects.all().filter(bidder=requester[0])
+	auctions = []
+	for i,a in enumerate(aucts) :
+		product = {
+			'a': a,
+			'product': a.product,
+			'picture': a.product.picture1,
+			'endtime': a.product.expired,
+		}
+		auctions.append(product)
+
+	
 
 	for auction in auctions :
 		auction['endmonth'] = auction['endtime'].strftime('%b')
@@ -34,16 +32,18 @@ def main(request):
 	}
 	return context
 
+
 def bid(request) :
 	if not request.POST :
 		return render(request,'common/invalid.html')
-
+	print 'here<<<<<<<<<<<<<<<<<<<<< '
 	formstate = request.POST
 
 	request_product = formstate.get('product')
-	requester_list = request.session.get('member')
-	requester_list = models.Member.objects.filter(id=requester)
-	product_list = models.Product.objects.filter(id=request_product)
+	requester = request.session.get('member')
+	print requester
+	requester_list = models.Member.objects.filter(email=requester)
+	product_list = models.Product.objects.filter(name=request_product)
 
 	requester = requester_list[0]
 
@@ -70,7 +70,7 @@ def bid(request) :
 				elif auction_new.current <= auction_old.current : # old bidder wins
 					winner = 0
 
-			else auction_old.isAuto : # The current highest bidder is auto bidding
+			elif auction_old.isAuto : # The current highest bidder is auto bidding
 				if auction_new.current > auction_old.ceiling : # challenger wins
 					winner = 1
 
@@ -79,14 +79,14 @@ def bid(request) :
 						auction_old.current += auction_old.increase
 						winner = 0
 
-		elif auction_new.current == 0 # the bid request is in auto mode
-			if not auction_old.isAuto # The current highest bidder is manual bidding
+		elif auction_new.current == 0 :# the bid request is in auto mode
+			if not auction_old.isAuto :# The current highest bidder is manual bidding
 				if auction_new.ceiling > auction_old.current : # challenger wins
 					winner = 1
 					auction_new.current = auction_old.current+auction_new.increase
 				elif auction_new.ceiling <= auction_old.current : # old bidder wins
 					winner = 0
-			else auction_old.isAuto # The current highest bidder is auto bidding
+			elif auction_old.isAuto :# The current highest bidder is auto bidding
 				# Fight to determine winner
 				bidder_turn = 1 # 0 = old bidder, 1 = challenger
 				while True:
@@ -98,10 +98,11 @@ def bid(request) :
 						winner = 0
 						auction_old.current = auction_new.current + auction_old.increase
 						bidder_turn = 1
-					else
+					# else
 
 
-		if winner == 0
+		if winner == 0 :
 			product.highest_auction = auction_old
-		else
+		else :
 			product.highest_auction = auction_new
+	return HttpResponse('Success')
