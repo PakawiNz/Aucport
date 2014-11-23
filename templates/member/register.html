@@ -11,7 +11,11 @@
 {% include 'common/topnavbar.html' %}
 {% include 'common/topbreadcrumb.html'%}
 <div class="container">
+	{% if member %}
+	<form action="{% url 'doupdated' %}" method="POST" enctype="multipart/form-data" id="mainform" >
+	{% else %}
 	<form action="{% url 'doregister' %}" method="POST" enctype="multipart/form-data" id="mainform" >
+	{% endif %}
 		{% csrf_token %}
 		<div class="mainblock">
 			<div>
@@ -22,20 +26,27 @@
 					<div class="padblock"></div>
 					<div class="input-group has-error">
 						<span class="input-group-addon">Email</span>
-						<input required tabindex="1" type="email" class="form-control input"
-							name="email" id="email"  placeholder="Email Address" >
+						<input tabindex="1" type="email" class="form-control input" required value="{{member.email}}" 
+							name="email" id="email"  placeholder="Email Address" {% if member %} readonly {% endif %} >
 						<div class="input-group-addon descbox">
 							ฝากดูตรงนี้โหน่ยยย มันไม่ยอมขึ้นบรรทัดใหม่ให้อ่ะ
 						</div>
 					</div>
+					{% if member %}
+					<div class="input-group">
+						<span class="input-group-addon">Old Password</span>
+						<input tabindex="2" type="password" class="form-control input" required value="" 
+							name="oldpassword" id="oldpassword"  placeholder="Old Password" >
+					</div>
+					{% endif %}
 					<div class="input-group">
 						<span class="input-group-addon">Password</span>
-						<input required tabindex="2" type="password" class="form-control input"
+						<input tabindex="2" type="password" class="form-control input" required value="" 
 							name="password" id="password"  placeholder="Password" >
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon">Confirm</span>
-						<input required tabindex="3" type="password" class="form-control input"
+						<input tabindex="3" type="password" class="form-control input" required value="" 
 							name="password_confirmation" id="password_confirmation"  placeholder="Confirm Password" >
 					</div>
 				</div>
@@ -48,27 +59,27 @@
 					<div class="padblock"></div>
 					<div class="input-group">
 						<span class="input-group-addon">First Name</span>
-						<input tabindex="4" type="text" class="form-control input" required
+						<input tabindex="4" type="text" class="form-control input" required value="{{member.firstname}}" 
 							name="firstname" id="firstname" placeholder="First Name" >
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon">Last Name</span>
-						<input tabindex="5" type="text" class="form-control input" required
+						<input tabindex="5" type="text" class="form-control input" required value="{{member.lastname}}" 
 							name="lastname" id="lastname" placeholder="Last Name" >
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon">Display Name</span>
-						<input tabindex="6" type="text" class="form-control input" required
+						<input tabindex="6" type="text" class="form-control input" required value="{{member.displayname}}" 
 							name="displayname" id="displayname" placeholder="Display Name" >
 					</div>
 					<div class="input-group" id="datetimepicker1">
 						<span class="input-group-addon">Birthdate</span>
 
 						<div class="input-group">
-							<input tabindex="7" type="date" class="form-control input" required
+							<input tabindex="7" type="date" class="form-control input" required value="{{member.birthdate|date:"d b Y"}}" 
 								name="birthdate" id="birthdate" placeholder="Birthdate"  
 								data-date-format="DD MMM YYYY"
-								style="background-color:white; cursor: text;" readonly/>
+								style="background-color:white; cursor: text;"/>
 							<div class="input-group-addon" style="width:0px !important;">
 								<span class="glyphicon glyphicon-calendar"></span>
 							</div>
@@ -76,17 +87,17 @@
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon">Phone</span>
-						<input tabindex="8" type="text" class="form-control input" required
+						<input tabindex="8" type="text" class="form-control input" required value="{{member.phone}}" 
 							name="phone" id="phone" placeholder="Phone" >
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon">Address</span>
-						<input tabindex="9" type="text" class="form-control input" required
+						<input tabindex="9" type="text" class="form-control input" required value="{{member.address}}" 
 							name="address" id="address" placeholder="Address" >
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon">Country</span>
-						<select tabindex="10" type="select" class="form-control input" required
+						<select tabindex="10" type="select" class="form-control input" required value="{{member.country}}" 
 							name="country" id="country" placeholder="Country" >
 						{% for country in countries %}
 						  <option value="{{country.id}}">{{country.name}}</option>
@@ -95,7 +106,7 @@
 					</div>
 					<div class="input-group">
 						<span class="input-group-addon">Timezone</span>
-						<select tabindex="11" type="select" class="form-control input" required
+						<select tabindex="11" type="select" class="form-control input" required value="{{member.timezone}}" 
 							name="timezone" id="timezone" placeholder="Timezone" >
 						{% for timezone in timezones %}
 						  <option value="{{timezone.id}}">{{timezone.name}}</option>
@@ -108,6 +119,7 @@
 				<time>
 					<span class="clock">Profile</span>
 				</time>
+				<img id="oldpicture" src="{{member.picture.url}}" class="hidden">
 				<div class="detail">
 					<div class="padblock"></div>
 					<div class="input-group">
@@ -124,6 +136,7 @@
 				</time>
 				<div class="detail">
 					<div class="padblock"></div>
+					{% if not member %}
 					<div>
 						<span class="button-checkbox">
 							<button type="button" class="btn" data-color="info" tabindex="13">I Agree</button>
@@ -133,6 +146,7 @@
 							set out by this site, including our Cookie Use.
 						</span>
 					</div>
+					{% endif %}
 					<div style="text-align:right;">
 						<button type="button" id="register" class="btn btn-primary" tabindex="14">
 							<span class="fa fa-file-text-o"></span> Register <span id="validating"></span>
