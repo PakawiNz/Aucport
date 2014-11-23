@@ -1,0 +1,81 @@
+{% extends 'common/maincanvas.html' %}
+{% block body %}
+{% block style %}
+<style type="text/css">
+html,
+body {
+	padding: 0px;
+	height: 100%;
+	background-color: rgba(72, 72, 72, 1) !important;
+}
+
+.site-wrapper {
+	display: table;
+	width: 100%;
+	height: 100%;
+	-webkit-box-shadow: inset 0 0 100px rgba(0,0,0,.5);
+	box-shadow: inset 0 0 100px rgba(0,0,0,.5);
+
+	color: #fff;
+	text-align: center;
+	text-shadow: 0 1px 3px rgba(0,0,0,.5);
+}
+.site-wrapper-inner {
+	display: table-cell;
+	height: 100%;
+	vertical-align: top;
+}
+.cover-container {
+	margin-top: 10%;
+	margin-right: auto;
+	margin-left: auto;
+	margin-bottom: 10%;
+}
+
+.inner {
+	padding: 30px;
+}
+
+.cover {
+	padding: 0 20px;
+}
+.cover .btn-lg {
+	padding: 10px 40px;
+	font-weight: bold;
+}
+.cover-container {
+	max-width: 700px;
+}
+	
+</style>
+{% endblock %}
+{% include 'common/topnavbar.html' %}
+<div class="site-wrapper">
+  <div class="site-wrapper-inner">
+    <div style="height:60px"></div>
+    <div class="cover-container">
+      <div class="inner cover">
+        <p class="lead">
+        	<div class="btn btn-lg btn-default" href="#"><h1>Aucport</h1></div>
+        </p>
+      
+        <h1 class="cover-heading">
+        	Blah Blah Blah Blah
+        </h1>
+
+        <p class="lead">
+        	Blah Blah Blah Blah
+        	Blah Blah Blah Blah
+        	Blah Blah Blah Blah
+        	Blah Blah Blah Blah
+        	Blah Blah Blah Blah
+        	Blah Blah Blah Blah
+        	Blah Blah Blah Blah
+        	Blah Blah Blah Blah
+        	Blah Blah Blah Blah
+        </p>
+      </div>
+    </div>
+</div>
+</div>
+{% endblock %}
