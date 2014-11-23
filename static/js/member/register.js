@@ -102,6 +102,11 @@ $(function () {
     });
 
     $("#picture").fileinput({
+        initialPreview: [
+            "<img src='" + $('#oldpicture')[0].src + "' class='file-preview-image'>",
+        ],
+        overwriteInitial: true,
+        initialCaption: "Old Picture",
         previewFileType: "picture",
         allowedFileExtensions: ["jpg"],
         browseClass: "btn btn-default",

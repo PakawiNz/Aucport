@@ -61,21 +61,10 @@
 	border-radius: 0px;
 }
 
-.container-fluid{
-	max-width: 1140px;
-	margin: 0 auto;
-}
-
 .view-wrapper {
 	float: right;
 	max-width: 70%;
 	margin-top: 25px;
-}
-
-.container {
-	padding-left: 0px;
-	padding-right: 0px;
-	max-width: 100%;
 }
 
 /*********************************************

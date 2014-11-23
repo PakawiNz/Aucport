@@ -18,7 +18,7 @@
                         <!-- <h4 class="white"><i class="fa fa-check-circle-o"></i> San Antonio, TX</h4> -->
                         <!-- <h4 class="white"><i class="fa fa-twitter"></i> CoolesOCool</h4> -->
                         {% if isOwner %}
-                        <a type="button" class="btn btn-labeled btn-info" href="/member/editprofile/">
+                        <a type="button" class="btn btn-labeled btn-default" href="{% url 'editprofile' %}">
                             <span class="btn-label"><i class="fa fa-pencil"></i></span>Update
                         </a>
                         {% endif %}
@@ -36,15 +36,15 @@
                 </div>
             </div>
             <div class="row overview">
-                <div class="col-md-4 user-pad text-center">
+                <div class="col-xs-4 col-md-4 user-pad text-center">
                     <h3>BUY</h3>
                     <h4>{{buy}}</h4>
                 </div>
-                <div class="col-md-4 user-pad text-center">
+                <div class="col-xs-4 col-md-4 user-pad text-center">
                     <h3>SELL</h3>
                     <h4>{{sell}}</h4>
                 </div>
-                <div class="col-md-4 user-pad text-center">
+                <div class="col-xs-4 col-md-4 user-pad text-center">
                     <h3>LIKED</h3>
                     <h4>{{liked}}</h4>
                 </div>
@@ -52,7 +52,7 @@
         </div>
         <div class="col-md-1 user-menu-btns">
             <div class="btn-group-vertical square" id="responsive">
-                <a href="#" class="btn btn-block btn-default active">
+                <a href="#" class="btn btn-default active">
                   <i class="fa fa-bell-o fa-3x"></i>
                 </a>
                 <a href="#" class="btn btn-default">
@@ -169,14 +169,10 @@
     </div>
 </div>
 <div class="container" style="padding-top:30px">
-    <div class="row">
-        <div class="col-xs-12 col-sm-offset-2 col-sm-8">
-            <div class="mainblock">
-                {% for product in products %}
-                {% include 'product/productblock.html' with product=product %}
-                {% endfor %}
-            </div>
-        </div>
+    <div class="productblock">
+        {% for product in products %}
+        {% include 'product/productblock.html' with product=product %}
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

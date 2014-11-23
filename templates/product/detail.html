@@ -1,5 +1,6 @@
 {% extends 'common/maincanvas.html' %}
 {% block style %}
+<link rel="stylesheet" type="text/css" href="/static/css/common/aucprof.css">
 <link rel="stylesheet" type="text/css" href="/static/css/common/aucdetail.css">
 {% endblock %}
 {% block script %}
@@ -7,53 +8,86 @@
 {% endblock %}
 {% block body %}
 {% include 'common/topnavbar.html' %}
+<div class="container">
+    <div class="row user-menu-container square">
+        <div class="col-md-7 user-details">
+            <div class="row coralbg white">
+                <div class="col-md-6 no-pad">
+                    <div class="user-pad">
+                        <h3>Corsair GS600 600 Watt PSU</h3>
+                        <!-- <h4 class="white">The Corsair Gaming Series GS600 is the ideal price/performance choice for mid-spec gaming PC</h4> -->
+                        {% if isOwner %}
+                        <a type="button" class="btn btn-labeled btn-info" href="{% url 'editdetail' %}">
+                            <span class="btn-label"><i class="fa fa-pencil"></i></span>Edit
+                        </a>
+                        {% else %}
+                        <a type="button" class="btn btn-labeled btn-default" href="{% url 'payment' %}">
+                            <span class="btn-label"><i class="fa fa-usd"></i></span>Purchase
+	                    </a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-6 no-pad">
+                    <div class="user-image">
+                        {% if member.picture %}
+                        <img src="{{member.picture.url}}" class="img-responsive thumbnail">
+                        {% else %}
+                        <img src="" class="img-responsive thumbnail">
+                        <!-- <img src="http://www.gravatar.com/avatar/{{member.confirmation}}.jpg?s=512&r=x&d=identicon" 
+                            class="img-responsive thumbnail"> -->
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="overview row">
+                <div class="user-pad text-center col-xs-4">
+                    <h3>Price</h3>
+                    <h4>0</h4>
+                </div>
+                <div class="user-pad text-center col-xs-4">
+                    <h3>View</h3>
+                    <h4>0</h4>
+                </div>
+                <div class="user-pad text-center col-xs-4">
+                    <h3>LIKED</h3>
+                    <h4>0</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1 user-menu-btns">
+            <div class="btn-group-vertical square" id="responsive">
+                <a href="#" class="imgprev btn btn-default active">
+                  <img src="http://www.corsair.com/Media/catalog/product/g/s/gs600_psu_sideview_blue_2.png" alt="">
+                </a>
+                <a href="#" class="imgprev btn btn-default">
+                  <img src="http://www.corsair.com/Media/catalog/product/g/s/gs600_psu_sideview_blue_2.png" alt="">
+                </a>
+                <a href="#" class="imgprev btn btn-default">
+                  <img src="http://www.corsair.com/Media/catalog/product/g/s/gs600_psu_sideview_blue_2.png" alt="">
+                </a>
+                <a href="#" class="imgprev btn btn-default">
+                  <img src="http://www.corsair.com/Media/catalog/product/g/s/gs600_psu_sideview_blue_2.png" alt="">
+                </a>
+            </div>
+        </div>
+        <div class="col-md-4 user-menu user-pad">
+            <div class="user-menu-content active">
+	            <img src="http://www.corsair.com/Media/catalog/product/g/s/gs600_psu_sideview_blue_2.png" alt="">
+            </div>
+            <div class="user-menu-content">
+	            <img src="http://www.corsair.com/Media/catalog/product/g/s/gs600_psu_sideview_blue_2.png" alt="">
+            </div>
+            <div class="user-menu-content">
+	            <img src="http://www.corsair.com/Media/catalog/product/g/s/gs600_psu_sideview_blue_2.png" alt="">
+            </div>
+            <div class="user-menu-content">
+	            <img src="http://www.corsair.com/Media/catalog/product/g/s/gs600_psu_sideview_blue_2.png" alt="">
+            </div>
+        </div>
+    </div>
+</div>
 <div class="container-fluid">
     <div class="content-wrapper">	
-		<div class="item-container">	
-			<div class="container">	
-				<div class="col-md-12">
-					<div class="product col-md-3 service-image-left">
-						<center>
-							<img id="item-display" src="http://www.corsair.com/Media/catalog/product/g/s/gs600_psu_sideview_blue_2.png" alt=""></img>
-						</center>
-					</div>
-					
-					<div class="container service1-items col-sm-2 col-md-2 pull-left">
-						<center>
-							<a id="item-1" class="service1-item">
-								<img src="http://www.corsair.com/Media/catalog/product/g/s/gs600_psu_sideview_blue_2.png" alt=""></img>
-							</a>
-							<a id="item-2" class="service1-item">
-								<img src="http://www.corsair.com/Media/catalog/product/g/s/gs600_psu_sideview_blue_2.png" alt=""></img>
-							</a>
-							<a id="item-3" class="service1-item">
-								<img src="http://www.corsair.com/Media/catalog/product/g/s/gs600_psu_sideview_blue_2.png" alt=""></img>
-							</a>
-						</center>
-					</div>
-				</div>
-					
-				<div class="col-md-7">
-					<div class="product-title">Corsair GS600 600 Watt PSU</div>
-					<div class="product-desc">The Corsair Gaming Series GS600 is the ideal price/performance choice for mid-spec gaming PC</div>
-					<div class="product-rating"><i class="fa fa-star gold"></i> <i class="fa fa-star gold"></i> <i class="fa fa-star gold"></i> <i class="fa fa-star gold"></i> <i class="fa fa-star-o"></i> </div>
-					<hr>
-					<div class="product-price">$ 1234.00</div>
-					<div class="product-stock">In Stock</div>
-					<hr>
-					<div class="btn-group cart">
-						<button type="button" class="btn btn-success">
-							Add to cart 
-						</button>
-					</div>
-					<div class="btn-group wishlist">
-						<button type="button" class="btn btn-danger">
-							Add to wishlist 
-						</button>
-					</div>
-				</div>
-			</div> 
-		</div>
 		<div class="container-fluid">		
 			<div class="col-md-12 product-info">
 					<ul id="myTab" class="nav nav-tabs nav_tabs">
