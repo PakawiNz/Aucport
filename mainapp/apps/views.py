@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from mainapp import common
 
+@common.gen_view('Home','home.html')
 def home(request) :
-	return render(request,'home.html')
+	return {}
