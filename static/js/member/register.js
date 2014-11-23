@@ -101,10 +101,15 @@ $(function () {
         init();
     });
 
+    getOldpicture = function(){
+        if ($('#oldpicture')[0])
+            return ["<img src='" + $('#oldpicture')[0].src + "' class='file-preview-image'>"];
+        else 
+            return undefined;
+    }
+
     $("#picture").fileinput({
-        initialPreview: [
-            "<img src='" + $('#oldpicture')[0].src + "' class='file-preview-image'>",
-        ],
+        initialPreview: getOldpicture(),
         overwriteInitial: true,
         initialCaption: "Old Picture",
         previewFileType: "picture",

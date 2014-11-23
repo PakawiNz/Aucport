@@ -119,7 +119,9 @@
 				<time>
 					<span class="clock">Profile</span>
 				</time>
+				{% if member.picture %}
 				<img id="oldpicture" src="{{member.picture.url}}" class="hidden">
+				{% endif %}
 				<div class="detail">
 					<div class="padblock"></div>
 					<div class="input-group">
@@ -146,12 +148,18 @@
 							set out by this site, including our Cookie Use.
 						</span>
 					</div>
-					{% endif %}
 					<div style="text-align:right;">
 						<button type="button" id="register" class="btn btn-primary" tabindex="14">
 							<span class="fa fa-file-text-o"></span> Register <span id="validating"></span>
 						</button>
 					</div>
+					{% else %}
+					<div style="text-align:right;">
+						<button type="button" id="register" class="btn btn-primary" tabindex="14">
+							<span class="fa fa-file-text-o"></span> Update Profile <span id="validating"></span>
+						</button>
+					</div>
+					{% endif %}
 				</div>
 			</div>
 		</div>
