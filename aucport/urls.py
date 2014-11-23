@@ -37,3 +37,7 @@ urlpatterns += patterns('mainapp.apps.trading',
 	url(r'^trading/payment/$', 				'payment.main',				name='payment'),
 	url(r'^trading/bid/$', 					'auction.bid',				name='bid'),
 )
+
+
+handler404 = 'mainapp.utils.error_handler.handler404'
+handler500 = 'mainapp.utils.error_handler.handler500'
