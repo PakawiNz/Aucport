@@ -10,6 +10,11 @@
 {% block body %}
 {% include 'common/topnavbar.html' %}
 {% include 'common/topbreadcrumb.html'%}
+<style type="text/css">
+   	span.input-group-addon {
+   		width: 145px !important;
+   	}
+</style>
 <div class="container">
 	{% if product %}
 	<form action="{% url 'do_e_product' %}" method="POST" enctype="multipart/form-data" id="mainform" >
@@ -20,7 +25,7 @@
 		<div class="mainblock">
 			<div>
 				<time>
-					<span class="clock">Authen</span>
+					<span class="clock">Detail</span>
 				</time>
 				<div class="detail">
 					<div class="padblock"></div>
@@ -38,16 +43,16 @@
 			</div>
 			<div>
 				<time>
-					<span class="clock">Contact</span>
+					<span class="clock">Spacific Detail</span>
 				</time>
 				<div class="detail">
 					<div class="padblock"></div>
 					<div class="input-group">
 						<span class="input-group-addon">Expired</span>
 						<div class="input-group">
-							<input tabindex="0" type="text" class="form-control input" required value="{{product.expired|date:"d M Y H:i"}}" 
+							<input tabindex="0" type="text" class="form-control input" required value="{{product.expired|date:"Y-M-d H:i"}}" 
 								name="expired" id="expired" placeholder="Expired"  
-								data-date-format="DD MMM YYYY HH:mm"
+								data-date-format="YYYY-MM-DD HH:MM"
 								style="background-color:white; cursor: text;"/>
 							<div class="input-group-addon" style="width:0px !important;">
 								<span class="glyphicon glyphicon-calendar"></span>

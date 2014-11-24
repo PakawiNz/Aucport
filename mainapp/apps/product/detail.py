@@ -20,24 +20,25 @@ def show(request,pid):
 	product = models.Product.objects.get(id=pid)
 	context = {
 		'product':product,
+		'isOwner':isOwner,
 	}
 	return context
 
 @common.gen_view('Create New Product','product/editdetail.html',memberOnly=True)
 def create(request):
 	forms = [
-		form(0,'text','name','name','',False),
-		form(0,'text','amount','amount','',False),
-		form(0,'text','netPrice','netPrice','',False),
-		form(0,'text','properties','properties','',False),
-		form(0,'text','brand','brand','',False),
-		form(0,'text','version','version','',False),
-		form(0,'text','capacity','capacity','',False),
-		form(0,'text','dimension','dimension','',False),
-		form(0,'text','defection','defection','',False),
-		form(0,'text','product_condition','product_condition','',False),
-		form(0,'text','selling_condition','selling_condition','',False),
-		form(0,'text','shipping_condition','shipping_condition','',False),
+		form(0,'text','Name','Name','',False),
+		form(0,'text','Amount','Amount','',False),
+		form(0,'text','NetPrice','NetPrice','',False),
+		form(0,'text','Properties','Properties','',False),
+		form(0,'text','Brand','Brand','',False),
+		form(0,'text','Version','Version','',False),
+		form(0,'text','Capacity','Capacity','',False),
+		form(0,'text','Dimension','Dimension','',False),
+		form(0,'text','Defection','Defection','',False),
+		form(0,'text','Product Condition','Product Condition','',False),
+		form(0,'text','Selling Condition','Selling Condition','',False),
+		form(0,'text','Shipping Condition','Shipping Condition','',False),
 	]
 	context = {
 		'forms':forms,
@@ -51,18 +52,18 @@ def edit(request,pid):
 	if product.owner != common.getLoginMember(request) :
 		raise Exception("Sorry. You're not this product owner.")
 	forms = [
-		form(0,'text','name','name',product.name,False),
-		form(0,'text','amount','amount',product.amount,False),
-		form(0,'text','netPrice','netPrice',product.netPrice,False),
-		form(0,'text','properties','properties',product.properties,False),
-		form(0,'text','brand','brand',product.brand,False),
-		form(0,'text','version','version',product.version,False),
-		form(0,'text','capacity','capacity',product.capacity,False),
-		form(0,'text','dimension','dimension',product.dimension,False),
-		form(0,'text','defection','defection',product.defection,False),
-		form(0,'text','product_condition','product_condition',product.product_condition,False),
-		form(0,'text','selling_condition','selling_condition',product.selling_condition,False),
-		form(0,'text','shipping_condition','shipping_condition',product.shipping_condition,False),
+		form(0,'text','Name','Name',product.name,False),
+		form(0,'text','Amount','Amount',product.amount,False),
+		form(0,'text','NetPrice','NetPrice',product.netPrice,False),
+		form(0,'text','Properties','Properties',product.properties,False),
+		form(0,'text','Brand','Brand',product.brand,False),
+		form(0,'text','Version','Version',product.version,False),
+		form(0,'text','Capacity','Capacity',product.capacity,False),
+		form(0,'text','Dimension','Dimension',product.dimension,False),
+		form(0,'text','Defection','Defection',product.defection,False),
+		form(0,'text','Product Condition','Product Condition',product.product_condition,False),
+		form(0,'text','Selling Condition','Selling Condition',product.selling_condition,False),
+		form(0,'text','Shipping Condition','Shipping Condition',product.shipping_condition,False),
 	]
 	context = {
 		'product':product,

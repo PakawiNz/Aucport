@@ -16,6 +16,7 @@
                     <div class="user-pad">
                         <h3>{{ product.name }}</h3>
                         <!-- <h4 class="white">The Corsair Gaming Series GS600 is the ideal price/performance choice for mid-spec gaming PC</h4> -->
+
                         {% if login_member == product.owner %}
                         <a type="button" class="btn btn-labeled btn-default" href="{% url 'e_product' pid=product.id %}">
                             <span class="btn-label"><i class="fa fa-pencil"></i></span>Edit Detail
@@ -24,6 +25,13 @@
                         <a type="button" class="btn btn-labeled btn-default" href="{% url 'payment' pid=product.id %}">
                             <span class="btn-label"><i class="fa fa-usd"></i></span>Purchase
 	                    </a>
+                        <br>
+                        <br>
+                        {% if product.state == 3 %}
+                        <a type="button" class="btn btn-labeled btn-default" href="{% url 'auction' %}">
+                            <span class="btn-label"><i class="fa fa-usd"></i></span>Bid
+                        </a>
+                        {% endif %}
                         {% endif %}
                     </div>
                 </div>
