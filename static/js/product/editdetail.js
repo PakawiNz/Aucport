@@ -31,12 +31,6 @@ $(function () {
         });
     });
 
-    $('a.openeditlink').click(function(event){
-        alert(event.target.val);
-        url = $("#e_product").val();
-        $.form(url, { product: id }, 'POST').submit();
-    });
-
     $('#expired').datetimepicker({
         minDate:  new Date(),
     });

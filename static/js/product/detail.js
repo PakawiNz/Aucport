@@ -23,11 +23,4 @@ $( document ).ready(function() {
             $(this).find('.caption').slideUp(250); //.fadeOut(205)
         }
     ); 
-});profile.js
-
-$('a.openeditlink').click(function(event){
-    var id = @(this).val();
-    var form = $("#openeditform");
-    form.append("<input type='hidden' name='product' value='" + id + "' />");
-    form.submit();
 });
