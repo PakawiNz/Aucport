@@ -41,6 +41,7 @@ $(function() {
             		var context = logo + products[pid].maxprice;
 
             		var price = $('#price'+ pid);
+	            	$('[alt=current'+ pid + ']').attr('placeholder',products[pid].curprice);
             		if (price.val() == products[pid].maxprice) return; 
             		price.val(products[pid].maxprice);
 	            	$('#price'+ pid).fadeOut(function(){
@@ -56,6 +57,44 @@ $(function() {
 		refreshPrice();
 	}, 5000 );
 
+	$('button.toggle-btn').click(function(event){
+		var url = $("#main").attr("action");
+		var caller = $(this);
+		var auction = caller.data("auction");
+		var target = caller.data("target");
+		var input = $('#'+target);
+		var name = input.attr("name");
+
+		var data = {};
+		data[name] = input.val() == 0;
+		data['auction'] = auction;
+
+		var spinning = caller.children('.fa').first();
+
+		caller.removeClass('btn-info btn-default');
+		spinning.removeClass('fa-spin');
+
+        doajax({
+            url: url,
+            type: "POST",
+            dataType: 'json',
+            data: data,
+            success: function(result) {
+                if (result.success){
+               		if (data[name]) {
+	               		input.val(1);
+               			caller.addClass('btn-info')
+						spinning.addClass('fa-spin');
+               		}else {
+	               		input.val(0);
+               			caller.addClass('btn-default')
+               		}
+                }
+           		refreshPrice();
+            },
+        });
+	});
+
 	$('button.update-btn').click(function(event){
 		var url = $("#main").attr("action");
 		var caller = $(this);
@@ -68,7 +107,9 @@ $(function() {
 		data[name] = input.val();
 		data['auction'] = auction;
 
-        caller.prepend('<img class="loading" src="/static/img/loading.gif"></img>');
+        caller.prepend('<span class="loading fa fa-refresh fa-spin" style="display:none;"></span>');
+        var loading = caller.children('.loading').first();
+        loading.fadeIn();
 		doajax({
             url: url,
             type: "POST",
@@ -93,7 +134,9 @@ $(function() {
            		refreshPrice();
             },
             complete : function(){
-                $('.loading').fadeOut();
+                loading.fadeOut(function(){
+                	loading.remove();
+                });
             },
         });
 	});
