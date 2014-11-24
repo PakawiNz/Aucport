@@ -90,6 +90,10 @@ class Product(models.Model) :
 
 	highest_auction = models.OneToOneField('Auction',related_name="highest_auction",null=True,blank=True)
 
+	def __unicode__(self):
+		return self.name
+
+
 class Auction(models.Model) :
 	product = models.ForeignKey(Product)
 	bidder = models.ForeignKey(Member)
@@ -99,11 +103,18 @@ class Auction(models.Model) :
 	isAuto = models.BooleanField(default=False)
 	notify = models.BooleanField(default=False)
 	lastbid = models.DateTimeField()
+
+	def __unicode__(self):
+		return self.bidder.displayname
+
 				
 class Transaction(models.Model) :
 	product = models.ForeignKey(Product)
 	buyer = models.ForeignKey(Member)
 	timestamp = models.DateTimeField(auto_now_add=True)
+
+	def __unicode__(self):
+		return self.product.name
 
 class Feedback(models.Model) :
 	transaction = models.ForeignKey(Transaction)
@@ -112,3 +123,4 @@ class Feedback(models.Model) :
 
 class CreditCard(models.Model) :
 	owner = models.ForeignKey(Member)
+
