@@ -12,6 +12,14 @@
 	padding: 0px;
 	margin: 0px 0px 20px;
 }
+.productblock > div.hasextends {
+	margin: 0px;
+}
+.productblock > div.extends {
+	box-shadow: 0px 5px 5px rgb(51, 51, 51);
+	box-shadow: 0px 5px 5px rgba(51, 51, 51, 0.7);
+	padding: 15px 0px 15px 0px;
+}
 .productblock > div > time {
 	display: inline-block;
 	width: 100%;
@@ -115,6 +123,9 @@
 		height: 120px;
 		padding: 0px;
 	}
+	.productblock > div.extends {
+		height: auto;
+	}
 	.productblock > div > time,
 	.productblock > div > img,
 	.productblock > div > a > img  {
@@ -175,4 +186,13 @@
 		width: 40px;
 		padding: 10px 0px 9px;
 	}
+}
+
+.input-group-addon.eqsize {
+	width: 80px
+}
+.price {
+	font-size: 24px;
+	font-weight: 600;
+	text-shadow: 0 1px 3px rgba(0,0,0,.5);
 }

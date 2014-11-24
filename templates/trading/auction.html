@@ -3,127 +3,59 @@
 <link rel="stylesheet" type="text/css" href="/static/css/common/aucshow.css">
 {% endblock %}
 {% block script %}
-<script type="text/javascript" src="/static/js/trading/auction.js"></script>
 <script type="text/javascript" src="/static/js/trading/countdown.min.js"></script>
 <script type="text/javascript">
-	var auctions = [];
-	{% for auction in auctions %}
-		auctions.push({
-			index:{{forloop.counter}},
-			enddate: new Date(
-				{{auction.endtime.year}}, 
-				{{auction.endtime.month}}-1, 
-				{{auction.endtime.day}}, 
-				{{auction.endtime.hour}}, 
-				{{auction.endtime.minute}}, 
-				{{auction.endtime.second}}),
-		});
-	{% endfor %}
+var auctions = [];
+{% for auction in auctions %}
+	auctions.push({
+		index:{{forloop.counter}},
+		enddate: new Date(
+			{{auction.product.expired.year}}, 
+			{{auction.product.expired.month}}-1, 
+			{{auction.product.expired.day}}, 
+			{{auction.product.expired.hour}}, 
+			{{auction.product.expired.minute}}, 
+			{{auction.product.expired.second}}),
+	});
+{% endfor %}
 </script>
-<script type="text/javascript">
-
-var bid, tauto;
-
-$(function() { 
-	bid = function(id){
-		var data = {
-			'product' : id,
-			'current' : $('#current_'+id).val(),
-			'ceiling' : $('#ceiling_'+id).val(),
-			'increase' : $('#increase_'+id).val(),
-			'isAuto' : $('#isAuto_'+id).is(':checked'),
-		};
-		console.log(data);
-	    doajax({
-            url: '/trading/bid/',
-            type: 'POST',
-            dataType: "json",
-            data: {'data' : data},
-            success: function(result) {
-        		alert(id); 
-			},
-	    });
-	};
-
-});
-
-$(function() { 
-	tauto = function(id){
-		auto = $("#isAuto_"+id);
-		$("#ceiling_"+id).attr("disabled", !auto.is(':checked'));
-		$("#increase_"+id).attr("disabled", !auto.is(':checked'));
-	}
-});
-
-
-</script>
+<script type="text/javascript" src="/static/js/trading/auction.js"></script>
 {% endblock %}
 {% block body %}
 {% include 'common/topnavbar.html' %}
 {% include 'common/topbreadcrumb.html'%}
 <div class="container">
-	<div id="main" class="productblock">
+	<div id="main" class="productblock" action="{% url 'bid' %}">
 		{% for auction in auctions %}
-		<div>
+		<div class="hasextends">
 			<time id="endTime{{forloop.counter}}">
-				<span id="endMajor{{forloop.counter}}" class="day">{{auction.endtime.day}}</span>
-				<span id="endMinor{{forloop.counter}}" class="month">{{auction.endmonth}}</span>
+				<span id="endMajor{{forloop.counter}}" class="day">{{auction.product.expired|date:'d'}}</span>
+				<span id="endMinor{{forloop.counter}}" class="month">{{auction.product.expired|date:'M'}}</span>
 			</time>
-			<img src="{{auction.picture.url}}"/>
+			<img src="{{auction.product.picture1.url}}"/>
 			<div class="info">
 				<h2 class="title">{{auction.product.name}}</h2>
-				<p class="desc">{{auction.endtime}}</p>
-				{% if auction.product.state == 3 %}
-				<ul style="width:80%;">
-					<li class="hoverable" style="width:25%;"><a href="/trading/payment/">{{auction.product.netPrice}} <span class="fa fa-money"></span></a></li>							
-					<li style="width:25%;">{{auction.product.highest_auction.current}} <span class="fa fa-users"></span></li>
-					<li >
-						<div class="checkbox" style="margin:0px;">
-						<label>
-						{% if auction.a.isAuto %}
-						<input id="isAuto_{{auction.product.id}}" type="checkbox" checked onclick="tauto({{auction.product.id}});"> Auto {{auction.a.isAuto}}
-						{% else %}
-						<input id="isAuto_{{auction.product.id}}" type="checkbox" onclick="tauto({{auction.product.id}});"> Auto
-						{% endif %}
-						</label>
-						</div>
+				<p class="desc">{{auction.product.expired|date:'d M Y H:i'}}</p>
+				<ul>
+					<li></li>			
+					<li style="width:25%;">
+						<span class="competant"></span>
+						<span class="fa fa-users"></span>
 					</li>
-
-
-
+					<li style="width:25%;">
+						<input type="checkbox" {{auction.isAuto|yesno:'checked,'}} onclick="tauto({{auction.product.id}});" >
+						Auto
+					</li>
+					<li class="hoverable" style="width:25%;">
+						<a href="{% url 'payment' pid=auction.product.id %}">
+							<span id="price{{auction.product.id}}" pid="{{auction.product.id}}" class="price">
+								{{auction.product.getMaxPrice}}
+							</span>
+							<span class="fa fa-usd"></span>
+						</a>
+					</li>				
+					<li class="social_gap"></li>
 				</ul>
-				<label style="margin-left:15px;">Bidding$</label>
-				<input type="text" id ="current_{{auction.product.id}}" placeholder='{{auction.a.current}}'size="5">  
-
-					{% if auction.a.isAuto %}
-					<label style="margin-left:15px;">Ceiling$</label>
-					<input type="text" id ="ceiling_{{auction.product.id}}" placeholder='{{auction.a.ceiling}}' size="5">  
-
-					<label style="margin-left:15px;">Increase$</label>
-					<input type="text" id ="increase_{{auction.product.id}}" placeholder='{{auction.a.increase}}' size="5"> 
-					{% else %}
-					<label style="margin-left:15px;">Ceiling$</label>
-					<input disabled type="text" id ="ceiling_{{auction.product.id}}" placeholder='{{auction.a.ceiling}}' size="5">  
-
-					<label style="margin-left:15px;">Increase$</label>
-					<input disabled type="text" id ="increase_{{auction.product.id}}" placeholder='{{auction.a.increase}}' size="5"> 
-					{% endif %}
-
-				<button type="submit" class="btn btn-success" onClick="bid('{{auction.product.id}}');" style="margin-left:25px;">submit</button>
-				{% else %}
-				<ul style="width:50%;">
-					<li style="width:25%;">{{auction.product.netPrice}} <span class="fa fa-money"></span></li>		
-					<li style="width:25%;">{{auction.product.highest_auction.current}} <span class="fa fa-users"></span></li>
-				</ul>
-				<label style="margin-left:15px;">Bidding$</label>
-				<input disabled type="text" id ="current_{{auction.product.id}}" placeholder='{{auction.a.current}}'size="5">  
-		
-				<label style="margin-left:15px;">Ceiling$</label>
-				<input disabled type="text" id ="ceiling_{{auction.product.id}}" placeholder='{{auction.a.ceiling}}' size="5">  
-
-				<label style="margin-left:15px;">Increase$</label>
-				<input disabled type="text" id ="increase_{{auction.product.id}}" placeholder='{{auction.a.increase}}' size="5"> 
-				{% endif %}
 			</div>
 			<div class="social">
 				<ul>
@@ -131,6 +63,41 @@ $(function() {
 					<li class="twitter"><a href="#twitter"><span class="fa fa-twitter"></span></a></li>
 					<li class="google-plus"><a href="#google-plus"><span class="fa fa-google-plus"></span></a></li>
 				</ul>
+			</div>
+		</div>
+		<div class="extends row">
+			<div class="col-sm-4">
+				<div class="input-group">
+					<div class="input-group-addon eqsize">Bidding</div>
+					<input id="current{{auction.id}}" name="current" class="form-control" type="text" placeholder='{{auction.current}}'>  
+					<div class="input-group-btn">
+						<button class="update-btn btn btn-default" data-auction="{{auction.id}}" data-target="current{{auction.id}}">
+						<span class="fa fa-chevron-right"></span>
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="input-group">
+					<div class="input-group-addon eqsize">Ceiling</div>
+					<input id="ceiling{{auction.id}}" name="ceiling" class="form-control" type="text" placeholder='{{auction.ceiling}}'>  
+					<div class="input-group-btn">
+						<button class="update-btn btn btn-default" data-auction="{{auction.id}}" data-target="ceiling{{auction.id}}">
+						<span class="fa fa-chevron-right"></span>
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="input-group">
+					<div class="input-group-addon eqsize">Increase</div>
+					<input id="increase{{auction.id}}" name="increase" class="form-control" type="text" placeholder='{{auction.increase}}'> 
+					<div class="input-group-btn">
+						<button class="update-btn btn btn-default" data-auction="{{auction.id}}" data-target="increase{{auction.id}}">
+						<span class="fa fa-chevron-right"></span>
+						</button>
+					</div>
+				</div>
 			</div>
 		</div>
 		{% endfor %}

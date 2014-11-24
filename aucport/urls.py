@@ -36,6 +36,8 @@ urlpatterns += patterns('mainapp.apps.trading',
 	url(r'^trading/auction/$', 					'auction.main',				name='auction'),
 	url(r'^trading/payment/(?P<pid>\d+)/$', 	'payment.main',				name='payment'),
 	url(r'^trading/bid/$', 						'auction.bid',				name='bid'),
+	url(r'^trading/getupdated/$', 				'auction.getupdated',		name='getupdated'),
+	url(r'^trading/watch/(?P<pid>\d+)/$', 		'auction.watch',			name='watch'),
 )
 
 
