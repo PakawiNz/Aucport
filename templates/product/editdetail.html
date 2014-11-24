@@ -50,9 +50,9 @@
 					<div class="input-group">
 						<span class="input-group-addon">Expired</span>
 						<div class="input-group">
-							<input tabindex="0" type="text" class="form-control input" required value="{{product.expired|date:"Y-M-d H:i"}}" 
+							<input tabindex="0" type="text" class="form-control input" required value="{{product.expired|date:"d M Y H:i"}}" 
 								name="expired" id="expired" placeholder="Expired"  
-								data-date-format="YYYY-MM-DD HH:MM"
+								data-date-format="DD MMM YYYY HH:mm"
 								style="background-color:white; cursor: text;"/>
 							<div class="input-group-addon" style="width:0px !important;">
 								<span class="glyphicon glyphicon-calendar"></span>
