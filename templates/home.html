@@ -1,6 +1,8 @@
 {% extends 'common/maincanvas.html' %}
 {% block body %}
 {% block style %}
+<link rel="stylesheet" type="text/css" href="/static/css/common/aucprof.css">
+<link rel="stylesheet" type="text/css" href="/static/css/common/aucshow.css">
 <style type="text/css">
 html,
 body {
@@ -76,6 +78,17 @@ body {
         </p>
       </div>
     </div>
+    <div class="container jumbotron" style="padding-top:10px; padding-bottom:10px; margin-botton:0px;">
+    <div class="jumbotron" style="margin:10px; padding-top:2px; padding-bottom:5px; padding-left:30px; background-color: rgba(216, 216, 216, 1);">
+    <h3>Products</h3>
+    </div>
+    <div class="productblock">
+        <form id="openeditform" action="{% url 'e_product' %}" method="POST">{% csrf_token %}</form>
+        {% for product in products %}
+        {% include 'product/productblock.html' with product=product %}
+        {% endfor %}
+    </div>
+</div>
 </div>
 </div>
 {% endblock %}
