@@ -21,17 +21,15 @@
                         <a type="button" class="btn btn-labeled btn-default" href="{% url 'e_product' pid=product.id %}">
                             <span class="btn-label"><i class="fa fa-pencil"></i></span>Edit Detail
                         </a>
-                        {% else %}
+                        {% elif product.state == 2 %}
                         <a type="button" class="btn btn-labeled btn-default" href="{% url 'payment' pid=product.id %}">
                             <span class="btn-label"><i class="fa fa-usd"></i></span>Purchase
 	                    </a>
-                        <br>
-                        <br>
-                        {% if product.state == 3 %}
-                        <a type="button" class="btn btn-labeled btn-default" href="{% url 'auction' %}">
-                            <span class="btn-label"><i class="fa fa-usd"></i></span>Bid
+                        {% elif product.state == 3 %}
+                        <a type="button" class="btn btn-labeled btn-default" href="{% url 'watch' pid=product.id %}"
+                             data-toggle="tooltip" title="Add to Watchlist." data-trigger="hover">
+                            <span class="btn-label"><i class="fa fa-legal"></i></span>Bid
                         </a>
-                        {% endif %}
                         {% endif %}
                     </div>
                 </div>
@@ -46,7 +44,7 @@
             <div class="overview row">
                 <div class="user-pad text-center col-xs-4">
                     <h3>PRICE</h3>
-                    <h4>{{ product.netPrice }}</h4>
+                    <h4>{{ product.getMaxPrice }}</h4>
                 </div>
                 <div class="user-pad text-center col-xs-4">
                     <h3>VIEW</h3>

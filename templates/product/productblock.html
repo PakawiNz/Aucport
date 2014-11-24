@@ -1,6 +1,10 @@
 <div>
 	<a href="{% url 'product' pid=product.id %}">
+	{% if product.picture1 %}
 		<img src="{{product.picture1.url}}"/>
+	{% else %}
+		<img />
+	{% endif %}
 	</a>
 	<div class="info">
 		<h2 class="title">{{product.name}}</h2>

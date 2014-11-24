@@ -25,15 +25,12 @@ class ProductAdmin(admin.ModelAdmin) :
 
 @admin.register(models.Auction)
 class AuctionAdmin(admin.ModelAdmin) :
-	list_display = ('product',)
-
+	list_display = ('product','bidder','ceiling','increase','current','isAuto','notify','lastbid',)
+	
 @admin.register(models.Transaction)
 class TransactionAdmin(admin.ModelAdmin) :
-	list_display = ('product','buyer',)
+	list_display = ('timestamp','product','buyer','card','score','comment','critical',)
 
-@admin.register(models.Feedback)
-class FeedbackAdmin(admin.ModelAdmin) :
-	list_display = ('transaction',)
 
 @admin.register(models.CreditCard)
 class CreditCardAdmin(admin.ModelAdmin) :

@@ -108,22 +108,22 @@ class Auction(models.Model) :
 	lastbid = models.DateTimeField(blank=True,null=True)
 
 	def __unicode__(self):
-		return self.bidder.displayname
-
-				
-class Transaction(models.Model) :
-	product = models.ForeignKey(Product)
-	buyer = models.ForeignKey(Member)
-	timestamp = models.DateTimeField(auto_now_add=True)
-
-	def __unicode__(self):
-		return self.product.name
-
-class Feedback(models.Model) :
-	transaction = models.ForeignKey(Transaction)
-	isReport = models.BooleanField(default=False)
-	score = models.IntegerField()
+		return self.bidder.email + " : " + self.product.name
 
 class CreditCard(models.Model) :
 	owner = models.ForeignKey(Member)
+
+class Transaction(models.Model) :
+	timestamp = models.DateTimeField(auto_now_add=True)
+
+	product = models.ForeignKey(Product)
+	buyer = models.ForeignKey(Member)
+	card = models.ForeignKey(CreditCard)
+
+	comment = models.TextField(blank=True,null=True)
+	score = models.IntegerField(default=0)
+	critical = models.BooleanField(default=False)
+
+	def __unicode__(self):
+		return self.buyer.email + " : " + self.product.name
 
