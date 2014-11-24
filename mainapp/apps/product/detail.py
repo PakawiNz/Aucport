@@ -20,7 +20,6 @@ def show(request,pid):
 	product = models.Product.objects.get(id=pid)
 	context = {
 		'product':product,
-		'isOwner':isOwner,
 	}
 	return context
 
