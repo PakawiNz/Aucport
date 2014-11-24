@@ -16,12 +16,13 @@
                     <div class="user-pad">
                         <h3>{{ product.name }}</h3>
                         <!-- <h4 class="white">The Corsair Gaming Series GS600 is the ideal price/performance choice for mid-spec gaming PC</h4> -->
-                        {% if isOwner %}
-                        <a id='openeditform' type="button" class="btn btn-labeled btn-info" href="{% url 'e_product' %}" method="POST" value="{{product.id}}">{% csrf_token %}
-                            <span class="btn-label"><i class="fa fa-pencil"></i></span>Edit
+
+                        {% if login_member == product.owner %}
+                        <a type="button" class="btn btn-labeled btn-default" href="{% url 'e_product' pid=product.id %}">
+                            <span class="btn-label"><i class="fa fa-pencil"></i></span>Edit Detail
                         </a>
                         {% else %}
-                        <a type="button" class="btn btn-labeled btn-default" href="{% url 'payment' %}">
+                        <a type="button" class="btn btn-labeled btn-default" href="{% url 'payment' pid=product.id %}">
                             <span class="btn-label"><i class="fa fa-usd"></i></span>Purchase
 	                    </a>
                         <br>

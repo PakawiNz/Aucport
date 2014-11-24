@@ -16,16 +16,14 @@
 				<li id="nav2" class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Menu <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
-						<!-- <li><a href="/product/product/1/">product</a></li> -->
-						<!-- <li><a href="{% url 'product' %}">test product</a></li> -->
-						<li><a href="{% url 'c_product' %}">Create Product</a></li>
-						<!-- <li><a href="{% url 'e_product' %}">Edit Product</a></li> -->
-						<!-- <li><a href="{% url 'search' %}">Search</a></li> -->
+						<li><a href="{% url 'product' pid='1' %}">test product</a></li>
+						<li><a href="{% url 'c_product' %}">c_product</a></li>
+						<li><a href="{% url 'search' %}">Search</a></li>
+						<li><a href="{% url 'editprofile' %}">Edit Profile</a></li>
 						<li><a href="{% url 'profile' %}">Profile</a></li>
 						<li><a href="{% url 'editprofile' %}">Edit Profile</a></li>
 						<!-- <li><a href="{% url 'register' %}">Register</a></li> -->
 						<li><a href="{% url 'auction' %}">Auction</a></li>
-						<li><a href="{% url 'payment' %}">Payment</a></li>
 					</ul>
 				</li>
 				<li id="nav3" class="dropdown">

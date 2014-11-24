@@ -1,21 +1,36 @@
 <div>
-	<a href="{% url 'product' %}{{product.id}}">
+	<a href="{% url 'product' pid=product.id %}">
 		<img src="{{product.picture1.url}}"/>
 	</a>
 	<div class="info">
 		<h2 class="title">{{product.name}}</h2>
 		<p class="desc">{{product.properties}}</p>
-		<ul style="width:100%;">
+		<ul>
 			<li></li>
 			{% if login_member.id == product.owner.id %}
 			<li class="hoverable" style="width:25%;">
-				<a class="openeditlink" href="#" name="{{product.id}}">Edit Product <span class="fa fa-edit"></span></a>
+				<a href="{% url 'e_product' pid=product.id %}" name="{{product.id}}">Edit Product <span class="fa fa-edit"></span></a>
 			</li>
 			{% endif %}
 			<li class="hoverable" style="width:25%;">
-				<a >{{product.netPrice}} <span class="fa fa-money"></span></a>
+				{% if product.state == product.STATE_AUCTION %}
+				<a href="{% url 'watch' pid=product.id %}" class="price"
+					data-toggle="tooltip" title="Add to Watchlist." data-trigger="hover">
+					{{product.getMaxPrice}} <span class="fa fa-legal"></span>
+				</a>
+				{% elif product.state == product.STATE_SELLING %}
+				<a href="{% url 'payment' pid=product.id %}" class="price"
+					data-toggle="tooltip" title="Purchase Product." data-trigger="hover">
+					{{product.getMaxPrice}} <span class="fa fa-usd"></span>
+				</a>
+				{% else %}
+				<a href="" class="price"
+					data-toggle="tooltip" title="Purchase Product." data-trigger="hover">
+					{{product.getMaxPrice}} <span class="fa fa-usd"></span>
+				</a>
+				{% endif %}
 			</li>
-			<li class="social_gap"></li>							
+			<li class="social_gap"></li>
 		</ul>
 	</div>
 	<div class="social">

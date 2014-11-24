@@ -23,4 +23,6 @@ $(function(){
         }
         $.ajax(data);
     }
+
+    $('[data-toggle="tooltip"]').tooltip();
 });

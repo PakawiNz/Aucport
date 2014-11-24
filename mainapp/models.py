@@ -93,16 +93,19 @@ class Product(models.Model) :
 	def __unicode__(self):
 		return self.name
 
+	def getMaxPrice(self):
+		possessor = self.highest_auction
+		return possessor.current if possessor != None else self.netPrice
 
 class Auction(models.Model) :
 	product = models.ForeignKey(Product)
 	bidder = models.ForeignKey(Member)
 	ceiling = models.FloatField(default=0)
 	increase = models.FloatField(default=0)
-	current = models.FloatField()
+	current = models.FloatField(default=0)
 	isAuto = models.BooleanField(default=False)
 	notify = models.BooleanField(default=False)
-	lastbid = models.DateTimeField()
+	lastbid = models.DateTimeField(blank=True,null=True)
 
 	def __unicode__(self):
 		return self.bidder.displayname

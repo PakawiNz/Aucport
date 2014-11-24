@@ -16,7 +16,7 @@ def search(request) :
 	lprice = request.POST.get('lprice')
 	hprice = request.POST.get('hprice')
 
-	result = models.Product.objects.filter(state=models.Product.STATE_PENDING)
+	result = models.Product.objects.filter(state__in=[models.Product.STATE_AUCTION,models.Product.STATE_SELLING])
 	if category : result = result.filter(category=category)
 	if name : result = result.filter(name__contains=name)
 	if brand : result = result.filter(brand__contains=brand)

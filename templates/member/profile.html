@@ -173,7 +173,6 @@
     <h3>My Product</h3>
     </div>
     <div class="productblock">
-        <form id="openeditform" action="{% url 'e_product' %}" method="POST">{% csrf_token %}</form>
         {% for product in products %}
         {% include 'product/productblock.html' with product=product %}
         {% endfor %}
@@ -184,7 +183,7 @@
     <h3>Waiting to Purchese</h3>
     </div>
     <div class="productblock">
-        <form id="openeditform" action="{% url 'e_product' %}" method="POST">{% csrf_token %}</form>
+        <form id="openeditform" action="{% url 'e_product' pid=product.id %}" method="POST">{% csrf_token %}</form>
         {% for product in products_wait %}
         {% include 'product/productblock.html' with product=product %}
         {% endfor %}
