@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from mainapp import models,common
+import datetime
 
 class form(object) :
 	def __init__(self,index,type,name,label,value,required) :
@@ -16,8 +17,7 @@ def dump(request):
 
 @common.gen_view('Product Detail','product/detail.html')
 def show(request,pid):
-	product = models.get_one(models.Product,id=pid)
-	if not product : raise Exception("No Product with such ID.")
+	product = models.Product.objects.get(id=pid)
 	context = {
 		'product':product,
 	}
@@ -45,10 +45,11 @@ def create(request):
 	}
 	return context
 
-@common.gen_view('Edit Product Detail','product/editdetail.html',postOnly=True,memberOnly=True)
-def edit(request):
-	product = request.POST.get('product')
-	product = models.Product.objects.get(id=product)
+@common.gen_view('Edit Product Detail','product/editdetail.html',memberOnly=True)
+def edit(request,pid):
+	product = models.Product.objects.get(id=pid)
+	if product.owner != common.getLoginMember(request) :
+		raise Exception("Sorry. You're not this product owner.")
 	forms = [
 		form(0,'text','name','name',product.name,False),
 		form(0,'text','amount','amount',product.amount,False),
@@ -70,23 +71,23 @@ def edit(request):
 	}
 	return context
 
-@common.gen_view('','',postOnly=True,memberOnly=True,redirect=True)
+@common.gen_view(postOnly=True,memberOnly=True,redirect=True)
 def docreate(request):
 
-	result = clean(request, True)
-	if result != True :
+	success,result = clean(request, True)
+	if not success :
 		return result
 
-	return render(request)
+	return redirect('product_id',pid=result.id)
 
-@common.gen_view('','',postOnly=True,memberOnly=True,redirect=True)
+@common.gen_view(postOnly=True,memberOnly=True,redirect=True)
 def doedit(request):
 
-	result = clean(request, False)
-	if result != True :
+	success,result = clean(request, False)
+	if not success :
 		return result
 
-	return render(request)
+	return redirect('product_id',pid=result.id)
 
 def clean(request,isCreate):
 	category = request.POST.get('category')
@@ -118,6 +119,11 @@ def clean(request,isCreate):
 	except : 
 		category=models.Category.objects.first()
 		errorList['category'] = ['This Category is not in Database']
+	try : 
+		expired = datetime.datetime.strptime(expired,"%d %b %Y %H:%M")
+	except : 
+		expired = datetime.datetime.now().replace(year=2000)
+		errorList['expired'] = ['This Datetime is not valid format (should be like 23 Dec 2013 23:59)']
 
 	if isCreate :
 		product = models.Product(
@@ -186,7 +192,7 @@ def clean(request,isCreate):
 			context['errorList'] = errorList
 		else :
 			context['success'] = True
-		return common.jsonResponse(context)
+		return False,common.jsonResponse(context)
 	
 	if errorList :
 		errorListText = []
@@ -195,6 +201,7 @@ def clean(request,isCreate):
 
 		context['errorList'] = errorListText
 		context['content'] = "Validation Error."
-		return render(request,'common/invalid.html',context)
+		return False,render(request,'common/invalid.html',context)
 
 	product.save()
+	return True,product

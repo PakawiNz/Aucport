@@ -1,5 +1,5 @@
 <div>
-	<a href="{% url 'product' %}{{product.id}}">
+	<a href="{% url 'product' pid=product.id %}">
 		<img src="{{product.picture1.url}}"/>
 	</a>
 	<div class="info">
@@ -9,7 +9,7 @@
 			<li></li>
 			{% if login_member.id == product.owner.id %}
 			<li class="hoverable" style="width:25%;">
-				<a class="openeditlink" href="#" name="{{product.id}}">Edit Product <span class="fa fa-edit"></span></a>
+				<a href="{% url 'e_product' pid=product.id %}" name="{{product.id}}">Edit Product <span class="fa fa-edit"></span></a>
 			</li>
 			{% endif %}
 			<li class="hoverable" style="width:25%;">

@@ -170,7 +170,6 @@
 </div>
 <div class="container" style="padding-top:30px">
     <div class="productblock">
-        <form id="openeditform" action="{% url 'e_product' %}" method="POST">{% csrf_token %}</form>
         {% for product in products %}
         {% include 'product/productblock.html' with product=product %}
         {% endfor %}
