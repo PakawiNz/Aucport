@@ -101,7 +101,7 @@ class Auction(models.Model) :
 	product = models.ForeignKey(Product)
 	bidder = models.ForeignKey(Member)
 	ceiling = models.FloatField(default=0)
-	increase = models.FloatField(default=0)
+	increase = models.FloatField(default=1)
 	current = models.FloatField(default=0)
 	isAuto = models.BooleanField(default=False)
 	notify = models.BooleanField(default=False)
