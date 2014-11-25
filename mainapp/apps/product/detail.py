@@ -3,7 +3,7 @@ from mainapp import models,common
 import datetime
 
 class form(object) :
-	def __init__(self,index,type,name,label,value,required) :
+	def __init__(self,index,type,label,name,value,required) :
 		self.index = index
 		self.type = type
 		self.name = name

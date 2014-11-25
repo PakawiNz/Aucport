@@ -76,7 +76,7 @@ class Member(models.Model) :
 
 	def getScoreNeg(self) :
 		try :
-			return reduce(lambda x,y : x+y,
+			return -reduce(lambda x,y : x+y,
 				map(lambda x : x.score if x.score < 0 else 0,
 				self.getSellTransaction()))
 		except :
