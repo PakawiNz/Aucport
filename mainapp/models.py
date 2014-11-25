@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q,Count
 
 from utils import fields,validator as V
 import datetime
@@ -38,6 +39,49 @@ class Member(models.Model) :
 
 	def __unicode__(self):
 		return self.email
+
+	def getMyTransaction(self) :
+		return Transaction.objects.filter(
+			Q(product__in=self.getSoldProduct())|Q(product__in=self.getBoughtProduct())).order_by('timestamp')
+
+	def getBuyTransaction(self) :
+		return Transaction.objects.filter(buyer=self).order_by('timestamp')
+
+	def getSellTransaction(self) :
+		return Transaction.objects.filter(product__in=self.getSoldProduct()).order_by('timestamp')
+
+	def getBoughtProduct(self) :
+		return Product.object.filter(transactions__in=self.getBuyTransaction())
+
+	def getSoldProduct(self) :
+		return self.getMyProduct().filter(state=Product.STATE_SOLDOUT)
+
+	def getSellingProduct(self) :
+		return self.getMyProduct().filter(state__in=[Product.STATE_SELLING,Product.STATE_AUCTION])
+
+	def getMyProduct(self) :
+		return Product.objects.filter(owner=self)
+
+	def getScorePos(self) :
+		try :
+			return reduce(lambda x,y : x+y.score if y.score > 0 else x ,
+				self.getSellTransaction())
+		except :
+			return 0
+
+	def getScoreNeg(self) :
+		try :
+			return reduce(lambda x,y : x+y.score if y.score < 0 else x ,
+				self.getSellTransaction())
+		except :
+			return 0
+
+	def getTopSelling(self) :
+		return self.getMyProduct().filter(state__in=[Product.STATE_SELLING]).order_by('-view')
+
+	def getTopAuction(self) :
+		return self.getMyProduct().filter(state__in=[Product.STATE_AUCTION]).annotate(
+			auctions_count=Count('auctions')).order_by('-auctions_count')
 
 class Category(models.Model) :
 	name = fields.CharField(max_length=80)
@@ -89,6 +133,7 @@ class Product(models.Model) :
 	shipping_condition = models.TextField(null=True,blank=True)
 
 	highest_auction = models.OneToOneField('Auction',related_name="highest_auction",null=True,blank=True)
+	view = models.IntegerField(default=0)
 
 	def __unicode__(self):
 		return self.name
@@ -98,7 +143,7 @@ class Product(models.Model) :
 		return possessor.current if possessor != None else self.netPrice
 
 class Auction(models.Model) :
-	product = models.ForeignKey(Product)
+	product = models.ForeignKey(Product,related_name="auctions")
 	bidder = models.ForeignKey(Member)
 	ceiling = models.FloatField(default=0)
 	increase = models.FloatField(default=1)
@@ -116,7 +161,7 @@ class CreditCard(models.Model) :
 class Transaction(models.Model) :
 	timestamp = models.DateTimeField(auto_now_add=True)
 
-	product = models.ForeignKey(Product)
+	product = models.ForeignKey(Product,related_name="transactions")
 	buyer = models.ForeignKey(Member)
 	card = models.ForeignKey(CreditCard)
 
@@ -126,4 +171,3 @@ class Transaction(models.Model) :
 
 	def __unicode__(self):
 		return self.buyer.email + " : " + self.product.name
-

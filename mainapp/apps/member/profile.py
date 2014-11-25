@@ -15,15 +15,7 @@ def show(request,mid):
 
 	context = {
 		'title': member.displayname,
-		'hideTitle': True,
 		'member':member,
-		'products':models.Product.objects.filter(owner=member),
-		'products_wait':models.Product.objects.filter(owner=member,state=models.Product.STATE_BILLING),
-		'buy':models.Transaction.objects.filter(buyer=member).count(),
-		'sell':models.Transaction.objects.filter(product__in=models.Product.objects.filter(owner=member)).count(),
-		'like':0,
-		'dislike':0,
-		'isOwner':viewer == member,
 	}
 	return context
 

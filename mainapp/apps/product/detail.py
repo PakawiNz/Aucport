@@ -21,6 +21,8 @@ def show(request,pid):
 	if product.state == models.Product.STATE_PENDING :
 		if product.owner != common.getLoginMember(request) :
 			raise Exception("Product is Unavialable")
+	product.view = product.view + 1
+	product.save()
 	context = {
 		'product':product,
 	}

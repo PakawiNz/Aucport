@@ -9,7 +9,7 @@
 {% block body %}
 {% include 'common/topnavbar.html' %}
 <div class="container">
-    <div class="row user-menu-container square">
+    <div class="row user-menu-container">
         <div class="col-md-7 user-details">
             <div class="row coralbg white">
                 <div class="col-md-6 no-pad">
@@ -17,7 +17,7 @@
                         <h3>{{member.displayname}}</h3>
                         <!-- <h4 class="white"><i class="fa fa-check-circle-o"></i> San Antonio, TX</h4> -->
                         <!-- <h4 class="white"><i class="fa fa-twitter"></i> CoolesOCool</h4> -->
-                        {% if isOwner %}
+                        {% if login_member == member %}
                         <a type="button" class="btn btn-labeled btn-default" href="{% url 'editprofile' %}">
                             <span class="btn-label"><i class="fa fa-pencil"></i></span>Edit
                         </a>
@@ -38,18 +38,18 @@
             <div class="row overview">
                 <div class="col-xs-4 col-md-4 user-pad text-center">
                     <h3>BUY</h3>
-                    <h4>{{buy}}</h4>
+                    <h4>{{member.getBuyTransaction.count}}</h4>
                 </div>
                 <div class="col-xs-4 col-md-4 user-pad text-center">
                     <h3>SELL</h3>
-                    <h4>{{sell}}</h4>
+                    <h4>{{member.getSellTransaction.count}}</h4>
                 </div>
                 <div class="col-xs-4 col-md-4 user-pad text-center">
                     <h3>RATE</h3>
                     <h5 style="font-size:21px">                   
-                        <i class="fa fa-thumbs-up" style="color:coral;">{{like}}</i>
+                        <i class="fa fa-thumbs-up" style="color:coral;">{{member.getScorePos}}</i>
                         &nbsp;
-                        <i class="fa fa-thumbs-down">{{dislike}}</i>
+                        <i class="fa fa-thumbs-down">{{member.getScoreNeg}}</i>
                      </h5>
                 </div>
             </div>
@@ -60,10 +60,10 @@
                   <i class="fa fa-bell-o fa-3x"></i>
                 </a>
                 <a href="#" class="btn btn-default">
-                  <i class="fa fa-envelope-o fa-3x"></i>
+                  <i class="fa fa-usd fa-3x"></i>
                 </a>
                 <a href="#" class="btn btn-default">
-                  <i class="fa fa-laptop fa-3x"></i>
+                  <i class="fa fa-legal fa-3x"></i>
                 </a>
                 <a href="#" class="btn btn-default">
                   <i class="fa fa-cloud-upload fa-3x"></i>
@@ -73,101 +73,67 @@
         <div class="col-md-4 user-menu user-pad">
             <div class="user-menu-content active">
                 <h3>
-                    Recent Interactions
+                    Recent Transactions
                 </h3>
                 <ul class="user-menu-list">
+                    {% if login_member == member %}
+                    {% for transaction in member.getBuyTransaction|slice:":3" %}
                     <li>
-                        <h4><i class="fa fa-user coral"></i> <a>Roselynn</a> buy your <a>Sceptor</a>.</h4>
+                        <h4><i class="fa fa-user coral"></i> 
+                            {% if transaction.buyer == member %}
+                            <a href="{% url 'profile' pid=transaction.product.owner.id %}">
+                                {{transaction.product.owner.name}}</a> sold you 
+                            {% else %}
+                            <a href="{% url 'profile' pid=transaction.buyer.id %}">
+                                {{transaction.buyer.name}}</a> buy you 
+                            {% endif %}
+                            <a href="{% url 'product' pid=transaction.product.id %}">{{transaction.product.name}}</a>.
+                        </h4>
                     </li>
+                    {% endfor %}
+                    {% if member.getBuyTransaction %}
                     <li>
-                        <h4><i class="fa fa-heart-o coral"></i> <a>Jonathan</a> buy your <a>Battle Fury</a>.</h4>
-                    </li>
-                    <li>
-                        <h4><i class="fa fa-paper-plane-o coral"></i> <a>Jenkins</a> buy your <a>Devine Rapier</a></h4>
-                    </li>
-                    <li>
-                        <a type="button" class="btn btn-labeled btn-success" href="#">
+                        <a type="button" class="btn btn-labeled btn-danger" href="#">
                             <span class="btn-label"><i class="fa fa-bell-o"></i></span>View all activity
                         </a>
                     </li>
+                    {% else %}
+                    <li>
+                        <a type="button" class="btn btn-labeled btn-default" href="#" disabled>
+                            <span class="btn-label"><i class="fa fa-bell-o"></i></span>No recent activity
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% else %}
+                    {% endif %}
                 </ul>
             </div>
             <div class="user-menu-content">
                 <h3>
-                    Your Inbox
-                </h3>
-                <ul class="user-menu-list">
-                    <li>
-                        <h4>From Roselyn Smith <small class="coral"><strong>NEW</strong> <i class="fa fa-clock-o"></i> 7:42 A.M.</small></h4>
-                    </li>
-                    <li>
-                        <h4>From Jonathan Hawkins <small class="coral"><i class="fa fa-clock-o"></i> 10:42 A.M.</small></h4>
-                    </li>
-                    <li>
-                        <h4>From Georgia Jennings <small class="coral"><i class="fa fa-clock-o"></i> 10:42 A.M.</small></h4>
-                    </li>
-                    <li>
-                        <button type="button" class="btn btn-labeled btn-danger" href="#">
-                            <span class="btn-label"><i class="fa fa-envelope-o"></i></span>View All Messages</button>
-                    </li>
-                </ul>
-            </div>
-            <div class="user-menu-content">
-                <h3>
-                    Trending
+                    Top Product
                 </h3>
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="view">
-                            <div class="caption">
-                                <p>47LabsDesign</p>
-                                <a href="" rel="tooltip" title="Appreciate"><span class="fa fa-heart-o fa-2x"></span></a>
-                                <a href="" rel="tooltip" title="View"><span class="fa fa-search fa-2x"></span></a>
-                            </div>
-                            <img src="http://24.media.tumblr.com/273167b30c7af4437dcf14ed894b0768/tumblr_n5waxesawa1st5lhmo1_1280.jpg" class="img-responsive">
-                        </div>
-                        <div class="info">
-                            <p class="small" style="text-overflow: ellipsis">An Awesome Title</p>
-                            <p class="small coral text-right"><i class="fa fa-clock-o"></i> Posted Today | 10:42 A.M.</small>
-                        </div>
-                        <div class="stats turqbg">
-                            <span class="fa fa-heart-o"> <strong>47</strong></span>
-                            <span class="fa fa-eye pull-right"> <strong>137</strong></span>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="view">
-                            <div class="caption">
-                                <p>47LabsDesign</p>
-                                <a href="" rel="tooltip" title="Appreciate"><span class="fa fa-heart-o fa-2x"></span></a>
-                                <a href="" rel="tooltip" title="View"><span class="fa fa-search fa-2x"></span></a>
-                            </div>
-                            <img src="http://24.media.tumblr.com/282fadab7d782edce9debf3872c00ef1/tumblr_n3tswomqPS1st5lhmo1_1280.jpg" class="img-responsive">
-                        </div>
-                        <div class="info">
-                            <p class="small" style="text-overflow: ellipsis">An Awesome Title</p>
-                            <p class="small coral text-right"><i class="fa fa-clock-o"></i> Posted Today | 10:42 A.M.</small>
-                        </div>
-                        <div class="stats turqbg">
-                            <span class="fa fa-heart-o"> <strong>47</strong></span>
-                            <span class="fa fa-eye pull-right"> <strong>137</strong></span>
-                        </div>
-                    </div>
+                    {% for product in member.getTopSelling|slice:":2" %}
+                    {% include 'product/productbreif.html' with product=product %}
+                    {% endfor %}
                 </div>
             </div>
             <div class="user-menu-content">
-                <h2 class="text-center">
-                    START SHARING
-                </h2>
-                <center><i class="fa fa-cloud-upload fa-4x"></i></center>
-                <div class="share-links">
-                    <center><button type="button" class="btn btn-lg btn-labeled btn-success" href="#" style="margin-bottom: 15px;">
-                            <span class="btn-label"><i class="fa fa-bell-o"></i></span>A FINISHED PROJECT
-                    </button></center>
-                    <center><button type="button" class="btn btn-lg btn-labeled btn-warning" href="#">
-                            <span class="btn-label"><i class="fa fa-bell-o"></i></span>A WORK IN PROGRESS
-                    </button></center>
+                <h3>
+                    Top Auction
+                </h3>
+                <div class="row">
+                    {% for product in member.getTopAuction|slice:":2" %}
+                    {% include 'product/productbreif.html' with product=product %}
+                    {% endfor %}
                 </div>
+            </div>
+            <div class="user-menu-content">
+                <h3>
+                    Feedback
+                </h3>
+                <ul class="user-menu-list">
+                </ul>
             </div>
         </div>
     </div>

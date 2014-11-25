@@ -47,35 +47,35 @@ $(function () {
         initialPreview: getOldpicture(1),
         overwriteInitial: true,
         previewFileType: "picture",
-        allowedFileExtensions: ["jpg"],
+        allowedFileExtensions: ["jpg png"],
         browseClass: "btn btn-default",
     });
     $("#picture2").fileinput({
         initialPreview: getOldpicture(2),
         overwriteInitial: true,
         previewFileType: "picture",
-        allowedFileExtensions: ["jpg"],
+        allowedFileExtensions: ["jpg png"],
         browseClass: "btn btn-default",
     });
     $("#picture3").fileinput({
         initialPreview: getOldpicture(3),
         overwriteInitial: true,
         previewFileType: "picture",
-        allowedFileExtensions: ["jpg"],
+        allowedFileExtensions: ["jpg png"],
         browseClass: "btn btn-default",
     });
     $("#picture4").fileinput({
         initialPreview: getOldpicture(4),
         overwriteInitial: true,
         previewFileType: "picture",
-        allowedFileExtensions: ["jpg"],
+        allowedFileExtensions: ["jpg png"],
         browseClass: "btn btn-default",
     });
     $("#picture5").fileinput({
         initialPreview: getOldpicture(5),
         overwriteInitial: true,
         previewFileType: "picture",
-        allowedFileExtensions: ["jpg"],
+        allowedFileExtensions: ["jpg png"],
         browseClass: "btn btn-default",
     });
 });

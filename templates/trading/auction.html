@@ -32,7 +32,13 @@ var auctions = [];
 				<span id="endMajor{{forloop.counter}}" class="day">{{auction.product.expired|date:'d'}}</span>
 				<span id="endMinor{{forloop.counter}}" class="month">{{auction.product.expired|date:'M'}}</span>
 			</time>
-			<img src="{{auction.product.picture1.url}}"/>
+			<a href="{% url 'product' pid=auction.product.id %}">
+			{% if auction.product.picture1 %}
+				<img src="{{auction.product.picture1.url}}"/>
+			{% else %}
+				<img />
+			{% endif %}
+			</a>
 			<div class="info">
 				<h2 class="title">{{auction.product.name}}</h2>
 				<p class="desc">{{auction.product.expired|date:'d M Y H:i'}}</p>
