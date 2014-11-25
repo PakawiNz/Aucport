@@ -6,11 +6,11 @@ import datetime
 
 def member_file_name(instance, filename):
 	filename = hashlib.sha224(instance.email).hexdigest()
-	return '/'.join(['profilepic', filename + '.jpg'])
+	return '/'.join(['profilepic', filename +str(instance.id) + '.jpg'])
 
 def product_file_name(instance, filename):
 	filename = hashlib.sha224(filename).hexdigest()
-	return '/'.join(['productpic', filename + '.jpg'])
+	return '/'.join(['productpic', filename +str(instance.id) + '.jpg'])
 
 class RegexField(models.CharField):
 	def __init__(self, regex=r'.*', **kwargs) :

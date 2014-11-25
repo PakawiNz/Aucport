@@ -55,6 +55,11 @@ def edit(request,pid):
 	product = models.Product.objects.get(id=pid)
 	if product.owner != common.getLoginMember(request) :
 		raise Exception("Sorry. You're not this product owner.")
+	if product.state in [product.STATE_AUCTION,product.STATE_BILLING,product.STATE_ABANDONED ] :
+		raise Exception("Sorry. You can not edit product after Auction was declared.")
+	if product.state == product.STATE_SOLDOUT :
+		raise Exception("Sorry. You can not edit product after sold.")
+
 	forms = [
 		form(0,'text','Name','name',product.name,False),
 		form(0,'text','Amount','amount',product.amount,False),

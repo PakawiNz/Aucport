@@ -17,20 +17,29 @@
                         <h3>{{ product.name }}</h3>
                         <!-- <h4 class="white">The Corsair Gaming Series GS600 is the ideal price/performance choice for mid-spec gaming PC</h4> -->
 
-                        {% if login_member == product.owner %}
+                        {% if login_member == product.owner and product.state in product.STATE_EDITABLE %}
                         <a type="button" class="btn btn-labeled btn-default" href="{% url 'e_product' pid=product.id %}">
                             <span class="btn-label"><i class="fa fa-pencil"></i></span>Edit Detail
                         </a>
-                        {% elif product.state == 2 %}
+                        {% elif product.state == product.STATE_SELLING %}
                         <a type="button" class="btn btn-labeled btn-default" href="{% url 'payment' pid=product.id %}">
                             <span class="btn-label"><i class="fa fa-usd"></i></span>Purchase
 	                    </a>
-                        {% elif product.state == 3 %}
+                        {% elif product.state == product.STATE_AUCTION %}
                         <a type="button" class="btn btn-labeled btn-default" href="{% url 'watch' pid=product.id %}"
                              data-toggle="tooltip" title="Add to Watchlist." data-trigger="hover">
                             <span class="btn-label"><i class="fa fa-legal"></i></span>Bid
                         </a>
+                        {% elif product.state == product.STATE_SOLDOUT %}
+                        <a type="button" class="btn btn-labeled btn-default"
+                             data-toggle="tooltip" title="View Transaction." data-trigger="hover">
+                            <span class="btn-label"><i class="fa fa-exchange"></i></span>Transaction
+                        </a>
                         {% endif %}
+                        <a type="button" class="btn btn-labeled btn-default" href="{% url 'profile_id' mid=product.owner.id %}"
+                             data-toggle="tooltip" title="Seller Profile." data-trigger="hover">
+                            <span class="btn-label"><i class="fa fa-male"></i></span>Seller
+                        </a>
                     </div>
                 </div>
                 <div class="col-md-6 no-pad">
@@ -51,8 +60,6 @@
                     <h4>{{ product.view }}</h4>
                 </div>
                 <div class="user-pad text-center col-xs-4">
-                    <h3>LIKE</h3>
-                    <h4>{{ product.like }}</h4>
                 </div>
             </div>
         </div>

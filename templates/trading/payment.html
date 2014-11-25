@@ -58,28 +58,30 @@
 	<div class="productblock">
 		{% include 'product/productblock.html' with product=product %}
 	</div>
-	<div class="mainblock">
-		<div>
-			<time>
-				<span class="clock">Contact</span>
-			</time>
-			<form>
-			<div class="detail">
-				<div class="padblock"></div>
-				<div class="input-group">
-					<span class="input-group-addon">Credit Card</span>
-					<input tabindex="4" type="text" maxlength="16" class="form-control input" required 
-						name="creditcard" id="creditcard" placeholder="Credit Card">
+	<form action="{% url 'dopayment' %}" method="POST">
+		{% csrf_token %}
+		<input type="hidden" name="product" value="{{product.id}}">
+		<div class="mainblock">
+			<div>
+				<time>
+					<span class="clock">Contact</span>
+				</time>
+				<div class="detail">
+					<div class="padblock"></div>
+					<div class="input-group">
+						<span class="input-group-addon">Credit Card</span>
+						<input tabindex="1" type="text" maxlength="16" class="form-control input" required 
+							name="creditcard" id="creditcard" placeholder="Credit Card">
+					</div>
+				</div>
+				<div class="detail" style="height:55px;">
+					<button type="submit" id="pay" class="btn btn-primary" style="float:right; width:100px" tabindex="8" maxlength="6">
+						<span class="fa fa-credit-card"></span> Pay 
+					</button>
 				</div>
 			</div>
-			<div class="detail" style="height:55px;">
-			<button type="submit" id="pay" class="btn btn-primary" style="float:right; width:100px" tabindex="8" maxlength="6">
-				<span class="fa fa-credit-card"></span> Pay 
-			</button>
-			</div>
-			</form>
 		</div>
-	</div>
+	</form>
 </div>
 
 {% endblock %}

@@ -51,7 +51,7 @@ class Member(models.Model) :
 		return Transaction.objects.filter(product__in=self.getSoldProduct()).order_by('timestamp')
 
 	def getBoughtProduct(self) :
-		return Product.object.filter(transactions__in=self.getBuyTransaction())
+		return Product.objects.filter(transactions__in=self.getBuyTransaction())
 
 	def getSoldProduct(self) :
 		return self.getMyProduct().filter(state=Product.STATE_SOLDOUT)
@@ -64,15 +64,17 @@ class Member(models.Model) :
 
 	def getScorePos(self) :
 		try :
-			return reduce(lambda x,y : x+y.score if y.score > 0 else x ,
-				self.getSellTransaction())
+			return reduce(lambda x,y : x+y,
+				map(lambda x : x.score if x.score > 0 else 0,
+				self.getSellTransaction()))
 		except :
 			return 0
 
 	def getScoreNeg(self) :
 		try :
-			return reduce(lambda x,y : x+y.score if y.score < 0 else x ,
-				self.getSellTransaction())
+			return reduce(lambda x,y : x+y,
+				map(lambda x : x.score if x.score < 0 else 0,
+				self.getSellTransaction()))
 		except :
 			return 0
 
@@ -98,6 +100,7 @@ class Product(models.Model) :
 	STATE_BILLING = 4
 	STATE_ABANDONED = 5
 	STATE_SOLDOUT = 6
+	STATE_EDITABLE = (STATE_PENDING,STATE_SELLING)
 	__state = (
 		(STATE_PENDING,'pending'),
 		(STATE_SELLING,'selling'),
@@ -156,6 +159,7 @@ class Auction(models.Model) :
 		return self.bidder.email + " : " + self.product.name
 
 class CreditCard(models.Model) :
+	cardid = fields.RegexField(regex=r'\d{16}$',max_length=16)
 	owner = models.ForeignKey(Member)
 
 class Transaction(models.Model) :

@@ -11,27 +11,42 @@
 		<p class="desc">{{product.properties}}</p>
 		<ul>
 			<li></li>
-			{% if login_member.id == product.owner.id %}
-			<li class="hoverable" style="width:25%;">
-				<a href="{% url 'e_product' pid=product.id %}" name="{{product.id}}">Edit Product <span class="fa fa-edit"></span></a>
-			</li>
-			{% endif %}
-			<li class="hoverable" style="width:25%;">
+				{% if product.state in product.STATE_EDITABLE %}
+				{% if login_member.id == product.owner.id %}
+				<li class="hoverable" style="width:25%;">
+					<a href="{% url 'e_product' pid=product.id %}" name="{{product.id}}">
+						Edit Product <span class="fa fa-edit"></span></a>
+				</li>
+				{% endif %}
+				{% endif %}
+
+				{% if product.state == product.STATE_SOLDOUT and transaction %}
+				{% if transaction.comment == None and transaction.buyer == login_member %}
+				<li class="" style="width:110px;">
+					<a href="{% url 'feedback' tid=transaction.id %}" name="{{product.id}}" class="btn btn-default">
+						Comment <span class="fa fa-edit"></span></a>
+				</li>
+				{% endif %}
+				{% endif %}
+
 				{% if product.state == product.STATE_AUCTION %}
-				<a href="{% url 'watch' pid=product.id %}" class="price"
-					data-toggle="tooltip" title="Add to Watchlist." data-trigger="hover">
-					{{product.getMaxPrice}} <span class="fa fa-legal"></span>
-				</a>
+				<li class="hoverable" style="width:25%;">
+					<a href="{% url 'watch' pid=product.id %}" class="price"
+						data-toggle="tooltip" title="Add to Watchlist." data-trigger="hover">
+						{{product.getMaxPrice}} <span class="fa fa-legal"></span>
+					</a>
+				</li>
 				{% elif product.state == product.STATE_SELLING %}
-				<a href="{% url 'payment' pid=product.id %}" class="price"
-					data-toggle="tooltip" title="Purchase Product." data-trigger="hover">
-					{{product.getMaxPrice}} <span class="fa fa-usd"></span>
-				</a>
+				<li class="hoverable" style="width:25%;">
+					<a href="{% url 'payment' pid=product.id %}" class="price"
+						data-toggle="tooltip" title="Purchase Product." data-trigger="hover">
+						{{product.getMaxPrice}} <span class="fa fa-usd"></span>
+					</a>
+				</li>
 				{% else %}
-				<a href="" class="price"
-					data-toggle="tooltip" title="Purchase Product." data-trigger="hover">
-					{{product.getMaxPrice}} <span class="fa fa-usd"></span>
-				</a>
+				<li style="width:25%;">
+					<a class="price"> {{product.getMaxPrice}} <span class="fa fa-usd"></span></a>
+				</li>
 				{% endif %}
 			</li>
 			<li class="social_gap"></li>
