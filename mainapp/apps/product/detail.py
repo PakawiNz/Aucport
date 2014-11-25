@@ -18,6 +18,9 @@ def dump(request):
 @common.gen_view('Product Detail','product/detail.html')
 def show(request,pid):
 	product = models.Product.objects.get(id=pid)
+	if product.state == models.Product.STATE_PENDING :
+		if product.owner != common.getLoginMember(request) :
+			raise Exception("Product is Unavialable")
 	context = {
 		'product':product,
 	}
@@ -78,7 +81,7 @@ def docreate(request):
 	if not success :
 		return result
 
-	return redirect('product_id',pid=result.id)
+	return redirect('product',pid=result.id)
 
 @common.gen_view(postOnly=True,memberOnly=True,redirect=True)
 def doedit(request):
@@ -87,7 +90,7 @@ def doedit(request):
 	if not success :
 		return result
 
-	return redirect('product_id',pid=result.id)
+	return redirect('product',pid=result.id)
 
 def clean(request,isCreate):
 	category = request.POST.get('category')
