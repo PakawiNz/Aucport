@@ -11,9 +11,6 @@ $(function() {
 				document.getElementById(major).className = "clock";
 			}
 			if (ts.start <= ts.end) {
-				document.getElementById(timeblock).style.backgroundColor="black";
-				document.getElementById(major).innerHTML = 'Time';
-				document.getElementById(minor).innerHTML = 'up';
 				window.clearInterval(timerId);
 				return;
 			}
@@ -22,7 +19,10 @@ $(function() {
 		},countdown.HOURS|countdown.MINUTES|countdown.SECONDS);
 	});
 
-	var pids = $(".price").attr("pid");
+	var pids = [];
+	$(".price").map(function(){
+	  pids.push($(this).attr('pid'));
+	});
 	function refreshPrice(pid){
 		var data = {'pids':pids};
 		if (pid) {
@@ -30,20 +30,31 @@ $(function() {
 		}
 		doajax({
 			url: '/trading/getupdated/',
-            type: "POST",
-            dataType: 'json',
             data: data,
             success: function(result) {
             	var products = result.products;
             	for (var pid in products){
             		var logo = "";
-            		if (products[pid].king) logo = "<span class='fa fa-flag'></span> ";
-            		var context = logo + products[pid].maxprice;
+            		if (products[pid].king) logo = "<span class='fa fa-flag' style='color:rgba(255, 0, 97, 1);'></span> ";
+            		var newPrice = parseFloat(products[pid].maxprice).toFixed(1);
+            		var context = logo + newPrice + ' ';
+
+            		if (products[pid].isExpired){
+            			$('#endTime' + pid).fadeOut(function(){
+							$('#endTime' + pid).css('background-color',"black");
+							$('#endMajor' + pid).html('Time');
+							$('#endMinor' + pid).html('up');
+							$('#endTime' + pid).fadeIn();
+	            			$('[data-auction='+ pid + ']').prop('disabled', true);
+						});
+						var index = pids.indexOf(pid);
+						if (index > -1) pids[index] = 0;
+            		}
 
             		var price = $('#price'+ pid);
-	            	$('[alt=current'+ pid + ']').attr('placeholder',products[pid].curprice);
-            		if (price.val() == products[pid].maxprice) return; 
-            		price.val(products[pid].maxprice);
+	            	$('#current' + pid).attr('placeholder',products[pid].curprice);
+            		if (price.val() == newPrice) return; 
+            		price.val(newPrice);
 	            	$('#price'+ pid).fadeOut(function(){
 		            	$('#price'+ pid).html(context);
 	            		$('#price'+ pid).fadeIn();
@@ -53,6 +64,7 @@ $(function() {
 		});
 	}
 
+	refreshPrice();
 	setInterval( function(){
 		refreshPrice();
 	}, 5000 );

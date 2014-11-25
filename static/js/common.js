@@ -1,4 +1,3 @@
-var csrf = "";
 var doajax = function(){};
 $(function(){
     //Handles menu drop down
@@ -14,12 +13,19 @@ $(function(){
     	$('#nav4').addClass('active');
     }
 
-    csrf = $('meta[name="csrf"]').attr('content')
+    var csrf = $('meta[name="csrf"]').attr('content')
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            xhr.setRequestHeader("X-CSRFToken", csrf);
+        }
+    });
 
     doajax = function(data){
-        if (data.type.toUpperCase() == 'POST') {
-            if (data.data) data.data.csrfmiddlewaretoken = csrf;
-            else data.data = {'csrfmiddlewaretoken':csrf,}
+        data.dataType = 'json';
+        data.type = "POST";
+        if (!data.sendform) {
+            data.data = JSON.stringify(data.data);
+            data.contentType = "application/json; charset=utf-8";
         }
         $.ajax(data);
     }

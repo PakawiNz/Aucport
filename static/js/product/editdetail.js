@@ -5,8 +5,7 @@ $(function () {
         register.parent().prepend('<img class="loading" src="/static/img/loading.gif"></img>');
         doajax({
             url: mainform.action,
-            type: mainform.method,
-            dataType: 'json',
+            sendform: true,
             data: $('#mainform').serialize(),
             success: function(result) {
                 if (result.success){
