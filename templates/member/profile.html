@@ -1,4 +1,5 @@
 {% extends 'common/maincanvas.html' %}
+{% load mathfilters %}
 {% block style %}
 <link rel="stylesheet" type="text/css" href="/static/css/common/aucprof.css">
 <link rel="stylesheet" type="text/css" href="/static/css/common/aucshow.css">
@@ -166,8 +167,22 @@
                 <h3>
                     Feedback
                 </h3>
-                <ul class="user-menu-list">
-                </ul>
+                {% for transaction in member.getSellTransaction|slice:":12" %}
+                {% if transaction.comment != None %}
+                <div class="col-xs-4 col-sm-2 col-md-4 col-lg-3" style="text-align:center;">
+                    <div class="price">
+                        {% if transaction.score > 0 %}
+                        <span class="fa fa-plus" style="color:green;"></span>
+                        {% elif transaction.score < 0 %}
+                        <span class="fa fa-minus" style="color:red;"></span>
+                        {% else %}
+                        <span class="fa fa-circle" style="color:black;"></span>
+                        {% endif %}
+                        {{transaction.score|abs}}
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
             </div>
         </div>
     </div>

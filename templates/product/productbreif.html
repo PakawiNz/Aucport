@@ -13,7 +13,7 @@
         {% endif %}
     </div>
     <div class="info">
-        <p class="small" style="text-overflow: ellipsis">{{product.name}}</p>
+        <p class="small ellipsis">{{product.name}}</p>
         <p class="small coral text-right">
             <i class="fa fa-usd"></i> {{product.getMaxPrice}}<br/>
             <i class="fa fa-clock-o"></i> {{product.expired|date:"M.d.Y,H:i"}}</p>

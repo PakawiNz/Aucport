@@ -39,3 +39,8 @@ body {
 	float:right;
 	margin-left:10px;
 }
+.ellipsis {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}

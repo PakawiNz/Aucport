@@ -1,11 +1,12 @@
+{% load mathfilters %}
 <div class="hasextends">
 	<a href="{% url 'product' pid=product.id %}">
 	{% if product.picture1 %}
 		<img src="{{product.picture1.url}}"
-			data-toggle="tooltip" title="Product Detail." data-trigger="hover"/>
+			data-toggle="tooltip" title="View Product Detail." data-trigger="hover"/>
 	{% else %}
 		<img 
-			data-toggle="tooltip" title="Product Detail." data-trigger="hover"/>
+			data-toggle="tooltip" title="View Product Detail." data-trigger="hover"/>
 	{% endif %}
 	</a>
 	<div class="info">
@@ -105,7 +106,7 @@
 			<li class="social_gap"></li>
 		</ul>
 	</div>
-	<div class="social">
+	<div class="social hidden-xs">
 		<ul>
 			<li class="facebook"><a href="#facebook"><span class="fa fa-facebook"></span></a></li>
 			<li class="twitter"><a href="#twitter"><span class="fa fa-twitter"></span></a></li>
@@ -118,7 +119,25 @@
 <div class="extends row">
 	<div class="col-md-3 col-md-offset-9 col-sm-4 col-sm-offset-8" >
 		<a href="{% url 'feedback' tid=transaction.id %}" class="btn btn-default" style="width:100%">
-			Comment <span class="fa fa-edit"></span></a>
+			Comment <span class="fa fa-comment"></span></a>
+	</div>
+</div>
+{% elif transaction.comment != None and transaction.buyer == login_member %}
+<div class="extends row">
+	<div class="col-xs-12">
+		<div class="price pull-left" style="padding-right:15px">
+		{% if transaction.score > 0 %}
+		<span class="fa fa-plus" style="color:green;"></span>
+		{% elif transaction.score < 0 %}
+		<span class="fa fa-minus" style="color:red;"></span>
+		{% else %}
+		<span class="fa fa-circle" style="color:black;"></span>
+		{% endif %}
+		{{transaction.score|abs}}
+		</div>
+		<div style="padding-top:10px">
+			{{transaction.comment}}
+		</div>
 	</div>
 </div>
 {% endif %}
