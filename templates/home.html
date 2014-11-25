@@ -1,7 +1,6 @@
 {% extends 'common/maincanvas.html' %}
 {% block body %}
 {% block style %}
-<link rel="stylesheet" type="text/css" href="/static/css/common/aucprof.css">
 <link rel="stylesheet" type="text/css" href="/static/css/common/aucshow.css">
 <style type="text/css">
 html,
@@ -48,6 +47,28 @@ body {
 .cover-container {
 	max-width: 700px;
 }
+.site-wrapper-inner > .productblock {
+    color: #000;
+    text-shadow: 0 0px 0px rgba(0,0,0,0);
+}
+.site-wrapper-inner > .productblock > div {
+    color: #000;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 1);
+}
+i {
+    text-shadow: 0 5px 5px rgba(0,0,0,1);
+    -webkit-transition: all 1.8s ease;
+    -moz-transition: all 1.8s ease;
+    -o-transition: all 1.8s ease;
+    transition: all 1.8s ease;
+}
+i:hover {
+    color:#FA396F;
+    -webkit-transition: all 0.1s ease;
+    -moz-transition: all 0.1s ease;
+    -o-transition: all 0.1s ease;
+    transition: all 0.1s ease;
+}
 	
 </style>
 {% endblock %}
@@ -55,39 +76,28 @@ body {
 <div class="site-wrapper">
   <div class="site-wrapper-inner">
     <div style="height:60px"></div>
-    <div class="cover-container">
-      <div class="inner cover">
+    <div class="cover-container" style="max-width:500px">
+      <div class="inner cover" >
         <p class="lead">
         	<div class="btn btn-lg btn-default" href="#"><h1>Aucport</h1></div>
         </p>
       
         <h1 class="cover-heading">
-        	Blah Blah Blah Blah
+        	Augment your happiness.
         </h1>
 
-        <p class="lead">
-        	Blah Blah Blah Blah
-        	Blah Blah Blah Blah
-        	Blah Blah Blah Blah
-        	Blah Blah Blah Blah
-        	Blah Blah Blah Blah
-        	Blah Blah Blah Blah
-        	Blah Blah Blah Blah
-        	Blah Blah Blah Blah
-        	Blah Blah Blah Blah
+        <p class="lead row" >
+            {% for random in randomdot %}
+            <i class="col-sm-1 col-xs-2 fa fa-circle"></i>
+            {% endfor %}
         </p>
       </div>
-    </div>
-    <div class="container jumbotron" style="padding-top:10px; padding-bottom:10px; margin-botton:0px;">
-    <div class="jumbotron" style="margin:10px; padding-top:2px; padding-bottom:5px; padding-left:30px; background-color: rgba(216, 216, 216, 1);">
-    <h3>Products</h3>
     </div>
     <div class="productblock">
         {% for product in products %}
         {% include 'product/productblock.html' with product=product %}
         {% endfor %}
     </div>
-</div>
-</div>
+  </div>
 </div>
 {% endblock %}

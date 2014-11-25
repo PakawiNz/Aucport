@@ -183,6 +183,16 @@
                 </div>
                 {% endif %}
                 {% endfor %}
+                {% if not member.getSellTransaction %}
+                <ul class="user-menu-list">
+                    <li>
+                        <a type="button" class="btn btn-labeled btn-default" href="#" disabled>
+                            <span class="btn-label"><i class="fa fa-comment"></i></span>No Feedback yet
+                        </a>
+                    </li>
+                </ul>
+                {% endif %}
+
             </div>
         </div>
     </div>
