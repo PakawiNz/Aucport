@@ -1,20 +1,25 @@
 from django.shortcuts import render
 from mainapp import models,common
 
+@common.gen_view(redirect=True)
+def main(request):
+	if request.GET : return search(request)
+	else : return form(request)
+
 @common.gen_view('Advance Search','product/search.html')
 def form(request):
 	context = {
 		'categorys':models.Category.objects.all(),
 	}
 	return context
-	
-@common.gen_view('Product List','product/searchlist.html',postOnly=True)
+
+@common.gen_view('Product List','product/searchlist.html')
 def search(request) :
-	name = request.POST.get('name')
-	brand = request.POST.get('brand')
-	category = request.POST.get('category')
-	lprice = request.POST.get('lprice')
-	hprice = request.POST.get('hprice')
+	name = request.GET.get('name')
+	brand = request.GET.get('brand')
+	category = request.GET.get('category')
+	lprice = request.GET.get('lprice')
+	hprice = request.GET.get('hprice')
 
 	result = models.Product.objects.filter(state__in=[models.Product.STATE_AUCTION,models.Product.STATE_SELLING])
 	if category : result = result.filter(category=category)

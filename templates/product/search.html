@@ -14,8 +14,7 @@
 {% include 'common/topnavbar.html' %}
 {% include 'common/topbreadcrumb.html'%}
 <div class="container">
-	<form method="POST" action="{% url 'dosearch' %}">
-	{% csrf_token %}
+	<form method="GET" action="{% url 'search' %}">
 	<div class="mainblock">
 		<div>
 			<time>

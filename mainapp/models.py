@@ -60,6 +60,9 @@ class Member(models.Model) :
 	def getSellingProduct(self) :
 		return self.getMyProduct().filter(state__in=[Product.STATE_SELLING,Product.STATE_AUCTION])
 
+	def getPendingProduct(self) :
+		return self.getMyProduct().filter(state__in=[Product.STATE_PENDING])
+
 	def getMyProduct(self) :
 		return Product.objects.filter(owner=self)
 
@@ -99,7 +102,7 @@ class Product(models.Model) :
 	STATE_SELLING = 2
 	STATE_AUCTION = 3
 	STATE_BILLING = 4
-	STATE_ABANDONED = 5
+	STATE_ABANDON = 5
 	STATE_SOLDOUT = 6
 	STATE_EDITABLE = (STATE_PENDING,STATE_SELLING)
 	__state = (
@@ -108,7 +111,7 @@ class Product(models.Model) :
 		(STATE_AUCTION,'auction'),
 		(STATE_BILLING,'billing'),
 		(STATE_SOLDOUT,'soldout'),
-		(STATE_ABANDONED,'abandoned'),
+		(STATE_ABANDON,'abandon'),
 	)
 
 	state = models.IntegerField(choices=__state)

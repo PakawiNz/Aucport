@@ -1,4 +1,5 @@
 body {
+	min-width: 315px;
 	padding: 60px 0px;
 	background-color: rgb(220, 220, 220) !important;
 }
@@ -31,4 +32,10 @@ body {
 .google-plus:hover a {
 	color: rgb(255, 255, 255) !important;
 	background-color: rgb(221, 75, 57) !important;
+}
+.member-pic-thumb {
+	width:22px;
+	height:22px;
+	float:right;
+	margin-left:10px;
 }

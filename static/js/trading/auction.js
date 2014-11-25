@@ -20,9 +20,49 @@ $(function() {
 	});
 
 	var pids = [];
-	$(".price").map(function(){
+	$(".auctioner").map(function(){
 	  pids.push($(this).attr('pid'));
 	});
+	function refreshPrice_success(aucid,product){
+		var logo = "";
+		if (product.king) logo = "<span class='fa fa-flag' style='color:rgba(255, 0, 97, 1);'></span> ";
+		var newPrice = parseFloat(product.maxprice).toFixed(1);
+		var context = logo + newPrice + ' ';
+		var price = $('#price'+ aucid);
+
+		if (product.isExpired){
+			var endTime = $('#endTime' + aucid);
+			endTime.fadeOut(function(){
+				if (product.king) {
+					$('#endMajor' + aucid).html('You');
+					$('#endMinor' + aucid).html('Win');
+           			price.tooltip('show');
+               		setTimeout(function () {
+	           			price.tooltip('hide');
+				    }, 4000);
+				    price.parent().attr('href',price.parent().attr('ref'));
+				    price.parent().parent().addClass('hoverable')
+				}else {
+					$('#endMajor' + aucid).html('Time');
+					$('#endMinor' + aucid).html('up');
+				}
+				$('#endTime' + aucid).css('background-color',"black");
+				endTime.fadeIn(function(){
+					$('#auctioner' + aucid).slideUp();
+				});
+			});
+			var index = pids.indexOf(aucid);
+			if (index > -1) pids[index] = 0;
+		}
+
+		$('#current' + aucid).attr('placeholder',product.curprice);
+		if (price.val() == newPrice) return; 
+		price.val(newPrice);
+		$('#price'+ aucid).fadeOut(function(){
+			$('#price'+ aucid).html(context);
+			$('#price'+ aucid).fadeIn();
+		});
+	}
 	function refreshPrice(pid){
 		var data = {'pids':pids};
 		if (pid) {
@@ -32,33 +72,8 @@ $(function() {
 			url: '/trading/getupdated/',
             data: data,
             success: function(result) {
-            	var products = result.products;
-            	for (var pid in products){
-            		var logo = "";
-            		if (products[pid].king) logo = "<span class='fa fa-flag' style='color:rgba(255, 0, 97, 1);'></span> ";
-            		var newPrice = parseFloat(products[pid].maxprice).toFixed(1);
-            		var context = logo + newPrice + ' ';
-
-            		if (products[pid].isExpired){
-            			$('#endTime' + pid).fadeOut(function(){
-							$('#endTime' + pid).css('background-color',"black");
-							$('#endMajor' + pid).html('Time');
-							$('#endMinor' + pid).html('up');
-							$('#endTime' + pid).fadeIn();
-	            			$('[data-auction='+ pid + ']').prop('disabled', true);
-						});
-						var index = pids.indexOf(pid);
-						if (index > -1) pids[index] = 0;
-            		}
-
-            		var price = $('#price'+ pid);
-	            	$('#current' + pid).attr('placeholder',products[pid].curprice);
-            		if (price.val() == newPrice) return; 
-            		price.val(newPrice);
-	            	$('#price'+ pid).fadeOut(function(){
-		            	$('#price'+ pid).html(context);
-	            		$('#price'+ pid).fadeIn();
-	            	});
+            	for (var pid in result.products){
+            		refreshPrice_success(pid,result.products[pid]);
             	}
             },
 		});

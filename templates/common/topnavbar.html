@@ -12,43 +12,26 @@
 		</div>
 		<div id="navbar" class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
-				<li id="nav1"><a href="/">Home</a></li>
-				<li id="nav2" class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Menu <span class="caret"></span></a>
-					<ul class="dropdown-menu" role="menu">
-						<li><a href="{% url 'product' pid='1' %}">test product</a></li>
-						<li><a href="{% url 'c_product' %}">c_product</a></li>
-						<li><a href="{% url 'search' %}">Search</a></li>
-						<li><a href="{% url 'editprofile' %}">Edit Profile</a></li>
-						<li><a href="{% url 'profile' %}">Profile</a></li>
-						<li><a href="{% url 'editprofile' %}">Edit Profile</a></li>
-						<!-- <li><a href="{% url 'register' %}">Register</a></li> -->
-						<li><a href="{% url 'auction' %}">Auction</a></li>
-					</ul>
-				</li>
-				<li id="nav3" class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Search <span class="caret"></span></a>
-					<ul class="dropdown-menu" role="menu">
-						<li>
-							<form role="search" method="POST" action="{% url 'dosearch' %}">
-								{% csrf_token %}
-								<div class="input-group" style="padding:10px; width:300px">
-									<input name="name" type="text" class="form-control" required>
-									<span class="input-group-btn">
-										<button class="btn btn-default" type="submit"><span class="fa fa-search"></button>
-									</span>
-								</div>
-							</form>
-						</li>
-						<li class="divider"></li>
-						<li><a href="{% url 'search' %}">Advance Search</a></li>
-					</ul>
-				</li>
+				{% if login_member %}
+				<li><a href="{% url 'c_product' %}">New Product</a></li>
+				<li><a href="{% url 'auction' %}">Auction</a></li>
+				{% endif %}
 			</ul>
+		    <div class="col-sm-3 col-md-3">
+		        <form class="navbar-form" role="search" action="{% url 'search' %}" method="GET">
+		        <div class="input-group">
+		            <input type="text" class="form-control" placeholder="Search" name="name">
+		            <div class="input-group-btn">
+		                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+		                <a class="btn btn-default" href="{% url 'search' %}"><i class="glyphicon glyphicon-list"></i></a>
+		            </div>
+		        </div>
+		        </form>
+		    </div>
 			<ul class="nav navbar-nav navbar-right">
 				{% if not login_member %}
-				<li id="nav4"><a href="{% url 'register' %}">Sign Up</a></li>
-				<li id="nav5" class="dropdown">
+				<li><a href="{% url 'register' %}">Sign Up</a></li>
+				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Sign in <b class="caret"></b></a>
 					<ul class="dropdown-menu" style="padding: 15px;min-width: 250px;">
 						<li>
@@ -64,11 +47,6 @@
 											<label class="sr-only" for="exampleInputPassword2">Password</label>
 											<input type="password" name="password" class="form-control" id="exampleInputPassword2" placeholder="Password" required>
 										</div>
-										<!-- <div class="checkbox">
-											<label>
-												<input type="checkbox"> Remember me
-											</label>
-										</div> -->
 										<div class="form-group">
 											<button type="submit" class="btn btn-success btn-block">Sign in</button>
 										</div>
@@ -79,8 +57,16 @@
 					</ul>
 				</li>
 				{% else %}
-				<li id="nav4"><a href="{% url 'profile' %}">Profile</a></li>
-				<li id="nav5"><a href="{% url 'logout' %}">Sign Out</a></li>
+				<li>
+					<a href="{% url 'profile' %}">{{login_member.displayname}}
+						{% if login_member.picture %}
+						<img src="{{login_member.picture.url}}" class="member-pic-thumb"/>
+						{% else %}
+						&nbsp;<i class="fa fa-male"></i>
+						{% endif %}
+					</a>
+				</li>
+				<li><a href="{% url 'logout' %}">Sign Out</a></li>
 				{% endif %}
 			</ul>
 		</div>

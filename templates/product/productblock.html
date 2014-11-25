@@ -1,4 +1,4 @@
-<div>
+<div class="hasextends">
 	<a href="{% url 'product' pid=product.id %}">
 	{% if product.picture1 %}
 		<img src="{{product.picture1.url}}"
@@ -19,9 +19,52 @@
 			</li>
 				{% if product.state in product.STATE_EDITABLE %}
 				<li class="hoverable proinfo">
-					<a href="{% url 'e_product' pid=product.id %}" name="{{product.id}}"
+					<a href="{% url 'e_product' pid=product.id %}"
 						data-toggle="tooltip" title="Edit Product Detail." data-trigger="hover">
 						Edit Product <span class="fa fa-edit"></span></a>
+				</li>
+				{% elif product.state == product.STATE_AUCTION %}
+				<li class="proinfo">
+					<a>On Auction <span class="fa fa-gavel"></span></a>
+				</li>
+				{% elif product.state == product.STATE_BILLING %}
+				<li class="hoverable proinfo">
+					<a href="{% url 'profile_id' mid=product.highest_auction.bidder.id %}"
+						data-toggle="tooltip" title="Bidder Profile." data-trigger="hover">
+						<span class="fa fa-credit-card"></span> Waiting for :
+						{{product.highest_auction.bidder.displayname}} 
+						{% if product.highest_auction.bidder.picture %}
+						<img src="{{product.highest_auction.bidder.picture.url}}" class="member-pic-thumb"/>
+						{% else %}
+						&nbsp;<i class="fa fa-male"></i>
+						{% endif %}
+					</a>
+				</li>
+				{% elif product.state == product.STATE_SOLDOUT %}
+				<li class="hoverable proinfo">
+					<a href="{% url 'profile_id' mid=product.transactions.first.buyer.id %}"
+						data-toggle="tooltip" title="Buyer Profile." data-trigger="hover">
+						<span class="fa fa-shopping-cart"></span> Sold to :
+						{{product.transactions.first.buyer.displayname}} 
+						{% if product.transactions.first.buyer.picture %}
+						<img src="{{product.transactions.first.buyer.picture.url}}" class="member-pic-thumb"/>
+						{% else %}
+						&nbsp;<i class="fa fa-male"></i>
+						{% endif %}
+					</a>
+				</li>
+				{% elif product.state == product.STATE_ABANDON %}
+				<li class="hoverable proinfo">
+					<a href="{% url 'profile_id' mid=product.highest_auction.bidder.id %}"
+						data-toggle="tooltip" title="Bidder Profile." data-trigger="hover">
+						<span class="fa fa-frown-o"></span> Abandoned by :
+						{{product.highest_auction.bidder.displayname}} 
+						{% if product.highest_auction.bidder.picture %}
+						<img src="{{product.highest_auction.bidder.picture.url}}" class="member-pic-thumb"/>
+						{% else %}
+						&nbsp;<i class="fa fa-male"></i>
+						{% endif %}
+					</a>
 				</li>
 				{% endif %}
 			{% else %}
@@ -45,20 +88,20 @@
 				</li>
 				{% endif %}
 			<li class="hoverable proinfo">
-				<a href="{% url 'e_product' pid=product.id %}" name="{{product.id}}"
+				<a href="{% url 'profile_id' mid=product.owner.id %}" 
 					data-toggle="tooltip" title="Seller Profile." data-trigger="hover">
-					{{product.owner.displayname}} <span class="fa fa-male"></span></a>
+					<span class="fa fa-male"></span> Seller :
+					{{product.owner.displayname}} 
+					{% if product.owner.picture %}
+					<img src="{{product.owner.picture.url}}" class="member-pic-thumb"/>
+					{% else %}
+					&nbsp;<i class="fa fa-male"></i>
+					{% endif %}
+				</a>
 			</li>
 			{% endif %}
 
-			{% if product.state == product.STATE_SOLDOUT and transaction %}
-			{% if transaction.comment == None and transaction.buyer == login_member %}
-			<li class="proinfo">
-				<a href="{% url 'feedback' tid=transaction.id %}" name="{{product.id}}" class="btn btn-default">
-					Comment <span class="fa fa-edit"></span></a>
-			</li>
-			{% endif %}
-			{% endif %}
+
 			<li class="social_gap"></li>
 		</ul>
 	</div>
@@ -70,3 +113,14 @@
 		</ul>
 	</div>
 </div>
+{% if product.state == product.STATE_SOLDOUT and transaction %}
+{% if transaction.comment == None and transaction.buyer == login_member %}
+<div class="extends row">
+	<div class="col-md-3 col-md-offset-9 col-sm-4 col-sm-offset-8" >
+		<a href="{% url 'feedback' tid=transaction.id %}" class="btn btn-default" style="width:100%">
+			Comment <span class="fa fa-edit"></span></a>
+	</div>
+</div>
+{% endif %}
+{% endif %}
+

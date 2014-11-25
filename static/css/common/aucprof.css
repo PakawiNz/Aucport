@@ -167,7 +167,7 @@ div.user-menu div.user-menu-content:not(.active){
     margin-top: 15px;
 }
 
-.square, .btn {
+.user-menu-container .btn {
     border-radius: 0px!important;
 }
 

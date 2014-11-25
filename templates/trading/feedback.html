@@ -53,25 +53,20 @@ $(function(){
 						<input tabindex="-1" type="text" class="form-control input" readonly="" 
 							name="creditcard" value="{{transaction.card.cardid}}" >
 					</div>
-					<div class="">
-						<div class="pull-left" >
+					<div class="row">
+						<div class="col-xs-6 col-sm-9" style="padding-right: 0px;">
 							<div class="input-group">
 								<span class="input-group-addon">Score</span>
-								<span class="form-control input" style="">
-									<i class="fa fa-plus"></i>
-									<i class="fa fa-plus"></i>
-									<i class="fa fa-plus"></i>
-									<i class="fa fa-plus"></i>
-									<i class="fa fa-plus"></i>
+								<span class="form-control input" style="width: 0px; padding: 0px; border-width: 0px 0px 0px 1px;">
 								</span>
 							</div>
 						</div>
-						<div class="pull-right" style="width:120px">
+						<div class="col-xs-6 col-sm-3" style="padding-left: 0px;">
 							<div class="input-group">
 								<div class="input-group-btn">
 									<button id="scoreD" type="button" class="btn btn-danger"><i class="fa fa-minus"></i></button>
 								</div>
-								<div class="" style="text-align:center; padding-top:3px;">
+								<div style="text-align:center; padding-top:3px;">
 									<div class="price" id="scoreS" style="font-size:18px;">0</div>
 								</div>
 								<div class="input-group-btn">

@@ -44,9 +44,9 @@ var auctions = [];
 				<p class="desc">{{auction.product.expired|date:'d M Y H:i'}}</p>
 				<ul>
 					<li style="text-align:right; padding-right:15px;">
-						<a>
-							<span id="price{{auction.id}}" pid="{{auction.id}}" 
-								class="price" value="{{auction.product.getMaxPrice}}">
+						<a ref="{% url 'payment' pid=auction.product.id %}">
+							<span id="price{{auction.id}}" class="price" value="{{auction.product.getMaxPrice}}"
+								data-toggle="tooltip" title="Click Here to purchase this product." data-trigger="manual" data-placement="top">
 								{% if auction.product.highest_auction == auction %}
 								<span class='fa fa-flag' style='color:rgba(255, 0, 97, 1);'></span>
 								{% endif %}
@@ -66,7 +66,7 @@ var auctions = [];
 				</ul>
 			</div>
 		</div>
-		<div class="extends row">
+		<div class="extends row auctioner" id="auctioner{{auction.id}}" pid="{{auction.id}}">
 			<div class="col-sm-6 col-lg-3">
 				<div class="input-group">
 					<div class="input-group-addon eqsize">Bidding</div>

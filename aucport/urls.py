@@ -30,8 +30,7 @@ urlpatterns += patterns('mainapp.apps.product',
 	url(r'^product/do_c_product/$',				'detail.docreate',			name='do_c_product'),
 	url(r'^product/do_e_product/$',				'detail.doedit',			name='do_e_product'),
 
-	url(r'^product/search/$', 					'search.form',				name='search'),
-	url(r'^product/dosearch/$', 				'search.search',			name='dosearch'),
+	url(r'^product/search/$', 					'search.main',				name='search'),
 )
 
 urlpatterns += patterns('mainapp.apps.trading',
@@ -43,9 +42,9 @@ urlpatterns += patterns('mainapp.apps.trading',
 	url(r'^trading/getupdated/$', 				'auction.getupdated',		name='getupdated'),
 	url(r'^trading/watch/(?P<pid>\d+)/$', 		'auction.watch',			name='watch'),
 
-	url(r'^trading/history/$', 					'payment.history',			name='transactions'),
-	url(r'^trading/feedback/(?P<tid>\d+)/$',	'payment.feedback',			name='feedback'),
-	url(r'^trading/dofeedback/$', 				'payment.dofeedback',		name='dofeedback'),
+	url(r'^trading/history/$', 					'history.history',			name='transactions'),
+	url(r'^trading/feedback/(?P<tid>\d+)/$',	'history.feedback',			name='feedback'),
+	url(r'^trading/dofeedback/$', 				'history.dofeedback',		name='dofeedback'),
 )
 
 

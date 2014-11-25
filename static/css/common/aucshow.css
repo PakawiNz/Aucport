@@ -12,6 +12,9 @@
 	padding: 0px;
 	margin: 0px 0px 20px;
 }
+.productblock > div.hasextends ~ div.hasextends {
+	margin-top: 20px;
+}
 .productblock > div.hasextends {
 	margin: 0px;
 }
