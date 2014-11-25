@@ -113,7 +113,7 @@ $(function () {
         overwriteInitial: true,
         initialCaption: "Old Picture",
         previewFileType: "picture",
-        allowedFileExtensions: ["jpg"],
+        allowedFileExtensions: ["jpg","png"],
         browseClass: "btn btn-default",
     });
 });
