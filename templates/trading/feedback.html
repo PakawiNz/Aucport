@@ -6,7 +6,24 @@
 </style>
 {% endblock %}
 {% block script %}
-<script type="text/javascript" src="/static/js/trading/payment.js"></script>
+<script type="text/javascript">
+$(function(){
+	function updateScore(amount){
+		var scoreOut = $('#scoreO');
+		var scoreShow = $('#scoreS');
+		var newScore =  parseInt(scoreOut.val(),10) + amount;
+		if (newScore > 5 ||newScore < -5 ) return;
+		scoreOut.val(newScore);
+		scoreShow.html(scoreOut.val());
+	}
+	$('#scoreU').click(function(){
+		updateScore(1);
+	});
+	$('#scoreD').click(function(){
+		updateScore(-1);
+	});
+});
+</script>
 {% endblock %}
 {% block body %}
 {% include 'common/topnavbar.html' %}
@@ -17,23 +34,61 @@
 	</div>
 	<form action="{% url 'dofeedback' %}" method="POST">
 		{% csrf_token %}
-		<input type="hidden" name="product" value="{{product.id}}">
+		<input type="hidden" name="transaction" value="{{transaction.id}}">
+		<input type="hidden" name="score" value="0" id="scoreO" >
 		<div class="mainblock">
 			<div>
 				<time>
-					<span class="clock">Contact</span>
+					<span class="clock">Comment</span>
 				</time>
 				<div class="detail">
 					<div class="padblock"></div>
 					<div class="input-group">
+						<span class="input-group-addon">Timestamp</span>
+						<input tabindex="-1" type="text" class="form-control input" readonly="" 
+							name="transdate" value="{{transaction.timestamp|date:'d M Y H:i'}}">
+					</div>
+					<div class="input-group">
 						<span class="input-group-addon">Credit Card</span>
-						<input tabindex="1" type="text" maxlength="16" class="form-control input" required 
-							name="creditcard" id="creditcard" placeholder="Credit Card">
+						<input tabindex="-1" type="text" class="form-control input" readonly="" 
+							name="creditcard" value="{{transaction.card.cardid}}" >
+					</div>
+					<div class="">
+						<div class="pull-left" >
+							<div class="input-group">
+								<span class="input-group-addon">Score</span>
+								<span class="form-control input" style="">
+									<i class="fa fa-plus"></i>
+									<i class="fa fa-plus"></i>
+									<i class="fa fa-plus"></i>
+									<i class="fa fa-plus"></i>
+									<i class="fa fa-plus"></i>
+								</span>
+							</div>
+						</div>
+						<div class="pull-right" style="width:120px">
+							<div class="input-group">
+								<div class="input-group-btn">
+									<button id="scoreD" type="button" class="btn btn-danger"><i class="fa fa-minus"></i></button>
+								</div>
+								<div class="" style="text-align:center; padding-top:3px;">
+									<div class="price" id="scoreS" style="font-size:18px;">0</div>
+								</div>
+								<div class="input-group-btn">
+									<button id="scoreU" type="button" class="btn btn-success"><i class="fa fa-plus"></i></button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon">Comment</span>
+						<textarea tabindex="2" type="text" rows="5" class="form-control input" required 
+							name="comment" placeholder="Comment" style="resize:none;"></textarea>
 					</div>
 				</div>
 				<div class="detail" style="height:55px;">
-					<button type="submit" id="pay" class="btn btn-primary" style="float:right; width:100px" tabindex="8" maxlength="6">
-						<span class="fa fa-credit-card"></span> Pay 
+					<button type="submit" class="btn btn-primary" style="float:right; width:100px" tabindex="3">
+						<span class="fa fa-edit"></span> Submit 
 					</button>
 				</div>
 			</div>

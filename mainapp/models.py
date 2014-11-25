@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import Q,Count
+from django.utils import timezone
 
 from utils import fields,validator as V
 import datetime
@@ -140,6 +141,9 @@ class Product(models.Model) :
 
 	def __unicode__(self):
 		return self.name
+
+	def isExpired(self):
+		return self.expired < timezone.now()
 
 	def getMaxPrice(self):
 		possessor = self.highest_auction

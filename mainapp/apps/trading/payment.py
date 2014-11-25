@@ -46,7 +46,7 @@ def main(request,pid):
 	if product.owner == viewer :
 		raise Exception("Sorry. You can't purchase your own product.")
 	elif product.state == product.STATE_AUCTION :
-		if product.expired < datetime.datetime.now() :
+		if product.isExpired() :
 			product.state = product.STATE_BILLING
 			product.save()
 		else :

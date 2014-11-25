@@ -163,7 +163,7 @@
     <h3>My Product</h3>
     </div>
     <div class="productblock">
-        {% for product in products %}
+        {% for product in member.getSellingProduct %}
         {% include 'product/productblock.html' with product=product %}
         {% endfor %}
     </div>

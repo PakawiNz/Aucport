@@ -24,6 +24,12 @@ def gen_view(
 
 			login_member = getLoginMember(request)
 			context['login_member'] = login_member
+
+			if not request.POST : 
+				try :
+					request.POST = json.loads(request.body)
+				except :
+					pass
 			post_state = request.POST
 			
 			if memberOnly and not login_member:

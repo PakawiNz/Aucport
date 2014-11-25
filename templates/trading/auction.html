@@ -8,14 +8,14 @@
 var auctions = [];
 {% for auction in auctions %}
 	auctions.push({
-		index:{{forloop.counter}},
+		index:{{auction.id}},
 		enddate: new Date(
-			{{auction.product.expired.year}}, 
-			{{auction.product.expired.month}}-1, 
-			{{auction.product.expired.day}}, 
-			{{auction.product.expired.hour}}, 
-			{{auction.product.expired.minute}}, 
-			{{auction.product.expired.second}}),
+			{{auction.product.expired|date:'Y'}}, 
+			{{auction.product.expired|date:'m'}}-1, 
+			{{auction.product.expired|date:'d'}}, 
+			{{auction.product.expired|date:'H'}}, 
+			{{auction.product.expired|date:'i'}}, 
+			{{auction.product.expired|date:'s'}}),
 	});
 {% endfor %}
 </script>
@@ -28,9 +28,9 @@ var auctions = [];
 	<div id="main" class="productblock" action="{% url 'bid' %}">
 		{% for auction in auctions %}
 		<div class="hasextends">
-			<time id="endTime{{forloop.counter}}">
-				<span id="endMajor{{forloop.counter}}" class="day">{{auction.product.expired|date:'d'}}</span>
-				<span id="endMinor{{forloop.counter}}" class="month">{{auction.product.expired|date:'M'}}</span>
+			<time id="endTime{{auction.id}}">
+				<span id="endMajor{{auction.id}}" class="day">{{auction.product.expired|date:'d'}}</span>
+				<span id="endMinor{{auction.id}}" class="month">{{auction.product.expired|date:'M'}}</span>
 			</time>
 			<a href="{% url 'product' pid=auction.product.id %}">
 			{% if auction.product.picture1 %}
@@ -45,7 +45,11 @@ var auctions = [];
 				<ul>
 					<li style="text-align:right; padding-right:15px;">
 						<a>
-							<span id="price{{auction.product.id}}" pid="{{auction.product.id}}" class="price">
+							<span id="price{{auction.id}}" pid="{{auction.id}}" 
+								class="price" value="{{auction.product.getMaxPrice}}">
+								{% if auction.product.highest_auction == auction %}
+								<span class='fa fa-flag' style='color:rgba(255, 0, 97, 1);'></span>
+								{% endif %}
 								{{auction.product.getMaxPrice}}
 							</span>
 							<span class="fa fa-usd"></span>
@@ -66,7 +70,8 @@ var auctions = [];
 			<div class="col-sm-6 col-lg-3">
 				<div class="input-group">
 					<div class="input-group-addon eqsize">Bidding</div>
-					<input id="current{{auction.id}}" alt="current{{auction.product.id}}" name="current" class="form-control" type="text" placeholder='{{auction.current}}'>  
+					<input id="current{{auction.id}}" name="current" class="form-control" type="text" 
+						placeholder='{{auction.current}}' data-auction="{{auction.id}}">
 					<div class="input-group-btn">
 						<button class="update-btn btn btn-default" data-auction="{{auction.id}}" data-target="current{{auction.id}}">
 						<span class="fa fa-chevron-right"></span>
@@ -77,7 +82,8 @@ var auctions = [];
 			<div class="col-sm-6 col-lg-3">
 				<div class="input-group">
 					<div class="input-group-addon eqsize">Ceiling</div>
-					<input id="ceiling{{auction.id}}" name="ceiling" class="form-control" type="text" placeholder='{{auction.ceiling}}'>  
+					<input id="ceiling{{auction.id}}" name="ceiling" class="form-control" type="text" 
+						placeholder='{{auction.ceiling}}' data-auction="{{auction.id}}">
 					<div class="input-group-btn">
 						<button class="update-btn btn btn-default" data-auction="{{auction.id}}" data-target="ceiling{{auction.id}}">
 						<span class="fa fa-chevron-right"></span>
@@ -88,7 +94,8 @@ var auctions = [];
 			<div class="col-sm-6 col-lg-3">
 				<div class="input-group">
 					<div class="input-group-addon eqsize">Increase</div>
-					<input id="increase{{auction.id}}" name="increase" class="form-control" type="text" placeholder='{{auction.increase}}'> 
+					<input id="increase{{auction.id}}" name="increase" class="form-control" type="text" 
+						placeholder='{{auction.increase}}' data-auction="{{auction.id}}">
 					<div class="input-group-btn">
 						<button class="update-btn btn btn-default" data-auction="{{auction.id}}" data-target="increase{{auction.id}}">
 						<span class="fa fa-chevron-right"></span>

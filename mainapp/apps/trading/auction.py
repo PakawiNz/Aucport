@@ -21,16 +21,24 @@ def main(request):
 def getupdated(request) :
 	pids = request.POST.get('pids')
 	viewer = common.getLoginMember(request)
-	products = models.Product.objects.filter(id__in=pids)
-	auctions = models.Auction.objects.filter(product__in=products,bidder=viewer)
+	auctions = models.Auction.objects.filter(id__in=pids)
 
 	products_dump = {}
-	for product in products :
-		products_dump[product.id] = {}
-		products_dump[product.id]['maxprice'] = product.getMaxPrice()
-		products_dump[product.id]['curprice'] = auctions.get(product=product).current
+	for auction in auctions :
+		product = auction.product
+		if product.isExpired() :
+			if product.highest_auction :
+				product.state = product.STATE_BILLING
+			else : 
+				product.state = product.STATE_PENDING
+			product.save()
+
+		products_dump[auction.id] = {}
+		products_dump[auction.id]['isExpired'] = product.isExpired()
+		products_dump[auction.id]['maxprice'] = product.getMaxPrice()
+		products_dump[auction.id]['curprice'] = auctions.get(product=product).current
 		if product.highest_auction :
-			products_dump[product.id]['king'] = product.highest_auction.bidder == viewer
+			products_dump[auction.id]['king'] = product.highest_auction.bidder == viewer
 
 	return common.jsonResponse({'products':products_dump})
 
@@ -70,6 +78,9 @@ def bid(request) :
 			return common.jsonResponse({'success':False,'error':'No Such Auction with this ID'})
 	else :
 		return common.jsonResponse({'success':False,'error':'No Auction Found.'})
+
+	if auction.expired < datetime.datetime.now() :
+		return common.jsonResponse({'success':False,'error':"Auction's already expired."})
 
 	if current != None :
 		current = float(current)
