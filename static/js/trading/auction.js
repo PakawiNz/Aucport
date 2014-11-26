@@ -33,6 +33,7 @@ $(function() {
 		if (product.isExpired){
 			var endTime = $('#endTime' + aucid);
 			endTime.fadeOut(function(){
+				$('#endMajor' + aucid).addClass("clock").removeClass("day")
 				if (product.king) {
 					$('#endMajor' + aucid).html('You');
 					$('#endMinor' + aucid).html('Win');

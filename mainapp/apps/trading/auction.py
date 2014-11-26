@@ -8,7 +8,6 @@ def main(request,unwatched=False):
 	auctions = models.Auction.objects.filter(bidder=viewer).order_by('-product__expired')
 	auctions = auctions.filter(unwatched=unwatched)
 
-	print auctions
 	context = {
 		'today':datetime.datetime.now(),
 		'state':models.Product,
