@@ -9,3 +9,13 @@ def home(request) :
 		'randomdot':range(36),
 	}
 	return context
+
+@common.gen_view('ERROR 404','common/invalid.html',status_code=404)
+def handler404(request):
+	context = {'content':'Sorry. This url does not provide service.'}
+	return context
+
+@common.gen_view('ERROR 500','common/invalid.html',status_code=500)
+def handler500(request):
+	context = {'content':'Sorry. There is an error on our server.'}
+	return context

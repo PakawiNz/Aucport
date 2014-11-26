@@ -13,6 +13,7 @@ def gen_view(
 		guestOnly=False,
 		postOnly=False,
 		redirect=False,
+		status_code=None,
 		):
 
 	def inner_decorator(inner_func):
@@ -50,7 +51,9 @@ def gen_view(
 				else :
 					view_context = inner_func(*args,**kwargs)
 					context.update(view_context)
-					return render(request,template,context)
+					response = render(request,template,context)
+					if status_code : response.status_code = status_code
+					return response
 
 			except Exception as e :
 				print traceback.format_exc()

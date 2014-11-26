@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'c_m8@1dd1lphe(gt4u2h2q)pc1(k_)mv5hn0+)=1l%$^hw+u%6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = True
 
@@ -89,9 +89,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static/"),
-)
+if DEBUG == False :
+    STATIC_ROOT = 'static/'
+else :
+    STATICFILES_DIRS = (
+        os.path.join(BASE_DIR, "static/"),
+    )
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = 'media/'

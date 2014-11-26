@@ -3,11 +3,9 @@ from django.conf import settings
 from django.contrib import admin
 
 urlpatterns = patterns('',
-
 	url(r'^admin/', include(admin.site.urls)),
 	url(r'^$', 								'mainapp.apps.views.home',	name='home'),
-
-) + static.static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+)
 
 urlpatterns += patterns('mainapp.apps.member',
 	url(r'^member/profile/(?P<mid>\d+)/$',		'profile.show',     		name='profile_id'),
@@ -48,6 +46,14 @@ urlpatterns += patterns('mainapp.apps.trading',
 	url(r'^trading/dofeedback/$', 				'history.dofeedback',		name='dofeedback'),
 )
 
+if settings.DEBUG == False :
+	urlpatterns += patterns('',
+	    url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
+	)
 
-handler404 = 'mainapp.utils.error_handler.handler404'
-handler500 = 'mainapp.utils.error_handler.handler500'
+urlpatterns += patterns('',
+    url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
+)
+
+handler404 = 'mainapp.apps.views.handler404'
+handler500 = 'mainapp.apps.views.handler500'
