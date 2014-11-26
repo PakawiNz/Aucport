@@ -133,7 +133,6 @@ $(function() {
 
 		var data = {};
 		data[name] = input.val();
-		alert(data[name]);
 		data['auction'] = auction;
 
         caller.prepend('<span class="loading fa fa-refresh fa-spin" style="display:none;"></span>');
