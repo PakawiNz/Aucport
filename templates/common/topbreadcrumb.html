@@ -1,6 +1,11 @@
 <div class="container">
 	<div class="jumbotron" style="margin:10px; padding-top:2px; padding-bottom:10px; padding-left:30px;">
 		<h2>
+			{% if speclink %}
+			<a class="btn btn-default pull-right" href="{{speclink.url}}">
+				{{speclink.name}} <i class="fa fa-caret-right"></i>
+			</a>
+			{% endif %}
 			{{ title }}
 			<br/>
 			<small>

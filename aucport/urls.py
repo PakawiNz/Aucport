@@ -41,6 +41,7 @@ urlpatterns += patterns('mainapp.apps.trading',
 	url(r'^trading/bid/$', 						'auction.bid',				name='bid'),
 	url(r'^trading/getupdated/$', 				'auction.getupdated',		name='getupdated'),
 	url(r'^trading/watch/(?P<pid>\d+)/$', 		'auction.watch',			name='watch'),
+	url(r'^trading/auction_u/$', 				'auction.unwatched_list',	name='auction_u'),
 
 	url(r'^trading/history/$', 					'history.history',			name='transactions'),
 	url(r'^trading/feedback/(?P<tid>\d+)/$',	'history.feedback',			name='feedback'),

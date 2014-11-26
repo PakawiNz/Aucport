@@ -161,9 +161,15 @@ class Auction(models.Model) :
 	isAuto = models.BooleanField(default=False)
 	notify = models.BooleanField(default=False)
 	lastbid = models.DateTimeField(blank=True,null=True)
+	unwatched = models.BooleanField(default=False)
 
 	def __unicode__(self):
 		return self.bidder.email + " : " + self.product.name
+
+	def bid(self,amount):
+		if amount == self.current : return
+		self.current = amount
+		self.lastbid = timezone.now()
 
 class CreditCard(models.Model) :
 	cardid = fields.RegexField(regex=r'\d{16}$',max_length=16)

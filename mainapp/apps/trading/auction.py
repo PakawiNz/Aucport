@@ -1,21 +1,30 @@
 from django.shortcuts import render,redirect
 from mainapp import models,common
-from django .http import HttpResponse
 import datetime
-from mainapp import models, common
-import unicodedata
 
-@common.gen_view('Auction Watchlist','trading/auction.html',memberOnly=True)
-def main(request):
+@common.gen_view('Auction Watch List','trading/auction.html',memberOnly=True)
+def main(request,unwatched=False):
 	viewer = common.getLoginMember(request)
-	auctions = models.Auction.objects.filter(bidder=viewer)
+	auctions = models.Auction.objects.filter(bidder=viewer).order_by('-product__expired')
+	auctions = auctions.filter(unwatched=unwatched)
 
+	print auctions
 	context = {
 		'today':datetime.datetime.now(),
 		'state':models.Product,
 		'auctions':auctions,
 	}
+	if not unwatched :
+		context['speclink'] = {'name':'Unwatched List','url':'/trading/auction_u/'}
+	else :	
+		context['speclink'] = {'name':'Watch List','url':'/trading/auction/'}
+		context['title'] = 'Auction Unwatched List'
+
 	return context
+
+@common.gen_view(memberOnly=True,redirect=True)
+def unwatched_list(request):
+	return main(request,True)
 
 @common.gen_view(memberOnly=True,redirect=True,postOnly=True)
 def getupdated(request) :
@@ -62,6 +71,7 @@ def bid(request) :
 
 	formstate = request.POST
 	auction = formstate.get('auction')
+	unwatched = formstate.get('unwatched')
 	current = formstate.get('current')
 	ceiling = formstate.get('ceiling')
 	increase = formstate.get('increase')
@@ -79,7 +89,12 @@ def bid(request) :
 	else :
 		return common.jsonResponse({'success':False,'error':'No Auction Found.'})
 
-	if auction.expired < datetime.datetime.now() :
+	if unwatched != None :
+		auction.unwatched = unwatched
+		auction.save()
+		return common.jsonResponse({'unwatched':unwatched,})
+
+	if auction.product.isExpired() :
 		return common.jsonResponse({'success':False,'error':"Auction's already expired."})
 
 	if current != None :
@@ -91,7 +106,7 @@ def bid(request) :
 		if current <= oldmaxprice :
 			return common.jsonResponse({'success':False,'error':'Input is lower than current price'})
 		else : 
-			auction.current = current
+			auction.bid(current)
 			auction.save()
 			fight_man(auction)
 			return common.jsonResponse({'success':True,'newval':current,})
@@ -113,21 +128,21 @@ def bid(request) :
 		auction.save()
 		return common.jsonResponse({'success':True,'newval':increase,})
 	elif isAuto != None : 
-		if isAuto.lower() == 'true' :
+		if isAuto == True :
 			auction.isAuto = True
 			auction.save()
 			fight_auto(auction)
-		elif isAuto.lower() == 'false' :
+		elif isAuto == False :
 			auction.isAuto = False
 			auction.save()
 		else :
 			return common.jsonResponse({'success':False,'error':'Invalid Auto.'})
 		return common.jsonResponse({'success':True})
 	elif isNotify != None : 
-		if isNotify.lower() == 'true' :
+		if isNotify == True :
 			auction.isNotify = True
 			auction.save()
-		elif isNotify.lower() == 'false' :
+		elif isNotify == False :
 			auction.isNotify = False
 			auction.save()
 		else :
@@ -142,22 +157,20 @@ def fight_auto(auction) :
 	if auction == possesor : return
 	if auction.ceiling <= product.getMaxPrice() : return
 	if not possesor or not possesor.isAuto :
-		auction.current = min(auction.ceiling, product.getMaxPrice() + auction.increase)
+		auction.bid(min(auction.ceiling, product.getMaxPrice() + auction.increase))
 		product.highest_auction = auction
 	else :
 		if auction.ceiling > possesor.ceiling :
-			possesor.current = possesor.ceiling
-			auction.current = min(auction.ceiling, 
-				max(possesor.ceiling, product.getMaxPrice()) + auction.increase)
+			possesor.bid(possesor.ceiling)
+			auction.bid(min(auction.ceiling, max(possesor.ceiling, product.getMaxPrice()) + auction.increase))
 			product.highest_auction = auction
 		elif auction.ceiling < possesor.ceiling :
-			possesor.current = min(possesor.ceiling, 
-				max(auction.ceiling, product.getMaxPrice()) + possesor.increase)
-			auction.current = auction.ceiling
+			possesor.bid(min(possesor.ceiling, max(auction.ceiling, product.getMaxPrice()) + possesor.increase))
+			auction.bid(auction.ceiling)
 			product.highest_auction = possesor
 		else :
-			possesor.current = possesor.ceiling
-			auction.current = auction.ceiling
+			possesor.bid(possesor.ceiling)
+			auction.bid(auction.ceiling)
 		possesor.save()
 
 	auction.save()
@@ -170,10 +183,10 @@ def fight_man(auction) :
 		product.highest_auction = auction
 	else :
 		if auction.current > possesor.ceiling :
-			possesor.current = possesor.ceiling
+			possesor.bid(possesor.ceiling)
 			product.highest_auction = auction
 		else :
-			possesor.current = min(possesor.ceiling, auction.current + possesor.increase)
+			possesor.bid(min(possesor.ceiling, auction.current + possesor.increase))
 		possesor.save()
 
 	product.save()

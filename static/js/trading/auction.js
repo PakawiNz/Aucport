@@ -20,7 +20,7 @@ $(function() {
 	});
 
 	var pids = [];
-	$(".auctioner").map(function(){
+	$(".auction").map(function(){
 	  pids.push($(this).attr('pid'));
 	});
 	function refreshPrice_success(aucid,product){
@@ -84,7 +84,7 @@ $(function() {
 		refreshPrice();
 	}, 5000 );
 
-	$('button.toggle-btn').click(function(event){
+	$('.toggle-btn').click(function(event){
 		var url = $("#main").attr("action");
 		var caller = $(this);
 		var auction = caller.data("auction");
@@ -122,7 +122,7 @@ $(function() {
         });
 	});
 
-	$('button.update-btn').click(function(event){
+	$('.update-btn').click(function(event){
 		var url = $("#main").attr("action");
 		var caller = $(this);
 		var auction = caller.data("auction");
@@ -132,6 +132,7 @@ $(function() {
 
 		var data = {};
 		data[name] = input.val();
+		alert(data[name]);
 		data['auction'] = auction;
 
         caller.prepend('<span class="loading fa fa-refresh fa-spin" style="display:none;"></span>');
@@ -143,7 +144,10 @@ $(function() {
             dataType: 'json',
             data: data,
             success: function(result) {
-               if (result.success){
+               if (result.unwatched != undefined){
+               		$('#auction' + auction).fadeOut();
+               		$('#auctioner' + auction).fadeOut();
+               }else if (result.success){
                		input.val("");
                		input.attr("placeholder",result.newval);
                }else {
