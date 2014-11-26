@@ -61,7 +61,7 @@ class Member(models.Model) :
 		return self.getMyProduct().filter(state__in=[Product.STATE_SELLING,Product.STATE_AUCTION])
 
 	def getPendingProduct(self) :
-		return self.getMyProduct().filter(state__in=[Product.STATE_PENDING])
+		return self.getMyProduct().filter(state__in=[Product.STATE_PENDING,Product.STATE_BILLING])
 
 	def getMyProduct(self) :
 		return Product.objects.filter(owner=self)

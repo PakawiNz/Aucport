@@ -89,6 +89,7 @@ def bid(request) :
 		return common.jsonResponse({'success':False,'error':'No Auction Found.'})
 
 	if unwatched != None :
+		unwatched = int(unwatched)
 		auction.unwatched = unwatched
 		auction.save()
 		return common.jsonResponse({'unwatched':unwatched,})

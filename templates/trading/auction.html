@@ -75,7 +75,10 @@ var auctions = [];
 						<a href="#" data-auction="{{auction.id}}" data-target="unwatched{{auction.id}}" class="update-btn">
 							<span class="fa fa-eye-slash"></span></a></li>
 					{% endif %}
-					<li></li>
+					<li class="twitter" data-toggle="tooltip" title="View Seller Profile.">
+						<input type="hidden" name="unwatched" id="unwatched{{auction.id}}" value="1">
+						<a href="{% url 'profile_id' mid=auction.product.owner.id %}">
+							<span class="fa fa-male"></span></a></li>
 					<li></li>
 				</ul>
 			</div>
