@@ -83,7 +83,7 @@ $(function() {
 	refreshPrice();
 	setInterval( function(){
 		refreshPrice();
-	}, 5000 );
+	}, 1500 );
 
 	$('.toggle-btn').click(function(event){
 		var url = $("#main").attr("action");

@@ -179,7 +179,7 @@ def fight_auto(auction) :
 def fight_man(auction) :
 	product = auction.product
 	possesor = product.highest_auction
-	if not possesor or not possesor.isAuto :
+	if not possesor or not possesor.isAuto or possesor == auction :
 		product.highest_auction = auction
 	else :
 		if auction.current > possesor.ceiling :

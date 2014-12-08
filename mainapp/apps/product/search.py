@@ -20,9 +20,11 @@ def search(request) :
 	category = request.GET.get('category')
 	lprice = request.GET.get('lprice')
 	hprice = request.GET.get('hprice')
+	selling_type = request.GET.get('selling_type')
 
 	result = models.Product.objects.filter(state__in=[models.Product.STATE_AUCTION,models.Product.STATE_SELLING])
-	if category : result = result.filter(category=category)
+	if category and category != "0" : result = result.filter(category=category)
+	if selling_type and selling_type != "0" : result = result.filter(state=selling_type)
 	if name : result = result.filter(name__contains=name)
 	if brand : result = result.filter(brand__contains=brand)
 	if lprice : result = result.filter(netPrice__gte=lprice)
